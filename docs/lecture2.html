@@ -279,5 +279,14 @@
 </figure>
 <p>Finite difference schemes may be obtained in this case by any discretisation of <span class="math inline">\(f(t)\)</span>, of the desired accuracy. For second-order accuracy, <span class="math inline">\(f^n = \left\{f(t_n),\mu_{t\cdot}f(t_n), \mu_{tt}f(t_n) \right\}\)</span>, are all valid discretisations. Hence, a suitable second-order accurate scheme is obtained as <span class="math display">\[\label{eq:shoFDForced}
     \delta_{tt}x^n = -\omega_0^2 x^n -2c\delta_{t\cdot}x^n + f^n\]</span> Initialisation should be performed in such a way that second-order accuracy is preserved. In this respect, one may set <span class="math inline">\(x^0 = x_0\)</span>. Then, <a href="#eq:dtdInit" data-reference-type="eqref" data-reference="eq:dtdInit">[eq:dtdInit]</a> is used again, to get <span class="math display">\[(\delta_{t+}- \frac{k}{2}\delta_{tt})x^0 = v_0.\]</span> One has <span class="math display">\[\delta_{tt}x^0 \approx -\omega_0^2 x_0 - 2c \delta_{t+}x^0 + f^0.\]</span> Using these, one can extract <span class="math inline">\(x^1\)</span> as <span class="math display">\[x^1 = x^0 + \frac{k v_0 + \frac{k^2}{2}\left(-\omega_0^2 x^0 + f^0 \right)}{1+kc}\]</span> When approximating a Dirac delta at <span class="math inline">\(t_0=0\)</span>, one should use <span class="math inline">\(f^0 = 2/k\)</span>. Error slopes for scheme <a href="#eq:shoFDForced" data-reference-type="eqref" data-reference="eq:shoFDForced">[eq:shoFDForced]</a> are shown in Fig. <a href="#fig:ErrSlopesForced" data-reference-type="ref" data-reference="fig:ErrSlopesForced">1.9</a>.</p>
+<script>
+    window.MathJax = {
+        loader: {load: ['[tex]/newcommand']},
+        tex: {
+            tags: 'ams',
+            packages: {'[+]': ['newcommand']}
+        }
+    };
+</script>
 </body>
 </html>
