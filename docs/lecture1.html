@@ -48,12 +48,6 @@
     p {
       margin: 1em 0;
     }
-    iframe{
-        margin: 1em 0;
-        width: 35em;
-        height: 500px;
-        max-width: 36em;
-    }
     a {
       color: #1a1a1a;
     }
@@ -137,6 +131,12 @@
       margin-bottom: 4em;
       text-align: center;
     }
+    iframe{
+        margin: 1em 0;
+        width: 35em;
+        height: 500px;
+        max-width: 36em;
+    }
     #TOC li {
       list-style: none;
     }
@@ -150,18 +150,37 @@
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
   </style>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 <header id="title-block-header">
 <h1 class="title">Lecture 1</h1>
 </header>
-<p>$$           </p>
-<p>$$</p>
+<ul>
+<li><a href="#introduction">Introduction</a>
+<ul>
+<li><a href="#newtons-law-for-mechanical-oscillations">Newton’s law for mechanical oscillations</a>
+<ul>
+<li><a href="#energy-analysis-secenangen">Energy Analysis {#sec:EnAnGen}</a></li>
+<li><a href="#bounds-on-solution-growth-secboundssho">Bounds on solution growth {#sec:BoundsSHO}</a></li>
+<li><a href="#periodicity-of-orbits-via-fourier-series">Periodicity of orbits via Fourier series</a></li>
+</ul></li>
+<li><a href="#time-difference-operators">Time Difference Operators</a>
+<ul>
+<li><a href="#shift-time-and-averaging-operators">Shift, time and averaging operators</a></li>
+</ul></li>
+<li><a href="#frequency-domain-analysis-and-stability-of-lti-systems-secfreqdoman">Frequency domain analysis and stability of LTI systems {#sec:FreqDomAn}</a>
+<ul>
+<li><a href="#laplace-and-z-transforms">Laplace and <span class="math inline">\(z\)</span> transforms</a></li>
+<li><a href="#fourier-and-discrete-time-fourier-transforms">Fourier and discrete time Fourier transforms</a></li>
+<li><a href="#frequency-domain-intepretation-of-time-difference-operators-secfdtransformations">Frequency-domain intepretation of time difference operators {#sec:FDtransformations}</a></li>
+<li><a href="#recursion-polynomials">Recursion polynomials</a></li>
+</ul></li>
+</ul></li>
+</ul>
 <h1 id="introduction">Introduction</h1>
 <p>This course is about the analysis and simulation of mechanical vibrations. Since a kind of oscillation is involved, the systems of interest here are time-dependent These systems appear in many branches of the sciences, including mechanical engineering, acoustics, vibroacoustics, and others. In this chapter, Newton’s law for a system comprising one degree of freedom will be reviewed, along with useful concepts used in later chapters. Discrete calculus will also be introduced.</p>
-<iframe src="https://editor.p5js.org/mhamilt/full/m1BwsQJKK"></iframe>
 <h2 id="newtons-law-for-mechanical-oscillations">Newton’s law for mechanical oscillations</h2>
 <p>We shall begin the discussion by studying the evolution of a simple vibrating object, comprising a mass <span class="math inline">\(m\)</span> and a subjected to a force field originating from a suitable potential,</p>
 <p><span class="math display">\[\begin{equation}\label{eq:PhiF}
@@ -209,20 +228,9 @@
     \left|\frac{dx(t)}{dt}\right| \leq \sqrt{2 H_0/m}\,\,\, \forall t,\end{equation}\]</span></p>
 <p>and thus the velocity of the system is <em>always</em> bounded in terms of the initial energy. The displacement <span class="math inline">\(x(t)\)</span> itself may or may not be bounded. Consider the case of a quadratic potential, as in the left panel of Fig. <a href="#fig:phis" data-reference-type="ref" data-reference="fig:phis">1.1</a>: <span class="math inline">\(\phi = \frac{K x^2}{2}\)</span>. This case (as shown above) corresponds to the linear case, i.e. the simple harmonic oscillator with stiffness constant <span class="math inline">\(K\)</span>. From <span class="math inline">\(\eqref{eq:bnds}\)</span>, one has <span class="math inline">\(|x|\leq \sqrt{2 H_0/K}\)</span>. Hence, the displacement is bounded. When the potential is not quadratic, a nonlinear system is obtained. We shall consider the nonlinear oscillator later on. Here, qualitatively, two nonlinear potentials are shown in the center and right panels of Fig. <a href="#fig:phis" data-reference-type="ref" data-reference="fig:phis">1.1</a>. Bounded motion is obtained whenever the potential attains infinity for large values of <span class="math inline">\(|x|\)</span>. However, if the potential <span class="math inline">\(\phi\)</span> is bounded by some finite constant, unbounded motion can be observed.</p>
 <figure>
-<img src="Figures/phiGraphs.png" id="fig:phis" alt="Potential functions corresponding to a quadratic function \phi \propto x^2 (left panel), and non-quadratic functions (center and right panels). Total energy is represented as dashed or dash-dotted lines, the latter corresponding to unbounded motion." /><figcaption aria-hidden="true">Potential functions corresponding to a quadratic function <span class="math inline">\(\phi \propto x^2\)</span> (left panel), and non-quadratic functions (center and right panels). Total energy is represented as dashed or dash-dotted lines, the latter corresponding to unbounded motion.</figcaption>
+<img src="figures/phiGraphs.png" id="fig:phis" alt="Potential functions corresponding to a quadratic function \phi \propto x^2 (left panel), and non-quadratic functions (center and right panels). Total energy is represented as dashed or dash-dotted lines, the latter corresponding to unbounded motion." /><figcaption aria-hidden="true">Potential functions corresponding to a quadratic function <span class="math inline">\(\phi \propto x^2\)</span> (left panel), and non-quadratic functions (center and right panels). Total energy is represented as dashed or dash-dotted lines, the latter corresponding to unbounded motion.</figcaption>
 </figure>
 <p>To understand these claims, it can be useful to visualise the trajectories in the <em>phase plane</em>. This is a plane whose axes are <span class="math inline">\(x = x(t)\)</span> and <span class="math inline">\(y = dx(t)/dt\)</span>, see Fig. <a href="#fig:phasePorts" data-reference-type="ref" data-reference="fig:phasePorts">[fig:phasePorts]</a>. For the quadratic case, trajectories are ellipses, and are hence symmetric about both the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> axes. Periodicity is evident by inspection of the phase portraits, which appear as closed loops. The energy components also oscillate periodically, in this case at one single frequency. For the central panel of Fig. <a href="#fig:phis" data-reference-type="ref" data-reference="fig:phis">1.1</a>, trajectories are now symmetric only about the <span class="math inline">\(x\)</span> axis: the nonlinearity is such that symmetry is broken in <span class="math inline">\(x\)</span>, as evident from panel 2 of Fig. <a href="#fig:phis" data-reference-type="ref" data-reference="fig:phis">1.1</a>. However, motion is still periodic, via the combination of a number frequencies with a common factor (the fundamental frequency). For the right panel of Fig. <a href="#fig:phis" data-reference-type="ref" data-reference="fig:phis">1.1</a>, motion may be bounded or unbounded, depending on the value of <span class="math inline">\(H_0\)</span>, as seen in panel 3 of Fig. <a href="#fig:phasePorts" data-reference-type="ref" data-reference="fig:phasePorts">[fig:phasePorts]</a>.</p>
-<p>.<br />
- <br />
-<br />
- <br />
-2.<br />
- <br />
-<br />
- <br />
-3.<br />
- <br />
-</p>
 <p>When motion is periodic, the period can be estimated from the energy, since</p>
 <p><span class="math display">\[\begin{equation}\label{eq:dxdtEn}
     \frac{dx}{dt} = \pm\sqrt{\frac{2}{m}}\sqrt{H_0-\phi}.
@@ -250,13 +258,15 @@ x(t) = \sum_{m=0}^M \left( a_m \cos(m \omega_0 t) + b_m \sin(m \omega_0 t) \righ
 <p><span class="math display">\[\begin{equation}\label{eq:FouComps}
 a_0 = \frac{1}{\tau}\int_0^\tau x(t) \, \text{d} t, \,\, a_{m\neq 0} = \frac{2}{\tau}\int_0^\tau x(t)\cos(m\omega_0 t) \, \text{d} t, \,\, b_{m} = \frac{2}{\tau}\int_0^\tau x(t)\sin(m\omega_0 t) \, \text{d} t\end{equation}\]</span></p>
 <p>These expressions are proven easily when considering the <em>orthogonality</em> of the Fourier components (easily obtained via direct integration), i.e.</p>
-<p><span class="math display">\[\begin{aligned}
+<p><span class="math display">\[
+\begin{aligned}
 \int_{0}^\tau \cos(m\omega_0 t)\cos(n \omega_0 t) \text{d} t &amp;= \frac{\tau}{2}\delta_{m,n} \,\,\, (m&gt;0, n\geq 0) \label{eq:OrthoFou1} \\
 \int_{0}^\tau \sin(m\omega_0 t)\sin(n \omega_0 t) \text{d} t &amp;= \frac{\tau}{2}\delta_{m,n} \,\,\, (m&gt;0, n\geq 0) \label{eq:OrthoFou2} \\
-\int_{0}^\tau \cos(m\omega_0 t)\sin(n \omega_0 t) \text{d} t &amp;= 0  \label{eq:OrthoFou3}\end{aligned}
-\end{equation}\]</span></p>
+\int_{0}^\tau \cos(m\omega_0 t)\sin(n \omega_0 t) \text{d} t &amp;= 0  \label{eq:OrthoFou3}
+\end{aligned}
+\]</span></p>
 <p>Multiplying <span class="math inline">\(\eqref{eq:Fou3}\)</span> by, say, <span class="math inline">\(\sin(n\omega_0 t)\)</span>, integrating, and using <span class="math inline">\(\eqref{eq:OrthoFou2}\)</span>, one obtains the last expression in <span class="math inline">\(\eqref{eq:FouComps}\)</span>. The other expressions in <span class="math inline">\(\eqref{eq:FouComps}\)</span> are obtained analogously. A picture of the Fourier components for Cases 1,2 and 3 is given in Fig. <a href="#fig:Fou1" data-reference-type="ref" data-reference="fig:Fou1">[fig:Fou1]</a>, where one sees that simple harmonic motion is indeed characterised by a single frequency of vibration.</p>
-<p><img src="Figures/Fou1.png" alt="image" /> <img src="Figures/Fou2.png" alt="image" /> <img src="Figures/Fou3.png" alt="image" /></p>
+<p><img src="figures/Fou1.png" alt="image" /> <img src="figures/Fou2.png" alt="image" /> <img src="figures/Fou3.png" alt="image" /></p>
 <p>It may be useful to express the Fourier series in complex exponential form. In that case, one has</p>
 <p><span class="math display">\[\begin{equation}\label{eq:FourierSeriesComplex}
 x(t) = \sum_{m=-M}^M c_m e^{jm\omega_0 t},
@@ -310,7 +320,7 @@ x(t) = \sum_{m=-M}^M c_m e^{jm\omega_0 t},
 <p>Constructing higher-order schemes is of course possible, and sometimes desirable, and these words of caution suffice for the moment as cursory understanding of the underlying difficulties.</p>
 <p>When solving differential equations, different definitions of errors are employed: these are the <em>local truncation error</em> (LTE) and the <em>global error</em>. The truncation errors given by <span class="math inline">\(\eqref{eq:Errs1}\)</span> and <span class="math inline">\(\eqref{eq:Errs}\)</span> are only useful to determine the order of the approximation of a difference operator, but ensuring that the differential operators of a difference scheme are approximated to an order <span class="math inline">\(p\)</span>, does not automatically ensure that the scheme is <span class="math inline">\(p^{th}\)</span> order accurate, if in fact convergent at all.</p>
 <figure>
-<embed src="Figures/stencils.pdf" id="fig:stencil" /><figcaption aria-hidden="true">Stencil width and coefficients (units of <span class="math inline">\(k\)</span>) of various difference operators approximating the first time derivative</figcaption>
+<embed src="figures/stencils.pdf" id="fig:stencil" /><figcaption aria-hidden="true">Stencil width and coefficients (units of <span class="math inline">\(k\)</span>) of various difference operators approximating the first time derivative</figcaption>
 </figure>
 <h2 id="sec:FreqDomAn">Frequency domain analysis and stability of LTI systems</h2>
 <p>Traditional analysis techinques for time-dependent problems rely on frequency domain analysis, both in the continuous and discrete cases.</p>
@@ -360,7 +370,7 @@ x(t) = \sum_{m=-M}^M c_m e^{jm\omega_0 t},
 <p>These identities will prove useful in the study of the stability of LTI systems via <em>von Neumann</em> analysis.</p>
 <h3 id="recursion-polynomials">Recursion polynomials</h3>
 <figure>
-<embed src="Figures/SchurCohn.pdf" id="fig:SchurCohn" /><figcaption aria-hidden="true">The Schur-Cohn stability region, i.e. the region of the <span class="math inline">\((b,c)-\)</span>plane for which the roots of <span class="math inline">\(\eqref{eq:TempSchurCohn}\)</span> have magnitude less than unity.</figcaption>
+<embed src="figures/SchurCohn.pdf" id="fig:SchurCohn" /><figcaption aria-hidden="true">The Schur-Cohn stability region, i.e. the region of the <span class="math inline">\((b,c)-\)</span>plane for which the roots of <span class="math inline">\(\eqref{eq:TempSchurCohn}\)</span> have magnitude less than unity.</figcaption>
 </figure>
 <p>Finite difference schemes, as will be seen shortly, produce a recursion in time. When such recursion has constant coefficients, substitution of <em>ansatz</em> <span class="math inline">\(\eqref{eq:ansatz}\)</span> results in a complex equation of the form <span class="math display">\[\sum_{n=0}^M a_n z^n = 0,
 \]</span></p>
@@ -374,14 +384,13 @@ x(t) = \sum_{m=-M}^M c_m e^{jm\omega_0 t},
 \end{equation}\]</span></p>
 <p>which are necessary and sufficient conditions to enforce <span class="math inline">\(|z_\pm|&lt;1\)</span>, and are known as <em>Schur-Cohn stability test</em>, see also Fig. <a href="#fig:SchurCohn" data-reference-type="ref" data-reference="fig:SchurCohn">1.3</a>.</p>
 <script>
-    window.MathJax = {
-        loader: {load: ['[tex]/newcommand']},
-        tex: {
-            tags: 'ams',
-            packages: {'[+]': ['newcommand']}
-        }
-    };
+  window.MathJax = {
+      loader: {load: ['[tex]/newcommand']},
+      tex: {
+          tags: 'ams',
+          packages: {'[+]': ['newcommand']}
+      }
+  };
 </script>
-
 </body>
 </html>
