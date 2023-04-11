@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Lecture 3
+title: Lecture 4
 ---
 
 - [Strings](#strings)
@@ -75,7 +75,7 @@ $T$ are all functions of the spatial coordinate $x$. Restricting the
 attention to the vertical direction, the infinitesimal vertical force
 $df$ acting on the string element is given by the difference of the
 force at the right end and the force at the left end, hence
-$$\label{eq:balance_eq}
+$$\begin{equation}\label{eq:balance_eq}
 df = T(x+dx,t) \sin\left( \theta(x+dx,t) \right) - T(x,t) \sin\left( \theta(x,t) \right) = dx \frac{\partial}{\partial x}(T \sin\theta)$$
 In dynamic equilibrium, the infinitesimal force is equal to the
 infinitesimal mass times the acceleration. The infinitesimal mass is
@@ -83,12 +83,13 @@ given by the volume density $\rho$ times the volume of the string's
 element, $dm = ds \rho A$, where $A$ is the cross section of the string
 (supposed constant here), and where $ds$ is the infinitesimal arclength,
 $ds = dx \sqrt{1+(\partial y / \partial x)^2}$. Hence
-$$\label{eq:inf_mass}
-df = ds \rho A \frac{\partial^2 y}{\partial t^2}$$ We can now eliminate
+$$\begin{equation}\label{eq:inf_mass}
+df = ds \rho A \frac{\partial^2 y}{\partial t^2}\end{equation}$$
+We can now eliminate
 $df$ in [\[eq:balance_eq\]](#eq:balance_eq){reference-type="eqref"
 reference="eq:balance_eq"} using
 [\[eq:inf_mass\]](#eq:inf_mass){reference-type="eqref"
-reference="eq:inf_mass"}, to get $$\label{eq:WEtheta}
+reference="eq:inf_mass"}, to get $$\begin{equation}\label{eq:WEtheta}
 \rho A \frac{\partial^2 y}{\partial t^2}ds = \frac{\partial}{\partial x}(T \sin\theta)dx$$
 What we need now are explicit expressions for the tension $T$ and the
 angle $\theta$ as a function of the coordinate $x$. From Figure
@@ -102,7 +103,7 @@ $\sin \theta  \approx \partial y / \partial x$, and $dx \approx ds$. One
 may also assume that, under such conditions, the tension is uniform,
 i.e. $T(x,t)=T_0$. Thus, using these in
 [\[eq:WEtheta\]](#eq:WEtheta){reference-type="eqref"
-reference="eq:WEtheta"} yields $$\label{eq:WE}
+reference="eq:WEtheta"} yields $$\begin{equation}\label{eq:WE}
  \frac{\partial^2 y}{\partial t^2} = c^2 \frac{\partial^2 y}{\partial x^2}$$
 where we have conveniently defined the wave velocity
 $c = \sqrt{T_0 /\rho A}$,
@@ -125,15 +126,17 @@ such as [\[eq:WE\]](#eq:WE){reference-type="eqref" reference="eq:WE"}.
 ## Solutions to the 1D wave equation
 
 *Separation of variables* is among the techniques often employed in the
-analysis of PDEs. For that, we assume that $$\label{eq:sepVar}
-y(x,t) = X(x)T(t)$$ Although there is no specific reason why a solution
+analysis of PDEs. For that, we assume that $$\begin{equation}\label{eq:sepVar}
+y(x,t) = X(x)T(t)\end{equation}$$
+Although there is no specific reason why a solution
 would have this form, we will assume that this is the case, and we will
 check at the end whether the solution obtained via separation is
 actually meaningful. Inserting
 [\[eq:sepVar\]](#eq:sepVar){reference-type="eqref"
 reference="eq:sepVar"} into [\[eq:WE\]](#eq:WE){reference-type="eqref"
 reference="eq:WE"}, and dividing both sides by $XT$, one gets
-$$\frac{T^{\prime\prime}}{T} = c^2 \frac{X^{\prime\prime}}{X}$$ Note
+$$\frac{T^{\prime\prime}}{T} = c^2 \frac{X^{\prime\prime}}{X}\end{equation}$$
+Note
 that, in the equation above, primes indicate derivatives with respect to
 the function's own argument (i.e. $t$ for $T$, and $x$ for $X$.) Notice
 also that the left-hand side depends only on $t$, and the right-hand
@@ -154,7 +157,8 @@ reference="eq:TXsyst1"} using the exponential technique. This gives
 $$T(t) = A_+ e^{st} + A_- e^{-st}, \quad A_+,A_- \in \mathbb{C}$$
 Clearly, for this solution to be oscillating and not exponentially
 growing or decaying one must set $s \in j\mathbb{R}$ and, in fact, one
-may define $$s = j \omega, \quad \omega \in \mathbb{R}$$ We are now in
+may define $$s = j \omega, \quad \omega \in \mathbb{R}\end{equation}$$
+We are now in
 the position of interpreting
 [\[eq:TXsyst1\]](#eq:TXsyst1){reference-type="eqref"
 reference="eq:TXsyst1"}: this is just the equation of a simple harmonic
@@ -163,15 +167,16 @@ that the temporal component oscillates at such frequency ensures that
 the spatial component is also oscillating: this is encaspsulated in
 [\[eq:TXsyst\]](#eq:TXsyst){reference-type="eqref"
 reference="eq:TXsyst"}. This results in the *dispersion relation* for
-the wave equation: $$\label{eq:DispRelWECnt}
-\omega = c \gamma,$$ where $\gamma$ is the spatial frequency, measured
+the wave equation: $$\begin{equation}\label{eq:DispRelWECnt}
+\omega = c \gamma,\end{equation}$$
+where $\gamma$ is the spatial frequency, measured
 in rad/m, and called the *wavenumber*. The solution to
 [\[eq:TXsyst2\]](#eq:TXsyst2){reference-type="eqref"
 reference="eq:TXsyst2"} is obtained analogously. One has
 $$X(x) = B_+ e^{j\gamma x} + B_- e^{-j\gamma x}, \quad B_+,B_- \in \mathbb{C}$$
 Thus, inserting these in
 [\[eq:sepVar\]](#eq:sepVar){reference-type="eqref"
-reference="eq:sepVar"} gives $$\label{eq:genSolWE}
+reference="eq:sepVar"} gives $$\begin{equation}\label{eq:genSolWE}
 y(x,t) = \left( A_+ e^{j\omega t} + A_- e^{-j\omega t}\right)\left( B_+ e^{j\gamma x} + B_- e^{-j\gamma x}\right)$$
 We remark two things: the first, is that the solution $y(x,t)$ is now
 expressed as a combination of complex-valued functions. The second, is
@@ -199,8 +204,9 @@ plots.](Figures/TravWavesSum.png){#fig:travStd width="\\linewidth"}
 
 Under some arbitrary choice of the four constants in
 [\[eq:genSolWE\]](#eq:genSolWE){reference-type="eqref"
-reference="eq:genSolWE"}, one gets $$\label{eq:SttoTr}
-y(x,t) = \cos (\omega t )\cos (\gamma x )$$ You may think of this
+reference="eq:genSolWE"}, one gets $$\begin{equation}\label{eq:SttoTr}
+y(x,t) = \cos (\omega t )\cos (\gamma x )\end{equation}$$
+You may think of this
 function as a standing wave pattern that extends across the whole
 $x$-axis. You may notice that, at the locations given by
 $x = (2n+1)\pi /2 \gamma$, $n\in\mathbb Z$, the solution is always zero:
@@ -214,7 +220,7 @@ distance is called the *wavelength*, and $\gamma$ is called the
 $\emph{wavenumber}$ (i.e. it is the spatial radian frequency). Using
 basic trigonometric identities, one may re-write
 [\[eq:SttoTr\]](#eq:SttoTr){reference-type="eqref"
-reference="eq:SttoTr"} as $$\label{eq:SumTrav}
+reference="eq:SttoTr"} as $$\begin{equation}\label{eq:SumTrav}
 y(x,t) = \frac{1}{2}\left(\cos (\omega t + \gamma x) + \cos (\omega t - \gamma x ) \right)$$
 Now, the term $\cos (\omega t + \gamma x)$ is a cosine function
 *travelling to the left*; the term $\cos (\omega t - \gamma x )$ is a
@@ -224,7 +230,8 @@ waves are travelling with speed $\pm c=\pm\sqrt{T_0/ \rho A}$. Why are
 these travelling waves? Just think of the points of constant phase:
 these are $\omega t \pm \gamma x = \text{constant}$. Deriving the
 expression above one obtains
-$$v_\phi = \frac{dx}{dt} = \pm \frac{\omega}{\gamma} = \pm c$$ The
+$$v_\phi = \frac{dx}{dt} = \pm \frac{\omega}{\gamma} = \pm c\end{equation}$$
+The
 velocity of constant phase, indicated here as $v_\phi$, is called the
 *phase velocity*. The absolute value of the phase velocity is given by
 $|\omega/\gamma|$, and for the simple wave equation such ratio is always
@@ -251,7 +258,8 @@ width="\\linewidth"}
 The converse is also true. Starting again from Equation
 [\[eq:genSolWE\]](#eq:genSolWE){reference-type="eqref"
 reference="eq:genSolWE"}, we may arrange the four arbitrary constants so
-to obtain $$y(x,t) = \cos(\omega t - \gamma x)$$ This is of course the
+to obtain $$y(x,t) = \cos(\omega t - \gamma x)\end{equation}$$
+This is of course the
 expression of a cosine travelling to the right with phase velocity
 $v_\phi = c$. Using again appropriate trigonometric identities, one has
 $$y(x,t) = \cos(\omega t)\cos(\gamma x) + \sin(\omega t)\sin(\gamma x)$$
@@ -263,11 +271,12 @@ travelling cosine as the sum of two standing waves, see also Figure
 
 The simple wave equation allows solutions that have a more general
 character than the sinusoidal solutions found so far. First, rewrite the
-wave equation as $$\label{eq:WEfac}
+wave equation as $$\begin{equation}\label{eq:WEfac}
 \left( \frac{\partial}{\partial t} - c  \frac{\partial}{\partial x}\right)\left( \frac{\partial}{\partial t} + c  \frac{\partial}{\partial x}\right) y(x,t) = 0$$
 Second, we are now performing a change of variables. Hence, we are
 mapping $(x,t) \in \mathbb{R}^2$ onto $(\eta,\zeta) \in \mathbb{R}^2$ so
-that $$\eta = x + ct, \qquad  \zeta = x - ct.$$ We are then using the
+that $$\eta = x + ct, \qquad  \zeta = x - ct.\end{equation}$$
+We are then using the
 chain rule to take partial derivatives in
 [\[eq:WEfac\]](#eq:WEfac){reference-type="eqref" reference="eq:WEfac"}.
 Thus
@@ -280,15 +289,18 @@ $$\begin{aligned}
 
 Using these into [\[eq:WEfac\]](#eq:WEfac){reference-type="eqref"
 reference="eq:WEfac"} gives the following PDE
-$$\frac{\partial^2y}{\partial \eta \partial \zeta}  = 0$$ Hence, direct
-integration gives $$y(\eta,\zeta) = f(\eta) + g(\zeta)$$ or,
-$$\label{eq:Dalem}
-y(x,t) = f(x+ct) + g(x-ct)$$ In view of the discussion in the previous
+$$\frac{\partial^2y}{\partial \eta \partial \zeta}  = 0\end{equation}$$
+Hence, direct
+integration gives $$y(\eta,\zeta) = f(\eta) + g(\zeta)\end{equation}$$
+or,
+$$\begin{equation}\label{eq:Dalem}
+y(x,t) = f(x+ct) + g(x-ct)\end{equation}$$
+In view of the discussion in the previous
 sections, you will recognise that $f,g$ have the form of a leftward and
 rightward travelling wave, respectively. Notice that this result is more
 general than the sinusoidal solutions of the previous section: here,
 $f,g$ are *any* function of $x+ct$ and $x-ct$. Examples of functions
-that are solution to the wave equation: $$\label{eq:WEsolsEx}
+that are solution to the wave equation: $$\begin{equation}\label{eq:WEsolsEx}
 y_1(x,t) = e^{(x-ct)}, \,\,\, y_2(x,t) = \log \left( (x+ct)^2 \right), \,\,\, y_3(x,t) =  ...$$
 Beware that nonlinear combinations (i.e. products) of $f,g$ are not, in
 general, solutions. Examples of functions that *are not* solutions to
@@ -326,10 +338,11 @@ To first order, one has
 $$dE_p \approx \frac{T_0}{2}\left(\frac{\partial y}{\partial x}\right)^2 dx$$
 From Newtonian physics of conservative systems, we know that sum of the
 changes of potential and kinetic energies is equal to zero, hence
-$$dE_k + dE_p = 0$$ where
+$$dE_k + dE_p = 0\end{equation}$$
+where
 $dE_k = \frac{\rho A}{2} \left( \frac{\partial y}{\partial t} \right)^2 dx$.
 Integrating this last expression between $x_l$ and $x_r$ ($x_l<x_r$)
-gives $$\label{eq:EnBal}
+gives $$\begin{equation}\label{eq:EnBal}
 E_k + E_p = \int_{x_l}^{x_r} \frac{\rho A}{2} \left(\frac{\partial y}{\partial t}\right)^2 dx + \int_{x_l}^{x_r} \frac{T_0}{2} \left(\frac{\partial y}{\partial x}\right)^2 dx = E$$
 where $E$ is the total energy (a constant). Notice that the total energy
 is a function of time only.
@@ -371,7 +384,7 @@ same solution. In order to see this, we are now going to introduce
 *initial conditions* on the string, such that we may assume that the
 string is at rest for $t<0$, and that some prescribed initial conditions
 are given at $t=0$. For simplicity, only displacement initial conditions
-will be studied here, so that $$\label{eq:ICs}
+will be studied here, so that $$\begin{equation}\label{eq:ICs}
 y(x,0) = y_0(x), \qquad \frac{\partial y(x,0)}{\partial t} = v_0(x).$$
 For simplicity, only displacement initial conditions will be studied in
 the following, for which $v_0(x) = 0$. We are now going to solve the
@@ -384,11 +397,14 @@ method).
 Using [\[eq:Dalem\]](#eq:Dalem){reference-type="eqref"
 reference="eq:Dalem"} into [\[eq:ICs\]](#eq:ICs){reference-type="eqref"
 reference="eq:ICs"} gives
-$$f(x)+g(x) = y_0(x), \qquad f^\prime(x) - g^\prime(x) = 0$$ Integrating
+$$f(x)+g(x) = y_0(x), \qquad f^\prime(x) - g^\prime(x) = 0\end{equation}$$
+Integrating
 the second condition, one gets $f(x) = g(x)$, and using this into the
-first condition one gets $$f(x)=g(x)=\frac{y_0(x)}{2}$$ so that
-$$\label{eq:Tr}
-y(x,t) = \frac{1}{2}\left( y_0(x-ct) + y_0(x+ct)\right)$$ The meaning of
+first condition one gets $$f(x)=g(x)=\frac{y_0(x)}{2}\end{equation}$$
+so that
+$$\begin{equation}\label{eq:Tr}
+y(x,t) = \frac{1}{2}\left( y_0(x-ct) + y_0(x+ct)\right)\end{equation}$$
+The meaning of
 this last equation is that any initial displacement will split into two
 travelling wavefronts, of amplitude equal to one half that of the
 initial displacement. (If the initial velocity is not identically zero,
@@ -399,10 +415,10 @@ two travelling wavefronts.)
 
 If instead we wish to use the sinusoidal representation for the
 solution, note that the most general form is given by the Fourier
-integral $$\label{eq:FTy}
+integral $$\begin{equation}\label{eq:FTy}
 y(x,t) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} \hat y(\gamma,t) e^{j\gamma x}d\gamma$$
 where $\hat y(\gamma,t)$ is the Fourier transform of $y(x,t)$, defined
-as $$\label{eq:yhat}
+as $$\begin{equation}\label{eq:yhat}
 \hat y(\gamma,t) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty}  y(x,t) e^{-j\gamma x}d x$$
 The meaning of [\[eq:FTy\]](#eq:FTy){reference-type="eqref"
 reference="eq:FTy"} is that the solution can be represented as a
@@ -414,7 +430,7 @@ the wave equation [\[eq:WE\]](#eq:WE){reference-type="eqref"
 reference="eq:WE"}. This gives
 $$\frac{\partial^2 \hat y(\gamma,t)}{\partial t^2} = - c^2\gamma^2 \hat y(\gamma,t),$$
 which is the usual harmonic oscillator equation solved by
-$$\label{eq:yhh}
+$$\begin{equation}\label{eq:yhh}
 \hat y(\gamma,t) = A_+(\gamma) e^{jc\gamma t} + A_-(\gamma)-e^{-jc\gamma t}$$
 We can now impose the initial conditions
 [\[eq:ICs\]](#eq:ICs){reference-type="eqref" reference="eq:ICs"}
@@ -426,7 +442,7 @@ reference="eq:yhh"} and that into
 [\[eq:FTy\]](#eq:FTy){reference-type="eqref" reference="eq:FTy"} gives
 the solution
 $$y(x,t) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty}\frac{\hat y_0(\gamma)}{2} \left( e^{-j c\gamma t} + e^{j c\gamma t} \right) e^{j\gamma x} d\gamma$$
-which may be written as $$\label{eq:FTtoTr}
+which may be written as $$\begin{equation}\label{eq:FTtoTr}
 y(x,t) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty}\frac{\hat y_0(\gamma)}{2}  e^{j\gamma (x - c  t)}d\gamma +  \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty}\frac{\hat y_0(\gamma)}{2}  e^{j\gamma (x + c  t)}d\gamma  = \frac{1}{2}\left( y_0(x-ct) + y_0(x+ct)\right)$$
 where the last equality is simply an application of the definition of
 the Fourier transform as per
@@ -455,9 +471,9 @@ $$E = E_k + E_p = \int_{-\infty}^{\infty} \frac{\rho A}{2}\left( \frac{\partial 
 The energy balance is expressed as $dE/dt = 0$. However, these results
 are only valid when the string is infinite in length. Suppose now that
 the string is only defined for $x\geq 0$. In practice we have introduced
-a boundary point at $x=0.$ The energy is given by $$\label{eq:EnHalf}
+a boundary point at $x=0.$ The energy is given by $$\begin{equation}\label{eq:EnHalf}
 E = E_k + E_p = \int_{0}^{\infty} \frac{\rho A}{2}\left( \frac{\partial y}{\partial t} \right)^2 dx + \int_{0}^{\infty} \frac{T_0}{2}\left( \frac{\partial y}{\partial x} \right)^2 dx$$
-However, the energy balance is now $$\label{eq:EnBal}
+However, the energy balance is now $$\begin{equation}\label{eq:EnBal}
 \frac{dE}{dt} = - T_0 \frac{\partial y}{\partial x }\Bigg|_{x=0}\frac{\partial y}{\partial t }\Bigg|_{x=0}$$
 As you can see, the boundary term can now influence the energy balance
 in such a way as to produce or disspate power! (Note that the energy
@@ -493,7 +509,8 @@ reference="eq:EnHalf"}.
 We now wish to describe the motion on the semi-infinite string using the
 D'Alembert solution. Consider first a boundary condition of *fixed*
 type. Using this condition one gets
-$$y(0,t) = f(-ct) + g(ct) = 0, \,\,\, \forall t$$ This corresponds to
+$$y(0,t) = f(-ct) + g(ct) = 0, \,\,\, \forall t\end{equation}$$
+This corresponds to
 setting $f(-ct) = -g(ct)$. An interpretation of this result is given in
 Figure [1.5](#fig:DalFixed){reference-type="ref"
 reference="fig:DalFixed"}: essentially, the solution can be thought as
@@ -530,10 +547,10 @@ Suppose now that we wish to describe the solution in terms of Fourier
 components (i.e. sine and cosine functions.) In analogy to the case
 developed for the initial conditions, we are now taking a Fourier
 transform in the $\omega$ domain, so that the solution may be
-represented as $$\label{eq:ytt}
+represented as $$\begin{equation}\label{eq:ytt}
 y(x,t) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} \hat y(x,\omega) e^{j\omega t} d\omega$$
 where the Fourier transform $\hat y(x,\omega)$ is defined as
-$$\label{eq:yhattOm}
+$$\begin{equation}\label{eq:yhattOm}
 \hat y(x,\omega) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty}  y(x,t) e^{-j\omega t} d t$$
 (Note that, with a slight abuse of notation, we have identified with the
 symbol $\hat y$ both the Fourier transform in the $\gamma$ domain, in
@@ -543,11 +560,12 @@ the Fourier transform in the $\omega$ domain in
 reference="eq:yhattOm"}. These are of course distinct functions.) Using
 the transformed wave equation, we get
 $$-\omega^2 \hat y(x,\omega) = c^2 \frac{\partial^2 \hat y(x,\omega)}{\partial x^2}$$
-which is solved, as per usual, by $$\label{eq:bcss}
+which is solved, as per usual, by $$\begin{equation}\label{eq:bcss}
 \hat y(x,\omega) = B_+(\omega) e^{j\frac{\omega}{c}x} + B_-(\omega) e^{-j\frac{\omega}{c}x}$$
 Using the fixed boundary condition at $x=0$ gives $B_+ = -B_-$ and thus
-$$\label{eq:FixedFou1}
-\hat y(x,\omega) = 2jB_+(\omega) \sin \frac{\omega x}{c}$$ The solution
+$$\begin{equation}\label{eq:FixedFou1}
+\hat y(x,\omega) = 2jB_+(\omega) \sin \frac{\omega x}{c}\end{equation}$$
+The solution
 is then given by using this expression in
 [\[eq:ytt\]](#eq:ytt){reference-type="eqref" reference="eq:ytt"}
 $$y(x,t)=\int_{-\infty}^{\infty} C_+(\omega) \sin\frac{\omega x}{c} e^{j\omega t} d\omega$$
@@ -555,15 +573,16 @@ where we defined $C_+ = 2 j B_+/\sqrt{2\pi}$. Notice that, indeed, we
 could have taken a Fourier transform in
 [\[eq:ytt\]](#eq:ytt){reference-type="eqref" reference="eq:ytt"} using
 $e^{-j \omega t}$ instead of $e^{j \omega t}$, so that effectively a
-more general solution is given by $$\label{eq:FixedFou}
+more general solution is given by $$\begin{equation}\label{eq:FixedFou}
 y(x,t)=\int_{-\infty}^{\infty} C_+(\omega) \sin\frac{\omega x}{c} e^{j\omega t} d\omega +  \int_{-\infty}^{\infty} C_-(\omega) \sin\frac{\omega x}{c} e^{-j\omega t} d\omega$$
 where $C_+,C_-$ may be determined from the two initial conditions.
 
 Using instead the free boundary condition in
 [\[eq:bcss\]](#eq:bcss){reference-type="eqref" reference="eq:bcss"}, we
-get $B_+ = B_-$ and $$\label{eq:FreeFou}
-\hat y(x,\omega) = 2 B_+(\omega) \cos \frac{\omega x}{c}$$ and thus, the
-general solution is $$\label{eq:FreeFou}
+get $B_+ = B_-$ and $$\begin{equation}\label{eq:FreeFou}
+\hat y(x,\omega) = 2 B_+(\omega) \cos \frac{\omega x}{c}\end{equation}$$
+and thus, the
+general solution is $$\begin{equation}\label{eq:FreeFou}
 y(x,t)= \int_{-\infty}^{\infty} D_+(\omega) \cos\frac{\omega x}{c} e^{j\omega t} d\omega +  \int_{-\infty}^{\infty} D_-(\omega) \cos\frac{\omega x}{c} e^{-j\omega t} d\omega$$
 where $D_+,D_-$ are again determined by the initial conditions. These
 meaning of [\[eq:FixedFou\]](#eq:FixedFou){reference-type="eqref"
@@ -581,13 +600,13 @@ reference="eq:FreeFou"}.
 The analysis carried out so far is very useful, as we are now ready to
 analyse the case of a string of finite length. A good place to start,
 once more, is the energy balance for the string, now defined for
-$0\leq x \leq L$. The energy balance is $$\label{eq:EnBalFull}
+$0\leq x \leq L$. The energy balance is $$\begin{equation}\label{eq:EnBalFull}
 \frac{dE}{dt} = T_0 \frac{\partial y}{\partial x }\Bigg|_{x=L}\frac{\partial y}{\partial t }\Bigg|_{x=L} - T_0 \frac{\partial y}{\partial x }\Bigg|_{x=0}\frac{\partial y}{\partial t }\Bigg|_{x=0}$$
 The origin of this expression should now be clear to you. The idea is to
 perform the same mathematical steps that lead to
 [\[eq:EnBal\]](#eq:EnBal){reference-type="eqref" reference="eq:EnBal"},
 but where now the limits of integration are set between $0$ and $L$.
-Hence $$\label{eq:EnFinite}
+Hence $$\begin{equation}\label{eq:EnFinite}
 E = E_k + E_p = \int_{0}^{L} \frac{\rho A}{2}\left( \frac{\partial y}{\partial t} \right)^2 dx + \int_{0}^{L} \frac{T_0}{2}\left( \frac{\partial y}{\partial x} \right)^2 dx$$
 In order to study the motion of strings of finite length, we may again
 adopt either the D'Alembert or the Fourier solution. Notice that the
@@ -629,13 +648,14 @@ some extent, universal: you may indeed apply this method to any linear,
 time-invariant system, in one or more dimenensions. The principle of
 application of this method has already been illustrated in the previous
 examples of strings of infinite length. Suppose now that the string is
-fixed at both ends, so that $$y(0,t) = y(L,t) = 0$$ We have already
+fixed at both ends, so that $$y(0,t) = y(L,t) = 0\end{equation}$$
+We have already
 derived the expression for the solution with a fixed boundary at $x=0$.
 This has led to [\[eq:FixedFou1\]](#eq:FixedFou1){reference-type="eqref"
 reference="eq:FixedFou1"}. Now, from
 [\[eq:FixedFou1\]](#eq:FixedFou1){reference-type="eqref"
 reference="eq:FixedFou1"}, given that the string is fixed at $x=L$, we
-should also have $$\label{eq:omeM}
+should also have $$\begin{equation}\label{eq:omeM}
 y(L,t) = 0 \implies \sin \frac{\omega L}{c} = 0 \implies \omega = \omega_m = \frac{\pi m c}{L}, \,\,\, m \in \mathbb{N}$$
 This is a very important result: what
 [\[eq:omeM\]](#eq:omeM){reference-type="eqref" reference="eq:omeM"} is
@@ -647,7 +667,7 @@ whilst in strings of infinite length sinusoidal components of any
 frequency may be found. This has a consequence on how we express the
 general solution [\[eq:FixedFou\]](#eq:FixedFou){reference-type="eqref"
 reference="eq:FixedFou"}. Instead of integrals, now we have
-$$\label{eq:modal}
+$$\begin{equation}\label{eq:modal}
 y(x,t) = \sum_{m=1}^{\infty } \left( C_+^{(m)} \sin \frac{\omega_m x}{c} e^{j \omega_m t} +  C_-^{(m)} \sin \frac{\omega_m x}{c} e^{-j \omega_m t} \right)$$
 where $C_+^{(m)},C_-^{(m)}$ are determined from the initial conditions.
 We call the expansion [\[eq:modal\]](#eq:modal){reference-type="eqref"
@@ -657,7 +677,7 @@ $\{ \omega_m \}$ and the *modal shapes* $\{\sin \frac{\omega_m x}{c}\}$.
 
 The form of [\[eq:modal\]](#eq:modal){reference-type="eqref"
 reference="eq:modal"} should be familiar to you: consider one point
-along the string, say $x_p$. Then $$\label{eq:Modes}
+along the string, say $x_p$. Then $$\begin{equation}\label{eq:Modes}
 y(x_p,t) = \sum_{m=1}^{\infty } \left( \bar C_+^{(m,x_p)} e^{j \omega_m t} +  \bar C_-^{(m,x_p)}  e^{-j \omega_m t} \right)$$
 with $\bar C_+^{(m,x_p)} = C_+^{(m)} \sin \frac{\omega_m x_p}{c}$,
 $\bar C_-^{(m,x_p)} = C_-^{(m)} \sin \frac{\omega_m x_p}{c}$. But
@@ -753,15 +773,16 @@ reference="fig:impBc"}.
 
 We want to set up the equation of motion of the mass-spring system. Of
 course, this is in the form of an oscillator equation, i.e.
-$$\label{eq:ImpBSc}
-m \frac{d^2 z}{dt^2} = - k z - R \frac{d z}{dt} + f(t)$$ Here, the
+$$\begin{equation}\label{eq:ImpBSc}
+m \frac{d^2 z}{dt^2} = - k z - R \frac{d z}{dt} + f(t)\end{equation}$$
+Here, the
 displacement $z(t)$ of the bridge is equal to the displacement of the
 string's end, so that $z(t) = y(L,t)$ (the bridge is attached to the
 string at all times!) The external force $f(t)$ is the force exterted by
 the string's end onto the mass. What is this force? We know this
 expression from the energy balance
 [\[eq:EnBalFull\]](#eq:EnBalFull){reference-type="eqref"
-reference="eq:EnBalFull"}: $$\label{eq:ft}
+reference="eq:EnBalFull"}: $$\begin{equation}\label{eq:ft}
 f(t) = - T_0 \frac{\partial y}{\partial x}(L,t)$$
 
 Notice that the minus sign is here due to the fact that this is the
@@ -791,8 +812,9 @@ Of course, remembering the definitions of $f(t)$ in
 $z(t)$, one has
 $$f(t)\frac{d z}{dt} + T_0 \frac{\partial y}{\partial x}\Bigg|_{x=L} \frac{\partial y}{\partial t} \Bigg|_{x=L} = 0$$
 and thus, the energy balance for this kind of boundary is
-$$\label{eq:EnBalImp}
-\frac{dE}{dt} = - R \left(\frac{d z}{dt}\right)^2 \leq 0$$ This is a
+$$\begin{equation}\label{eq:EnBalImp}
+\frac{dE}{dt} = - R \left(\frac{d z}{dt}\right)^2 \leq 0\end{equation}$$
+This is a
 comforting (and expected!) result. The energy in the system is
 decreasing because of the loss at the boundary, and is perfectly
 conserved if $R=0$ (conservative boundary.) The added mass and spring
@@ -811,8 +833,9 @@ reference="eq:bc2"}](Figures/tanSol.png){#fig:trasc width="\\linewidth"}
 Case a): $m=0,R=0$. Here, we are assuming that the mass and loss
 parameter of the bridge are very small compared to the stiffness. The
 boundary condition [\[eq:ImpBSc\]](#eq:ImpBSc){reference-type="eqref"
-reference="eq:ImpBSc"} in this case is $$\label{eq:imp1}
-k z = f(t)$$ We want to determine the modal frequencies and modal shapes
+reference="eq:ImpBSc"} in this case is $$\begin{equation}\label{eq:imp1}
+k z = f(t)\end{equation}$$
+We want to determine the modal frequencies and modal shapes
 of the string under this condition. Remembering that $z(t) = y(L,t)$,
 and remembering that the modal shapes for fixed boundary at $x=0$ are in
 the form of $\sin \frac{\omega x}{c}$, condition
@@ -823,8 +846,9 @@ First, two sanity checks. It is easy to see that, for $k=0$, we get back
 to the fixed-free case ($\cos \frac{\omega L}{c} = 0$) analysed before.
 Also, if $k\rightarrow \infty$, we obtain again the fixed-fixed
 condition ($\sin \frac{\omega L}{c} = 0$). If $k \neq 0$, the boundary
-condition gives $$\label{eq:bc1}
-\tan \frac{\omega L}{c} = - \frac{T_0}{ck}\omega$$ This is a
+condition gives $$\begin{equation}\label{eq:bc1}
+\tan \frac{\omega L}{c} = - \frac{T_0}{ck}\omega\end{equation}$$
+This is a
 trascendental equation, that can be solved using numerical root-finding
 algorithms. A picture of the solution to this equation is given in
 Figure [1.11](#fig:trasc){reference-type="ref" reference="fig:trasc"}.
@@ -845,8 +869,9 @@ Another sanity check here indicates that, when $m=0$ we obtain again the
 solution to the fixed-free boundary; when $m\rightarrow \infty$ we
 obtain again the frequencies of the fixed-fixed boundary (as expected!
 If the mass is really small / large, the boundary is effectively free /
-fixed.) For all other cases, one has $$\label{eq:bc2}
-\tan \frac{\omega L}{c} = \frac{T_0}{c m}\omega^{-1}$$ which is another
+fixed.) For all other cases, one has $$\begin{equation}\label{eq:bc2}
+\tan \frac{\omega L}{c} = \frac{T_0}{c m}\omega^{-1}\end{equation}$$
+which is another
 trascendental equation solvable via numerical root-finding procedures.
 Notice again that, for large frequencies, we obtain
 $\tan\frac{\omega L}{c}= 0$ which is solved by $\omega_m = m\pi c / L$:
@@ -860,9 +885,9 @@ over time scales of the order of seconds (i.e. the timescale of a
 musical signal, for example.) Thus, we are now going to study the
 effects that losses have on wave propagation. In analogy with the
 oscillator, we may introduce a loss factor propotional to the velocity
-of the string. Hence $$\label{eq:WEloss}
+of the string. Hence $$\begin{equation}\label{eq:WEloss}
 \frac{\partial^2 y}{\partial t^2} = c^2 \frac{\partial^2 y}{\partial x^2} - 2\sigma   \frac{\partial y}{\partial t}$$
-Note that the energy analysis here leads to $$\label{eq:EnBalWE}
+Note that the energy analysis here leads to $$\begin{equation}\label{eq:EnBalWE}
 \frac{d}{dt}\left( \int_{0}^{L} \frac{1}{2}\left( \frac{\partial y}{\partial t} \right)^2 dx + \int_{0}^{L} \frac{c^2}{2}\left( \frac{\partial y}{\partial x} \right)^2 dx \right) = -2\sigma \int_0^L \left(\frac{\partial y}{\partial t}\right)^2 dx,$$
 and hence energy is not increasing whenever $\sigma \geq 0$, which will
 be assumed in the remainder.
@@ -873,7 +898,8 @@ current analysis. The other tools that we developed previously though
 (separation of variables, analysis in the Fourier domain) are still
 valid, and we are going to make use of them now. What we could do, is to
 try to separate the solution into components depending only on time and
-space, i.e. $$y(x,t) = T(t)X(x)$$ We could then use this expression into
+space, i.e. $$y(x,t) = T(t)X(x)\end{equation}$$
+We could then use this expression into
 [\[eq:WEloss\]](#eq:WEloss){reference-type="eqref"
 reference="eq:WEloss"}, and follow the same steps as we did for the wave
 equation without loss, in last week's lecture. The net result is that we
@@ -882,8 +908,9 @@ $$y(x,t) = T(t)X(x) = \left(A_+ e^{st} + A_- e^{-st} \right)\left(B_+ e^{j\gamma
 where the four complex constants $A_+,A_-,B_+,B_-$ are arbitrary so long
 as initial and boundary conditions are not specified. Above,
 $s = -\sigma + j \omega$. In practice, the solution is a combination of
-typical terms such as $$\label{eq:ddp}
-y(x,t) = e^{st}e^{j\gamma x}$$ In actual fact, when analysing PDEs such
+typical terms such as $$\begin{equation}\label{eq:ddp}
+y(x,t) = e^{st}e^{j\gamma x}\end{equation}$$
+In actual fact, when analysing PDEs such
 as [\[eq:WEloss\]](#eq:WEloss){reference-type="eqref"
 reference="eq:WEloss"}, we may immediately try to use solutions such as
 [\[eq:ddp\]](#eq:ddp){reference-type="eqref" reference="eq:ddp"}. We
@@ -901,8 +928,9 @@ to find a relation between $\omega$ and $\gamma$ known as the
 [\[eq:WEloss\]](#eq:WEloss){reference-type="eqref"
 reference="eq:WEloss"} gives
 $$s^2 + 2 \sigma s + c^2 \gamma^2 = 0 \implies s = - \sigma \pm j \sqrt{c^2\gamma^2 - \sigma^2}$$
-Thus, the dispersion relation is $$\label{eq:dispRelLoss}
-\omega = \sqrt{c^2\gamma^2 - \sigma^2}$$ Of course, when $\sigma=0$ one
+Thus, the dispersion relation is $$\begin{equation}\label{eq:dispRelLoss}
+\omega = \sqrt{c^2\gamma^2 - \sigma^2}\end{equation}$$
+Of course, when $\sigma=0$ one
 recovers the dispersion of the simple wave equation $\omega = c\gamma$.
 The interesting fact about
 [\[eq:dispRelLoss\]](#eq:dispRelLoss){reference-type="eqref"
@@ -911,7 +939,8 @@ Dispersion is a property of vibratory system in which waves at different
 frequencies travel at different speeds. The wave equation without loss
 is *not* dispersive, because all waves travel at the same speed $c$. The
 wave equation with loss, on the other hand, has dispersion. Consider a
-simple harmonic solution $$y(x,t) = \cos(\omega t - \gamma x)$$ Using
+simple harmonic solution $$y(x,t) = \cos(\omega t - \gamma x)\end{equation}$$
+Using
 the definition of *phase velocity* $v_\phi$ (encountered in last week's
 lecture), one has
 $$v_\phi = \frac{\omega}{\gamma} = \frac{\sqrt{c^2 \gamma^2 - \sigma^2}}{\gamma} \approx c - \frac{\sigma^2}{2c\gamma^2} = c \left(1 - \frac{\sigma^2}{2(\omega^2+\sigma^2)} \right)$$
@@ -935,8 +964,9 @@ It is convenient, in dispersive systems, to not consider sines or
 cosines in isolation, but to consider *groups* of them. This is because,
 from Fourier theory, a disturbance may always be decomposed onto a
 linear combination of sines and cosines. Thus, let such disturbance be
-$$\label{eq:gvv}
-y(x,t) = \sum_{i=1}^N \cos(\omega_i t - \gamma_i x + \phi_i)$$ (here,
+$$\begin{equation}\label{eq:gvv}
+y(x,t) = \sum_{i=1}^N \cos(\omega_i t - \gamma_i x + \phi_i)\end{equation}$$
+(here,
 for simplicity, we are considering a discrete sum, though we may replace
 the sum with a Fourier integral as seen before.) The form of $y(x,t)$ is
 that of a group of waves. We are also making the assumption that such
@@ -945,14 +975,16 @@ wavenumber $\gamma_0$, so that effectively
 $$\omega_i = \omega_0 + \delta \omega_i, \quad \gamma_i = \gamma_0 + \delta \gamma_i, \quad i \in [1,N]$$
 with $\delta \omega_i$, $\delta \gamma_i$ being small. Thus, the change
 in phase $dP_i$ for a small displacement $dx$ in the time $dt$ for each
-of the waves is given by $$dP_i = \omega_i dt - \gamma_i dx$$ Now, this
+of the waves is given by $$dP_i = \omega_i dt - \gamma_i dx\end{equation}$$
+Now, this
 is the very important point: if the group moves "without changing in
 shape too much" then *all* the phases in the sum
 [\[eq:gvv\]](#eq:gvv){reference-type="eqref" reference="eq:gvv"} have
 changed by the same amount. Thus we set $dP_i - dP_j \approx 0$, or
 $$(\omega_i-\omega_j)dt - (\gamma_i-\gamma_j) \approx 0 \implies \frac{dx}{dt} \approx \frac{\delta \omega}{\delta \gamma}$$
 Thus, is convient to define the *group velocity*
-$$v_{g} = \frac{d \omega }{d \gamma}$$ that has the interpretation of
+$$v_{g} = \frac{d \omega }{d \gamma}\end{equation}$$
+that has the interpretation of
 the velocity of a group of waves, centered around some mean values
 $\omega_0$, $\gamma_0$, that travel with mostly the same speed, so that
 a packet of such waves retains its shape whilst travelling through the
