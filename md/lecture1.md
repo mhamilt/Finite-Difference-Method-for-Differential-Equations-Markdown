@@ -41,6 +41,20 @@ $$
 \newcommand{\mtt}{\mu_{tt}}
 $$
 
+- [Introduction](#introduction)
+  - [Newton's law for mechanical oscillations](#newtons-law-for-mechanical-oscillations)
+    - [Energy Analysis {#sec:EnAnGen}](#energy-analysis-secenangen)
+    - [Bounds on solution growth {#sec:BoundsSHO}](#bounds-on-solution-growth-secboundssho)
+    - [Periodicity of orbits via Fourier series](#periodicity-of-orbits-via-fourier-series)
+  - [Time Difference Operators](#time-difference-operators)
+    - [Shift, time and averaging operators](#shift-time-and-averaging-operators)
+  - [Frequency domain analysis and stability of LTI systems {#sec:FreqDomAn}](#frequency-domain-analysis-and-stability-of-lti-systems-secfreqdoman)
+    - [Laplace and $z$ transforms](#laplace-and-z-transforms)
+    - [Fourier and discrete time Fourier transforms](#fourier-and-discrete-time-fourier-transforms)
+    - [Frequency-domain intepretation of time difference operators {#sec:FDtransformations}](#frequency-domain-intepretation-of-time-difference-operators-secfdtransformations)
+    - [Recursion polynomials](#recursion-polynomials)
+
+
 # Introduction
 
 This course is about the analysis and simulation of mechanical
