@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lecture 1</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lecture 1</h1>
+</header>
+<p>$$           </p>
+<p>$$</p>
+<h1 id="introduction">Introduction</h1>
+<p>This course is about the analysis and simulation of mechanical vibrations. Since a kind of oscillation is involved, the systems of interest here are time-dependent These systems appear in many branches of the sciences, including mechanical engineering, acoustics, vibroacoustics, and others. In this chapter, Newton’s law for a system comprising one degree of freedom will be reviewed, along with useful concepts used in later chapters. Discrete calculus will also be introduced.</p>
+<h2 id="newtons-law-for-mechanical-oscillations">Newton’s law for mechanical oscillations</h2>
+<p>We shall begin the discussion by studying the evolution of a simple vibrating object, comprising a mass <span class="math inline">\(m\)</span> and a subjected to a force field originating from a suitable potential,</p>
+<p><span class="math display">\[\begin{equation}\label{eq:PhiF}
+    F = - \frac{d\phi}{dx}.
+\end{equation}\]</span></p>
+<p>Here <span class="math inline">\(\phi = \phi(x): \mathbb{R} \rightarrow \mathbb{R} \in \mathcal{C}^1\)</span> is the potential (assumed to be differentiable), and <span class="math inline">\(x = x(t): \mathbb{R}^+_0 \rightarrow \mathbb{R} \in \mathcal{C}^2\)</span> is the displacement (assumed to be differentiable twice), measured from some convenient reference position. Here, <span class="math inline">\(t \geq 0\)</span> is time. Newton’s law gives</p>
+<p><span class="math display">\[\begin{equation}\label{eq:SHO}
+    m \frac{d^2 x}{dt^2} = - \frac{d\phi}{dx}.
+\end{equation}\]</span></p>
+<p>Equation <span class="math inline">\(\eqref{eq:SHO}\)</span> is an example of <em>ordinary differential equation</em> (ODE). The equation is <em>autonomous</em>, intended as the absence of explicit dependence on time <span class="math inline">\(t\)</span>, except as via the argument of <span class="math inline">\(x\)</span>. The equation is, in general, <em>nonlinear</em>. Linearity is expressed here as a superposition principle: if <span class="math inline">\(x_1(t)\)</span> and <span class="math inline">\(x_2(t)\)</span> are both solutions to <span class="math inline">\(\eqref{eq:SHO}\)</span>, then, under linear conditions, <span class="math inline">\(x_3(t) = a_1 x_1(t) + a_2 x_2(t)\)</span> (with <span class="math inline">\(a_1\)</span>, <span class="math inline">\(a_2\)</span> being constants) is also a solution. Since the second time derivative on the left-hand side of <span class="math inline">\(\eqref{eq:SHO}\)</span> is linear, linearity is obtained when <span class="math display">\[\frac{d\phi(x_3)}{d x_3} = a_1 \frac{d\phi(x_1)}{dx_1} + a_2 \frac{d\phi(x_2)}{dx_2}\]</span></p>
+<p>which is solved for <span class="math inline">\(\phi = c x^\alpha\)</span>, where <span class="math inline">\(c\)</span> is a constant, and <span class="math inline">\(\alpha \in \{0,2 \}\)</span> (the case <span class="math inline">\(\alpha =0\)</span> being the trivial case of zero force).</p>
+<p>To be complete, <span class="math inline">\(\eqref{eq:SHO}\)</span> requires the specification of two <em>initial conditions</em>, usually given as the initial displacement and velocity, such that</p>
+<p><span class="math display">\[\begin{equation}\label{eq:SHO_ICs}
+    x(t=0) = x_0, \,\, \frac{dx}{dt}(t=0) = v_0,
+\end{equation}\]</span></p>
+<p>and since the independent variable is the time <span class="math inline">\(t\)</span>, <span class="math inline">\(\eqref{eq:SHO}\)</span> plus <span class="math inline">\(\eqref{eq:SHO_ICs}\)</span> specify an <em>initial value problem</em> (IVP). When initial conditions are imposed, the system possesses one <em>unique solution</em>, if appropriate Lipschitz-continuity arguments are satisfied. (There is no need to study these in detail, we will just assume that the examples provided here have a unique solution).</p>
+<h3 id="sec:EnAnGen">Energy Analysis</h3>
+<p>As anticipated, all through this course, we will rely heavily on energy arguments. The fact that systems present some kind of energy balance is a fundamental principle of physics, bearing significant consequences in the analysis of both the continuous systems, and the numerical approximations used to simulate them. In the simple, one dimensional case <span class="math inline">\(\eqref{eq:SHO}\)</span>, the work <span class="math inline">\(W\)</span> done by a force pushing on <span class="math inline">\(m\)</span> is <span class="math display">\[W = \int_0^x F \, \text{d} x
+\]</span></p>
+<p>where it is assumed that the initial position of the body, at the time <span class="math inline">\(t=0\)</span>, is 0. Using this definition in <span class="math inline">\(\eqref{eq:SHO}\)</span> gives <span class="math display">\[\int_0^x m \frac{d^2 x}{dt^2} \text{d} x = - \int_0^x \frac{d\phi}{dx} \text{d} x.\]</span></p>
+<p>To integrate, one uses <span class="math inline">\(dx = \frac{dx}{dt} dt\)</span>, giving</p>
+<p><span class="math display">\[\begin{equation}\label{eq:EnAnGen}
+    \int_0^t m \frac{d^2 x}{dt^2} \frac{d x}{dt} \text{d} t = - \int_0^t \frac{d\phi}{dx} \frac{dx}{dt} \text{d} t
+\end{equation}\]</span></p>
+<p>and, using simple identities, one gets</p>
+<p><span class="math display">\[\begin{equation}\label{eq:En1}
+    \int_0^t \frac{d}{dt}\left( \frac{m}{2}\left(\frac{dx}{dt}\right)^2 + \phi  \right) \text{d} t = 0.\end{equation}\]</span></p>
+<p>Since <span class="math inline">\(x(t) \in \mathcal{C}^2\)</span>, <span class="math inline">\(\phi(x) \in \mathcal{C}^1\)</span>, the equation is solved by taking</p>
+<p><span class="math display">\[\begin{equation}\label{eq:En2}
+    \frac{m}{2}\left(\frac{dx}{dt}\right)^2 + \phi = H_0,
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(H_0\)</span> (a constant) is the total energy of the system. It is convenient to identify the <em>kinetic</em> and <em>potential</em> components of the energy, given, respectively, by <span class="math display">\[E_k \triangleq \frac{m}{2}\left(\frac{dx}{dt}\right)^2, \quad E_p \triangleq \phi.\]</span></p>
+<p>The expression for <span class="math inline">\(H_0\)</span> is determined by the initial conditions, and hence</p>
+<p><span class="math display">\[\begin{equation}\label{eq:EnCons}
+    H_0 = \frac{m v_0^2}{2} + \phi(x_0),
+\end{equation}\]</span></p>
+<p>and the identity <span class="math inline">\(H(t) = H_0\)</span> holds <span class="math inline">\(\forall t \geq 0\)</span>.</p>
+<h3 id="sec:BoundsSHO">Bounds on solution growth</h3>
+<p>Energy, as seen, is conserved. It is remarked that the energy is also <em>non-negative</em>, i.e. <span class="math inline">\(H(t) \geq 0\)</span> <span class="math inline">\(\forall t\)</span>, when <span class="math inline">\(\phi\)</span> itself is non-negative. This fact leads to the important result of <em>boundedness of the solutions</em>. In practice, since the kinetic and potential energies are <em>both</em> non-negative, one has</p>
+<p><span class="math display">\[\begin{equation}\label{eq:bnds}
+    0 \leq E_k \leq H_0, \quad 0\leq E_p\leq H_0.
+\end{equation}\]</span></p>
+<p>For the kinetic term, one has, in all cases,</p>
+<p><span class="math display">\[\begin{equation}\label{eq:EgyBoundVel}
+    \left|\frac{dx(t)}{dt}\right| \leq \sqrt{2 H_0/m}\,\,\, \forall t,\end{equation}\]</span></p>
+<p>and thus the velocity of the system is <em>always</em> bounded in terms of the initial energy. The displacement <span class="math inline">\(x(t)\)</span> itself may or may not be bounded. Consider the case of a quadratic potential, as in the left panel of Fig. <a href="#fig:phis" data-reference-type="ref" data-reference="fig:phis">1.1</a>: <span class="math inline">\(\phi = \frac{K x^2}{2}\)</span>. This case (as shown above) corresponds to the linear case, i.e. the simple harmonic oscillator with stiffness constant <span class="math inline">\(K\)</span>. From <span class="math inline">\(\eqref{eq:bnds}\)</span>, one has <span class="math inline">\(|x|\leq \sqrt{2 H_0/K}\)</span>. Hence, the displacement is bounded. When the potential is not quadratic, a nonlinear system is obtained. We shall consider the nonlinear oscillator later on. Here, qualitatively, two nonlinear potentials are shown in the center and right panels of Fig. <a href="#fig:phis" data-reference-type="ref" data-reference="fig:phis">1.1</a>. Bounded motion is obtained whenever the potential attains infinity for large values of <span class="math inline">\(|x|\)</span>. However, if the potential <span class="math inline">\(\phi\)</span> is bounded by some finite constant, unbounded motion can be observed.</p>
+<figure>
+<img src="Figures/phiGraphs.png" id="fig:phis" alt="Potential functions corresponding to a quadratic function \phi \propto x^2 (left panel), and non-quadratic functions (center and right panels). Total energy is represented as dashed or dash-dotted lines, the latter corresponding to unbounded motion." /><figcaption aria-hidden="true">Potential functions corresponding to a quadratic function <span class="math inline">\(\phi \propto x^2\)</span> (left panel), and non-quadratic functions (center and right panels). Total energy is represented as dashed or dash-dotted lines, the latter corresponding to unbounded motion.</figcaption>
+</figure>
+<p>To understand these claims, it can be useful to visualise the trajectories in the <em>phase plane</em>. This is a plane whose axes are <span class="math inline">\(x = x(t)\)</span> and <span class="math inline">\(y = dx(t)/dt\)</span>, see Fig. <a href="#fig:phasePorts" data-reference-type="ref" data-reference="fig:phasePorts">[fig:phasePorts]</a>. For the quadratic case, trajectories are ellipses, and are hence symmetric about both the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> axes. Periodicity is evident by inspection of the phase portraits, which appear as closed loops. The energy components also oscillate periodically, in this case at one single frequency. For the central panel of Fig. <a href="#fig:phis" data-reference-type="ref" data-reference="fig:phis">1.1</a>, trajectories are now symmetric only about the <span class="math inline">\(x\)</span> axis: the nonlinearity is such that symmetry is broken in <span class="math inline">\(x\)</span>, as evident from panel 2 of Fig. <a href="#fig:phis" data-reference-type="ref" data-reference="fig:phis">1.1</a>. However, motion is still periodic, via the combination of a number frequencies with a common factor (the fundamental frequency). For the right panel of Fig. <a href="#fig:phis" data-reference-type="ref" data-reference="fig:phis">1.1</a>, motion may be bounded or unbounded, depending on the value of <span class="math inline">\(H_0\)</span>, as seen in panel 3 of Fig. <a href="#fig:phasePorts" data-reference-type="ref" data-reference="fig:phasePorts">[fig:phasePorts]</a>.</p>
+<p>.<br />
+ <br />
+<br />
+ <br />
+2.<br />
+ <br />
+<br />
+ <br />
+3.<br />
+ <br />
+</p>
+<p>When motion is periodic, the period can be estimated from the energy, since</p>
+<p><span class="math display">\[\begin{equation}\label{eq:dxdtEn}
+    \frac{dx}{dt} = \pm\sqrt{\frac{2}{m}}\sqrt{H_0-\phi}.
+\end{equation}\]</span></p>
+<p>The plus or minus signs depends on which side of the phase portrait the particle is (i.e. whether it is found in the <span class="math inline">\(y\geq0\)</span> or <span class="math inline">\(y&lt;0\)</span> half-plane). Considering the plus sign, and inverting, one has <span class="math display">\[\text{d} t = \sqrt{\frac{m}{2}}\frac{\text{d} x}{\sqrt{H_0-\phi}}.
+\]</span></p>
+<p>Thus, half the period is obtained integrating between <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>, which are the points in the phase plane where <span class="math inline">\(dx/dt = 0\)</span>. Denoting the period <span class="math inline">\(\tau\)</span>, one has <span class="math display">\[\tau = \sqrt{2m} \int_{x_1}^{x_2}\frac{\text{d} x}{\sqrt{H_0-\phi}}.
+\]</span></p>
+<p>In general, this equation does not have a closed-form solution. Some cases are exceptional, including the case of simple harmonic motion. For that, <span class="math inline">\(x_1 = -x_2\)</span>, and <span class="math inline">\(H_0=H(t) =\frac{K x_2^2}{2}\)</span>, where the last equality holds since <span class="math inline">\(dx/dt|_{x=x_2} = 0\)</span>. Hence, the period in obtained as the integral over one quadrant (one quarter of a loop): <span class="math display">\[\tau = 2\sqrt{2m} \int_0^{x_2}\frac{\text{d} x}{\sqrt{\frac{K x_2^2}{2}-\frac{K x^2}{2}}} = 4 \sqrt{\frac{m}{K}} \arctan\left( \frac{x}{\sqrt{x_2^2-x^2}}\right)\big|_0^{x_2} = 2\pi \sqrt{\frac{m}{K}}.\]</span></p>
+<p>It is convenient to introduce the <em>radian frequency</em> <span class="math inline">\(\omega_0 = \sqrt{K/m} = 2\pi f_0\)</span>, where <span class="math inline">\(f_0\)</span> is a linear frequency (in Hz). Hence, one has</p>
+<p><span class="math display">\[\begin{equation}\label{eq:tau}
+    \tau = \frac{2\pi}{\omega_0} = \frac{1}{f_0}.\end{equation}\]</span></p>
+<h3 id="periodicity-of-orbits-via-fourier-series">Periodicity of orbits via Fourier series</h3>
+<p>For Case 1 of the previous section (quadratic potential), periodicity of the solution is expressed as</p>
+<p><span class="math display">\[\begin{equation}\label{eq:Fou1}
+    x(t) = a \cos(\omega_0 t) + b \sin(\omega_0 t) = A \cos(\omega_0 t - \varphi)  = C_+ e^{j\omega_0 t} + C_- e^{-j \omega_0 t}\end{equation}\]</span></p>
+<p>where</p>
+<p><span class="math display">\[\begin{equation}\label{eq:Fou2}
+    A^2 = a^2 + b^2, \,\, a = A \cos\varphi, \,\, b = A\sin\varphi, \,\, C_+ = \frac{1}{2}(a+jb), \,\, C_- = \frac{1}{2}(a-jb)\end{equation}\]</span></p>
+<p>Note that the complex exponential notation in <span class="math inline">\(\eqref{eq:Fou1}\)</span> yields indeed a real solution, when <span class="math inline">\(C_+,C_-\)</span> are selected as in <span class="math inline">\(\eqref{eq:Fou2}\)</span>. The expression for <span class="math inline">\(x(t)\)</span> is periodic, with period <span class="math inline">\(\tau\)</span> given in <span class="math inline">\(\eqref{eq:tau}\)</span>.</p>
+<p>When the potential is not quadratic, the dynamics is nonlinear, as observed in Case 2 and (partly) 3 of the previous subsection. Since periodic motion still exists, this can be obtained as a combination of frequencies, all multiples of a fundamental frequency. A generalisation of <span class="math inline">\(\eqref{eq:Fou1}\)</span> can then be given as</p>
+<p><span class="math display">\[\begin{equation}\label{eq:Fou3}
+x(t) = \sum_{m=0}^M \left( a_m \cos(m \omega_0 t) + b_m \sin(m \omega_0 t) \right),\end{equation}\]</span></p>
+<p>which can be turned into amplitude-phase or complex exponential expressions analogous to those in <span class="math inline">\(\eqref{eq:Fou1}\)</span>, using identities similar to <span class="math inline">\(\eqref{eq:Fou2}\)</span>. The upper bound <span class="math inline">\(M\)</span> in the sum is in theory infinity, though one chooses a finite <span class="math inline">\(M\)</span> in any practical application. Expression <span class="math inline">\(\eqref{eq:Fou3}\)</span> is called a <em>Fourier series</em> expansion, which is valid and uniquely determined for any periodic signal <span class="math inline">\(x(t)\)</span>, with period <span class="math inline">\(\tau = 2\pi / \omega_0\)</span>. If one happens to know <span class="math inline">\(x(t)\)</span> for a given system (for example, via a measurement), then the Fourier components can be extracted as</p>
+<p><span class="math display">\[\begin{equation}\label{eq:FouComps}
+a_0 = \frac{1}{\tau}\int_0^\tau x(t) \, \text{d} t, \,\, a_{m\neq 0} = \frac{2}{\tau}\int_0^\tau x(t)\cos(m\omega_0 t) \, \text{d} t, \,\, b_{m} = \frac{2}{\tau}\int_0^\tau x(t)\sin(m\omega_0 t) \, \text{d} t\end{equation}\]</span></p>
+<p>These expressions are proven easily when considering the <em>orthogonality</em> of the Fourier components (easily obtained via direct integration), i.e.</p>
+<p><span class="math display">\[\begin{aligned}
+\int_{0}^\tau \cos(m\omega_0 t)\cos(n \omega_0 t) \text{d} t &amp;= \frac{\tau}{2}\delta_{m,n} \,\,\, (m&gt;0, n\geq 0) \label{eq:OrthoFou1} \\
+\int_{0}^\tau \sin(m\omega_0 t)\sin(n \omega_0 t) \text{d} t &amp;= \frac{\tau}{2}\delta_{m,n} \,\,\, (m&gt;0, n\geq 0) \label{eq:OrthoFou2} \\
+\int_{0}^\tau \cos(m\omega_0 t)\sin(n \omega_0 t) \text{d} t &amp;= 0  \label{eq:OrthoFou3}\end{aligned}
+\end{equation}\]</span></p>
+<p>Multiplying <span class="math inline">\(\eqref{eq:Fou3}\)</span> by, say, <span class="math inline">\(\sin(n\omega_0 t)\)</span>, integrating, and using <span class="math inline">\(\eqref{eq:OrthoFou2}\)</span>, one obtains the last expression in <span class="math inline">\(\eqref{eq:FouComps}\)</span>. The other expressions in <span class="math inline">\(\eqref{eq:FouComps}\)</span> are obtained analogously. A picture of the Fourier components for Cases 1,2 and 3 is given in Fig. <a href="#fig:Fou1" data-reference-type="ref" data-reference="fig:Fou1">[fig:Fou1]</a>, where one sees that simple harmonic motion is indeed characterised by a single frequency of vibration.</p>
+<p><img src="Figures/Fou1.png" alt="image" /> <img src="Figures/Fou2.png" alt="image" /> <img src="Figures/Fou3.png" alt="image" /></p>
+<p>It may be useful to express the Fourier series in complex exponential form. In that case, one has</p>
+<p><span class="math display">\[\begin{equation}\label{eq:FourierSeriesComplex}
+x(t) = \sum_{m=-M}^M c_m e^{jm\omega_0 t},
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(c_0 = a_0\)</span>, <span class="math inline">\(c_m = \frac{1}{2}\left( a_m - j b_m\right)\)</span> for <span class="math inline">\(m&gt;0\)</span>, <span class="math inline">\(c_m = \frac{1}{2}\left( a_m + j b_m\right)\)</span> for <span class="math inline">\(m&lt;0\)</span>.</p>
+<h2 id="time-difference-operators">Time Difference Operators</h2>
+<p>This section introduces the notation and the principles of difference calculus, upon which the method of <em>finite differences</em> is constructed. Though finite differences are used as a method for computer-aided solution of differential equations, this method has surprisingly long roots, reaching as far as the work of Courant, Friedrichs, and Lewy in 1928 (before digital computers were even available). The underlying principle of finite differences is straightforward, and it involves the discrete approximation of differential operators. In digital applications, whether e.g. performing a measurement, or in computer-aided simulation, time is most often discretised by means of a <em>sample rate</em>, <span class="math inline">\(f_s\)</span>. In practice, one usually knows (or is interested in knowing) the state of a system at discrete time intervals, of length <span class="math inline">\(k\)</span> seconds, the time step. The relationship between sample rate and time step is simply <span class="math display">\[k f_s = 1,
+\]</span></p>
+<p>The aim of finite differences is to compute a <em>time series</em> <span class="math inline">\(x^n\)</span> approximating the “true” solution <span class="math inline">\(x(t)\)</span> of a given model problem. The index <span class="math inline">\(n \in \mathbb{N}_0\)</span> in <span class="math inline">\(x^n\)</span> is shorthand for <span class="math inline">\(t = t_n \triangleq nk\)</span>, i.e. <span class="math inline">\(n\)</span> is the time index, approximating the true solution <span class="math inline">\(x(t)\)</span> at the time <span class="math inline">\(t_n = nk\)</span>. The fundamental relationship between the approximate time series <span class="math inline">\(x^n\)</span> and the true solution <span class="math inline">\(x(t)\)</span> is as follows:</p>
+<p><span class="math display">\[\begin{equation}\label{eq:ErrDef}
+    x(t_n) - x^n  = E^n ,
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(E^n\)</span> is a time series defining the <em>absolute error</em> of the approximation. In general, <span class="math inline">\(E^n \neq 0\)</span>, and, generally, it will not be possible to obtain an exact expression for <span class="math inline">\(E^n\)</span> (since <span class="math inline">\(x(t)\)</span> is generally unknown!) However, the study of finite differences is almost entirely devoted to the design of schems for which the error remains provably <em>bounded</em> by a given power of <span class="math inline">\(k\)</span>, and we shall of course spend considerable effort in studying such schemes.</p>
+<h3 id="shift-time-and-averaging-operators">Shift, time and averaging operators</h3>
+<p>Given the time series <span class="math inline">\(x^n\)</span>, the identity, forward and backward shift operators are given as <span class="math display">\[{1}{x}^n = { x}^n, \quad e_{t+}{x}^n = { x}^{n+1}, \quad e_{t-}{ x}^n = { x}^{n-1}\]</span></p>
+<p>From these, one may define the time difference operators, all approximating the first time derivative, as</p>
+<div class="subequations">
+<p><span class="math display">\[\begin{aligned}
+        \delta_{t+}&amp; = \frac{(e_{t+}- 1)}{k} \approx \frac{d}{dt},     \\
+        \delta_{t-}&amp; = \frac{(1 - e_{t-})}{k}\approx \frac{d}{dt},      \\
+        \delta_{t\cdot}&amp; = \frac{(e_{t+}- e_{t-})}{2k}\approx \frac{d}{dt} .
+    \end{aligned}\]</span></p>
+</div>
+<p>An approximation to the second time derivative is constructed from the above as <span class="math display">\[\delta_{tt}  = \delta_{t+}\delta_{t-}\approx \frac{d^2}{dt^2}.
+\]</span></p>
+<p>Averaging operators (all approximating the identity) are also used throughout the text, and are</p>
+<p><span class="math display">\[
+\begin{aligned}
+        \mu_{t+}&amp; = \frac{(e_{t+}+ 1)}{2} \approx 1,    \\
+        \mu_{t-}&amp; = \frac{(1 + e_{t-})}{2} \approx 1,    \\
+        \mu_{t\cdot}&amp; = \frac{(e_{t+}+ e_{t-})}{2} \approx 1.
+\end{aligned}
+\]</span></p>
+<p>Whilst these expressions look at least reasonable, Taylor series arguments can be used to infer the <em>order</em> of the approximation. Hence, the difference operators are applied to the continuous function <span class="math inline">\(x(t)\)</span>, and a Taylor expansion is applied. For the forward difference operator, one gets <span class="math display">\[\begin{aligned}
+    \delta_{t+}x(t_n) = \frac{x(t_n+k) - x(t_n)}{k} &amp; \approx \frac{x(t_n)+ k \frac{dx(t)}{dt}|*{t=t_n}+\frac{k^2}{2}\frac{d^2x(t)}{dt^2}|*{t=t_n}-x(t_n)}{k} \\&amp;= \frac{dx(t_n)}{dt}+\frac{k}{2}\frac{d^2x(t_n)}{dt^2}\end{aligned}
+\]</span></p>
+<p>Since <span class="math inline">\({d^2x(t_n)}/{dt^2}\)</span> is a value independent of <span class="math inline">\(k\)</span>, in the limit of high sample rate the expression above reduces to <span class="math inline">\({dx(t_n)}/{dt}\)</span>. The rate at which such approximation is satisfied is linear in <span class="math inline">\(k\)</span>, so that applying definition <span class="math inline">\(\eqref{eq:ErrDef}\)</span> one gets</p>
+<p><span class="math display">\[\begin{equation}\label{eq:Errs1}
+    \frac{dx(t_n)}{dt} - \delta_{t+}x(t_n) = O(k).
+\end{equation}\]</span></p>
+<p>The “big-Oh” notation <span class="math inline">\(O(k^p)\)</span> means that the rate of the approximation goes as <span class="math inline">\(k^p\)</span>. For the current case, <span class="math inline">\(p=1\)</span>. Using similar arguments, it is easy to show that</p>
+<p><span class="math display">\[\begin{aligned}
+     \frac{dx(t_n)}{dt} - \delta_{t-}x(t_n) &amp;= O(k), \\
+     \frac{dx(t_n)}{dt} - \delta_{t\cdot}x(t_n) &amp;= O(k^2),\\
+     \frac{d^2x(t_n)}{dt^2} - \delta_{tt} x(t_n) &amp;= O(k^2),
+     \end{aligned}
+     \]</span></p>
+<p>and so on. These identities define the <em>truncation errors</em> of the finite difference approximations. It is seen, then, that some operators have a higher accuracy than others. Generally, these employ a larger <em>stencil</em>, that is, the footprint in time of a finite difference operator including the coefficients. So, <span class="math inline">\(\delta_{t-}\)</span>, <span class="math inline">\(\delta_{t+}\)</span>, <span class="math inline">\(\mu_{t-}\)</span>, <span class="math inline">\(\mu_{t+}\)</span> all have a stencil of width 1. <span class="math inline">\(\delta_{t\cdot}\)</span>, <span class="math inline">\(\mu_{t\cdot}\)</span>, <span class="math inline">\(\delta_{tt}\)</span> have a stencil of width 2. See also Fig. <a href="#fig:stencil" data-reference-type="ref" data-reference="fig:stencil">1.2</a>.</p>
+<p>It is of course possible to construct operators with higher accuracy. As an example, consider the following central approximation to the first time derivative, <span class="math display">\[\bar \delta_{t\cdot} = \frac{e_{t-}^2 - 8 e_{t-}+ 8e_{t+}- e_{t+}^2}{12k}.\]</span></p>
+<p>It is easy (though a little tedious) to show that this approximation is <span class="math inline">\(O(k^4)\)</span>. At this point of the discussion, one may be tempted to think that the construction of higher-order schemes for the solution of a model problem amounts to merely employing difference operators with the appropriate stencil. Things are, of course, more complicated than this: primarily, operators with wide stencils in time tend to yield <em>unstable</em> simulations, as will be seen in forthcoming examples. Other problems exist: for instance, it is not clear how to initialise an operator with a stencil of width <span class="math inline">\(M\)</span>, when the model problem is of order <span class="math inline">\(N &lt; M\)</span>. A similar problem arises when discretising differential operators in space for boundary-values problems, where one must set values for the “ghost points” (i.e. points located outside the boundary of the grid).</p>
+<p>Constructing higher-order schemes is of course possible, and sometimes desirable, and these words of caution suffice for the moment as cursory understanding of the underlying difficulties.</p>
+<p>When solving differential equations, different definitions of errors are employed: these are the <em>local truncation error</em> (LTE) and the <em>global error</em>. The truncation errors given by <span class="math inline">\(\eqref{eq:Errs1}\)</span> and <span class="math inline">\(\eqref{eq:Errs}\)</span> are only useful to determine the order of the approximation of a difference operator, but ensuring that the differential operators of a difference scheme are approximated to an order <span class="math inline">\(p\)</span>, does not automatically ensure that the scheme is <span class="math inline">\(p^{th}\)</span> order accurate, if in fact convergent at all.</p>
+<figure>
+<embed src="Figures/stencils.pdf" id="fig:stencil" /><figcaption aria-hidden="true">Stencil width and coefficients (units of <span class="math inline">\(k\)</span>) of various difference operators approximating the first time derivative</figcaption>
+</figure>
+<h2 id="sec:FreqDomAn">Frequency domain analysis and stability of LTI systems</h2>
+<p>Traditional analysis techinques for time-dependent problems rely on frequency domain analysis, both in the continuous and discrete cases.</p>
+<h3 id="laplace-and-z-transforms">Laplace and <span class="math inline">\(z\)</span> transforms</h3>
+<p>For the continuous function <span class="math inline">\(x(t)\)</span>, the Laplace transform is obtained as</p>
+<p><span class="math display">\[\begin{equation}\label{eq:LapT}
+    \hat x(s) = \int_{\{-\infty,0\}}^{\infty} x(t) e^{-st} \text{d} t \triangleq \mathcal{L}\{x\}(s),\end{equation}\]</span></p>
+<p>where <span class="math inline">\(s = j\omega + \sigma \in \mathbb{C}\)</span> is a complex variable. The lower bound in the integral means that the transform can be defined to be two-sided (starting from <span class="math inline">\(-\infty\)</span>), or one-sided (starting from 0), the latter allowing the incorporation of initial conditions. The closely related <span class="math inline">\(z\)</span> transform is a discrete version of <span class="math inline">\(\eqref{eq:LapT}\)</span>, i.e.</p>
+<p><span class="math display">\[\begin{equation}\label{eq:ZT}
+    \hat x(z) = \sum_{n = \{-\infty,0 \}}^{\infty} x^n z^{-n} \triangleq \mathcal{Z}\{x \}(z)\end{equation}\]</span></p>
+<p>for a complex number <span class="math inline">\(z \in \mathbb{C}\)</span>. In the analysis of linear, time invariant (LTI) systems, both continuous and discrete, one usually computes <span class="math inline">\(s\)</span> and <span class="math inline">\(z\)</span> from the given model problem, via direct substitution of the transforms. Then, the stability of the underlying system may be inferred by direct inspection of <span class="math inline">\(s\)</span> and <span class="math inline">\(z\)</span>, as will be stated below. Applying the Laplace transform to the time derivative of <span class="math inline">\(x(t)\)</span> gives:</p>
+<p><span class="math display">\[\begin{equation}\label{eq:LPtemp1}
+    \mathcal{L}\left\{\frac{d x}{dt } \right\} = \int_{-\infty}^\infty\frac{dx(t)}{dt}e^{-st} \text{d} t = s \int_{-\infty}^{\infty} x(t) e^{-st} \text{d} t =  s\mathcal{L}\{x\},\end{equation}\]</span></p>
+<p>where integration by parts was used, and where it was assumed that <span class="math inline">\(x(t)\)</span> dies out fast enough as <span class="math inline">\(t\rightarrow \pm \infty\)</span>. The shift operators under the two-sided <span class="math inline">\(z\)</span> transform become</p>
+<p><span class="math display">\[\begin{equation}\label{eq:LPtemp2}
+    \mathcal{Z}\left\{e_{t\pm} x^n \right\} = \sum_{n = -\infty}^{\infty} x^{n\pm 1}z^{-n} = z^{\pm 1} \sum_{n = -\infty}^{\infty} x^{n\pm 1}z^{-(n\pm 1)} = z^{\pm 1} \mathcal{Z}\{x^n \}.\end{equation}\]</span></p>
+<p>Using analogous arguments as for <span class="math inline">\(\eqref{eq:LPtemp1}\)</span> and <span class="math inline">\(\eqref{eq:LPtemp2}\)</span>, one can show that higher-order derivatives and differences transform as</p>
+<p><span class="math display">\[\begin{equation}\label{eq:TransLZ}
+    \mathcal{L}\left\{\frac{d^p x}{dt^p } \right\} = s^p \mathcal{L}\{x\}, \quad \mathcal{Z}\left\{e^p_{t\pm} x^n \right\} = z^{\pm p} \mathcal{Z}\left\{x^n \right\}.\end{equation}\]</span></p>
+<p>In practice, it is often useful to substitute simpler expressions than the transforms, via an <em>ansatz</em>. So, one may employ the test solutions</p>
+<p><span class="math display">\[\begin{equation}\label{eq:ansatz}
+    x(t) = \hat x e^{st}, \quad x^n = \hat x z^n,
+\end{equation}\]</span></p>
+<p>for appropriate constant complex amplitudes <span class="math inline">\(\hat x\)</span>. It is immediate to verify that derivatives and differences of these test solutions transform in the same way as the derivatives and differences of the Laplace and <span class="math inline">\(z\)</span> transforms in <span class="math inline">\(\eqref{eq:TransLZ}\)</span>. For this reason, for LTI systems, the use of the test solutions yields ultimately the same qualitative analysis as the substitution of the full transforms, and we shall make use of such solutions accordingly. Since time <span class="math inline">\(t\)</span> (and, accordingly, the time index <span class="math inline">\(n\)</span>) increases toward infinity, boundedness of <span class="math inline">\(x(t)\)</span> and <span class="math inline">\(x^n\)</span> in <span class="math inline">\(\eqref{eq:ansatz}\)</span> can be achieved if and only if <span class="math inline">\(\text{Re}(s) \leq 0\)</span>, and <span class="math inline">\(|z|\leq 1\)</span>, respectively. This is, in essence, the idea of stability in the frequency domain.</p>
+<p>The fact that the transforms of derivatives and differences amount to mere multiplications in the frequency domain is a powerful analysis tool allowing for great simplifications. In theory, once the problem is solved in the frequency domain, one can transform back to the time domain, by computing the inverse transforms. This approach, however, presents some drawbacks. Most notably, inverse transforms are difficult to compute, and closed-form solutions are available only in a few cases. Second, these techniques do not generalise to nonlinear, time variant systems (though some exceptions exisit, such as Volterra kernels). Frequency domain techniques remain a popular analysis tool nonetheless, since most nonlinear systems reduce to linear under suitable conditions, and one may infer (at least qualitatively) some useful properties of the model systems under study.</p>
+<p>Laplace transforms (and inverses) may be difficult to compute, and usually one resorts to table look-ups. A couple of useful transorm pairs, used later on, are listed here as</p>
+<p><span class="math display">\[\begin{equation}\label{eq:LaplTtable}
+    \mathcal{L}\left\{e^{-ct}\sin(a t)u(t)\right\}(s) = \frac{a}{(s+c)^2 + a^2}, \quad \mathcal{L}\left\{e^{-ct}\cos(a t)u(t)\right\}(s) = \frac{s+c}{(s+c)^2 + a^2}.\end{equation}\]</span></p>
+<p>The function <span class="math inline">\(u(t)\)</span> is the step function at time <span class="math inline">\(t=0\)</span> (i.e. <span class="math inline">\(u(t&lt;0)=0, u(t\geq 0) = 1)\)</span>, and thus the identities above apply equally to the two-sided and one-sided transforms.</p>
+<h3 id="fourier-and-discrete-time-fourier-transforms">Fourier and discrete time Fourier transforms</h3>
+<p>When one considers <span class="math inline">\(\sigma=0\)</span> in <span class="math inline">\(\eqref{eq:LapT}\)</span>, and <span class="math inline">\(z = e^{j\omega k}\)</span> in <span class="math inline">\(\eqref{eq:ZT}\)</span> (in the two-sided form), the continuous <em>Fourier transform</em> and the <em>discrete time Fourier transform</em> (DTFT) are obtained. These are useful to compute the magnitude and the phase of the solutions (i.e. the spectrum), and will also be used throughout. The definitions of these transforms are as: <span class="math display">\[\hat x(\omega) = \int_{-\infty}^{\infty} x(t) e^{-j\omega t} \text{d} t \triangleq \mathcal{F}\{x\}(\omega),\qquad \hat x(\omega) = \sum_{n = -\infty}^{\infty} x^n e^{-j\omega k n} \triangleq \mathcal{X}\{x^n \}(\omega).\]</span></p>
+<p>The notation was used in both definitions, but the meaning is different. We remark, however, that the discrete time Fourier transform is a continuous function of the radian frequency <span class="math inline">\(\omega\)</span>, and is thus not to be confused with the discrete Fourier transform (which is evaluated at discrete frequency bins). A couple of useful transform pairs are given here as</p>
+<p><span class="math display">\[\begin{equation}\label{eq:FouTtable}
+    \mathcal{F}\left\{x(t)\sin(at)\right\}(\omega) = \frac{\hat x(\omega-a)-\hat x(\omega+a)}{2j}, \quad \mathcal{F}\left\{e^{-ct}u(t)| c \geq 0\right\}(\omega) = \frac{1}{\sqrt{2\pi}(c+j\omega)}.\end{equation}\]</span></p>
+<p>In the second transform, <span class="math inline">\(u(t)\)</span> is again the step function as in <span class="math inline">\(\eqref{eq:LaplTtable}\)</span>.</p>
+<h3 id="sec:FDtransformations">Frequency-domain intepretation of time difference operators</h3>
+<p>The action of the difference operators on a time series <span class="math inline">\(x^n\)</span> may be interpreted in the <span class="math inline">\(z\)</span> domain as a <em>transformation</em>. In <span class="math inline">\(\eqref{eq:LPtemp2}\)</span>, it was seen that <span class="math inline">\(\mathcal{Z}\left\{e_{t\pm} x^n\right\} = z^{\pm 1} \mathcal{Z}\left\{x^n\right\}\)</span>. The action of other difference operators may be constructed from such identity. To evaluate the frequency response, <span class="math inline">\(z\)</span> is limited to the unit circle, i.e. <span class="math inline">\(z=e^{j\omega k}\)</span>, i.e. the DTFT <span class="math inline">\(\mathcal X\left\{x^n \right\}\)</span>. Consider, for example, the second difference operator. This is</p>
+<p><span class="math display">\[\begin{equation}\label{eq:DTFTdtt}
+\mathcal{X}\left\{\delta_{tt} x^n\right\} = \frac{e^{j\omega k}-2+e^{-j\omega k}}{k^2}\mathcal{X}\left\{x^n\right\}=\frac{2}{k^2}\left(\cos(\omega k)-1 \right)\mathcal{X}\left\{x^n\right\} = -\frac{4}{k^2} \sin^2\left(\frac{\omega k}{2}\right)\mathcal{X}\left\{x^n\right\}\end{equation}\]</span></p>
+<p>Analogously, one has</p>
+<div class="subequations">
+<p><span class="math display">\[\begin{aligned}
+\mathcal{X}\left\{\mu_{t\cdot}x^n\right\} &amp;= \cos(\omega k) \mathcal{X}\left\{x^n \right\}, \\
+\mathcal{X}\left\{\mu_{tt}x^n\right\} &amp;= \frac{1}{2}\left(\cos(\omega k) + 1\right)\mathcal{X}\left\{x^n \right\} \\
+\mathcal{X}\left\{\delta_{t\cdot}x^n\right\} &amp;= \frac{j}{k}\sin(\omega k) \mathcal{X}\left\{x^n \right\}\end{aligned}\]</span></p>
+</div>
+<p>These identities will prove useful in the study of the stability of LTI systems via <em>von Neumann</em> analysis.</p>
+<h3 id="recursion-polynomials">Recursion polynomials</h3>
+<figure>
+<embed src="Figures/SchurCohn.pdf" id="fig:SchurCohn" /><figcaption aria-hidden="true">The Schur-Cohn stability region, i.e. the region of the <span class="math inline">\((b,c)-\)</span>plane for which the roots of <span class="math inline">\(\eqref{eq:TempSchurCohn}\)</span> have magnitude less than unity.</figcaption>
+</figure>
+<p>Finite difference schemes, as will be seen shortly, produce a recursion in time. When such recursion has constant coefficients, substitution of <em>ansatz</em> <span class="math inline">\(\eqref{eq:ansatz}\)</span> results in a complex equation of the form <span class="math display">\[\sum_{n=0}^M a_n z^n = 0,
+\]</span></p>
+<p>where the <span class="math inline">\(a_n\)</span>’s are constant coefficients, and <span class="math inline">\(M\)</span> is the problem order. Often, for the problems of interest here, <span class="math inline">\(M=2\)</span>, and thus the summation above reduces to (after rescaling by <span class="math inline">\(a_2 \neq 0\)</span>)</p>
+<p><span class="math display">\[\begin{equation}\label{eq:TempSchurCohn}
+    z^2 + b z + c = 0.
+\end{equation}\]</span></p>
+<p>The solutions (i.e. the poles) are given by <span class="math inline">\(z_\pm = \frac{-b \pm \sqrt{b^2-4 c}}{2}\)</span>. Useful bounds on the coefficients <span class="math inline">\(b,c\)</span> can be derived when one considers <span class="math inline">\(|z_\pm|&lt;1\)</span> (i.e. when the poles are within the unit circle). These are</p>
+<p><span class="math display">\[\begin{equation}\label{eq:SchurCohnStab}
+    |c| = |z_+ z_-| =  |z_+| |z_-| &lt; 1, \quad |b|&lt;1+|c|,
+\end{equation}\]</span></p>
+<p>which are necessary and sufficient conditions to enforce <span class="math inline">\(|z_\pm|&lt;1\)</span>, and are known as <em>Schur-Cohn stability test</em>, see also Fig. <a href="#fig:SchurCohn" data-reference-type="ref" data-reference="fig:SchurCohn">1.3</a>.</p>
+<script>
+    window.MathJax = {
+        loader: {load: ['[tex]/newcommand']},
+        tex: {
+            tags: 'ams',
+            packages: {'[+]': ['newcommand']}
+        }
+    };
+</script>
+
+</body>
+</html>
