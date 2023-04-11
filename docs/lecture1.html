@@ -131,17 +131,17 @@
       margin-bottom: 4em;
       text-align: center;
     }
-    iframe{
-        margin: 1em 0;
-        width: 35em;
-        height: 500px;
-        max-width: 36em;
-    }
     #TOC li {
       list-style: none;
     }
     #TOC a:not(:hover) {
       text-decoration: none;
+    }
+    iframe{
+        margin: 1em 0;
+        width: 35em;
+        height: 500px;
+        max-width: 36em;
     }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -150,8 +150,10 @@
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
   </style>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
 <header id="title-block-header">
@@ -162,25 +164,26 @@
 <ul>
 <li><a href="#newtons-law-for-mechanical-oscillations">Newton’s law for mechanical oscillations</a>
 <ul>
-<li><a href="#energy-analysis-secenangen">Energy Analysis {#sec:EnAnGen}</a></li>
-<li><a href="#bounds-on-solution-growth-secboundssho">Bounds on solution growth {#sec:BoundsSHO}</a></li>
+<li><a href="#energy-analysis">Energy Analysis</a></li>
+<li><a href="#bounds-on-solution-growth">Bounds on solution growth</a></li>
 <li><a href="#periodicity-of-orbits-via-fourier-series">Periodicity of orbits via Fourier series</a></li>
 </ul></li>
 <li><a href="#time-difference-operators">Time Difference Operators</a>
 <ul>
 <li><a href="#shift-time-and-averaging-operators">Shift, time and averaging operators</a></li>
 </ul></li>
-<li><a href="#frequency-domain-analysis-and-stability-of-lti-systems-secfreqdoman">Frequency domain analysis and stability of LTI systems {#sec:FreqDomAn}</a>
+<li><a href="#frequency-domain-analysis-and-stability-of-lti-systems">Frequency domain analysis and stability of LTI systems</a>
 <ul>
 <li><a href="#laplace-and-z-transforms">Laplace and <span class="math inline">\(z\)</span> transforms</a></li>
 <li><a href="#fourier-and-discrete-time-fourier-transforms">Fourier and discrete time Fourier transforms</a></li>
-<li><a href="#frequency-domain-intepretation-of-time-difference-operators-secfdtransformations">Frequency-domain intepretation of time difference operators {#sec:FDtransformations}</a></li>
+<li><a href="#frequency-domain-intepretation-of-time-difference-operators">Frequency-domain intepretation of time difference operators</a></li>
 <li><a href="#recursion-polynomials">Recursion polynomials</a></li>
 </ul></li>
 </ul></li>
 </ul>
 <h1 id="introduction">Introduction</h1>
 <p>This course is about the analysis and simulation of mechanical vibrations. Since a kind of oscillation is involved, the systems of interest here are time-dependent These systems appear in many branches of the sciences, including mechanical engineering, acoustics, vibroacoustics, and others. In this chapter, Newton’s law for a system comprising one degree of freedom will be reviewed, along with useful concepts used in later chapters. Discrete calculus will also be introduced.</p>
+<iframe src="https://editor.p5js.org/mhamilt/full/m1BwsQJKK"></iframe>
 <h2 id="newtons-law-for-mechanical-oscillations">Newton’s law for mechanical oscillations</h2>
 <p>We shall begin the discussion by studying the evolution of a simple vibrating object, comprising a mass <span class="math inline">\(m\)</span> and a subjected to a force field originating from a suitable potential,</p>
 <p><span class="math display">\[\begin{equation}\label{eq:PhiF}
@@ -197,7 +200,7 @@
     x(t=0) = x_0, \,\, \frac{dx}{dt}(t=0) = v_0,
 \end{equation}\]</span></p>
 <p>and since the independent variable is the time <span class="math inline">\(t\)</span>, <span class="math inline">\(\eqref{eq:SHO}\)</span> plus <span class="math inline">\(\eqref{eq:SHO_ICs}\)</span> specify an <em>initial value problem</em> (IVP). When initial conditions are imposed, the system possesses one <em>unique solution</em>, if appropriate Lipschitz-continuity arguments are satisfied. (There is no need to study these in detail, we will just assume that the examples provided here have a unique solution).</p>
-<h3 id="sec:EnAnGen">Energy Analysis</h3>
+<h3 id="energy-analysis">Energy Analysis</h3>
 <p>As anticipated, all through this course, we will rely heavily on energy arguments. The fact that systems present some kind of energy balance is a fundamental principle of physics, bearing significant consequences in the analysis of both the continuous systems, and the numerical approximations used to simulate them. In the simple, one dimensional case <span class="math inline">\(\eqref{eq:SHO}\)</span>, the work <span class="math inline">\(W\)</span> done by a force pushing on <span class="math inline">\(m\)</span> is <span class="math display">\[W = \int_0^x F \, \text{d} x
 \]</span></p>
 <p>where it is assumed that the initial position of the body, at the time <span class="math inline">\(t=0\)</span>, is 0. Using this definition in <span class="math inline">\(\eqref{eq:SHO}\)</span> gives <span class="math display">\[\int_0^x m \frac{d^2 x}{dt^2} \text{d} x = - \int_0^x \frac{d\phi}{dx} \text{d} x.\]</span></p>
@@ -218,7 +221,7 @@
     H_0 = \frac{m v_0^2}{2} + \phi(x_0),
 \end{equation}\]</span></p>
 <p>and the identity <span class="math inline">\(H(t) = H_0\)</span> holds <span class="math inline">\(\forall t \geq 0\)</span>.</p>
-<h3 id="sec:BoundsSHO">Bounds on solution growth</h3>
+<h3 id="bounds-on-solution-growth">Bounds on solution growth</h3>
 <p>Energy, as seen, is conserved. It is remarked that the energy is also <em>non-negative</em>, i.e. <span class="math inline">\(H(t) \geq 0\)</span> <span class="math inline">\(\forall t\)</span>, when <span class="math inline">\(\phi\)</span> itself is non-negative. This fact leads to the important result of <em>boundedness of the solutions</em>. In practice, since the kinetic and potential energies are <em>both</em> non-negative, one has</p>
 <p><span class="math display">\[\begin{equation}\label{eq:bnds}
     0 \leq E_k \leq H_0, \quad 0\leq E_p\leq H_0.
@@ -322,7 +325,7 @@ x(t) = \sum_{m=-M}^M c_m e^{jm\omega_0 t},
 <figure>
 <embed src="figures/stencils.pdf" id="fig:stencil" /><figcaption aria-hidden="true">Stencil width and coefficients (units of <span class="math inline">\(k\)</span>) of various difference operators approximating the first time derivative</figcaption>
 </figure>
-<h2 id="sec:FreqDomAn">Frequency domain analysis and stability of LTI systems</h2>
+<h2 id="frequency-domain-analysis-and-stability-of-lti-systems">Frequency domain analysis and stability of LTI systems</h2>
 <p>Traditional analysis techinques for time-dependent problems rely on frequency domain analysis, both in the continuous and discrete cases.</p>
 <h3 id="laplace-and-z-transforms">Laplace and <span class="math inline">\(z\)</span> transforms</h3>
 <p>For the continuous function <span class="math inline">\(x(t)\)</span>, the Laplace transform is obtained as</p>
@@ -356,7 +359,7 @@ x(t) = \sum_{m=-M}^M c_m e^{jm\omega_0 t},
 <p><span class="math display">\[\begin{equation}\label{eq:FouTtable}
     \mathcal{F}\left\{x(t)\sin(at)\right\}(\omega) = \frac{\hat x(\omega-a)-\hat x(\omega+a)}{2j}, \quad \mathcal{F}\left\{e^{-ct}u(t)| c \geq 0\right\}(\omega) = \frac{1}{\sqrt{2\pi}(c+j\omega)}.\end{equation}\]</span></p>
 <p>In the second transform, <span class="math inline">\(u(t)\)</span> is again the step function as in <span class="math inline">\(\eqref{eq:LaplTtable}\)</span>.</p>
-<h3 id="sec:FDtransformations">Frequency-domain intepretation of time difference operators</h3>
+<h3 id="frequency-domain-intepretation-of-time-difference-operators">Frequency-domain intepretation of time difference operators</h3>
 <p>The action of the difference operators on a time series <span class="math inline">\(x^n\)</span> may be interpreted in the <span class="math inline">\(z\)</span> domain as a <em>transformation</em>. In <span class="math inline">\(\eqref{eq:LPtemp2}\)</span>, it was seen that <span class="math inline">\(\mathcal{Z}\left\{e_{t\pm} x^n\right\} = z^{\pm 1} \mathcal{Z}\left\{x^n\right\}\)</span>. The action of other difference operators may be constructed from such identity. To evaluate the frequency response, <span class="math inline">\(z\)</span> is limited to the unit circle, i.e. <span class="math inline">\(z=e^{j\omega k}\)</span>, i.e. the DTFT <span class="math inline">\(\mathcal X\left\{x^n \right\}\)</span>. Consider, for example, the second difference operator. This is</p>
 <p><span class="math display">\[\begin{equation}\label{eq:DTFTdtt}
 \mathcal{X}\left\{\delta_{tt} x^n\right\} = \frac{e^{j\omega k}-2+e^{-j\omega k}}{k^2}\mathcal{X}\left\{x^n\right\}=\frac{2}{k^2}\left(\cos(\omega k)-1 \right)\mathcal{X}\left\{x^n\right\} = -\frac{4}{k^2} \sin^2\left(\frac{\omega k}{2}\right)\mathcal{X}\left\{x^n\right\}\end{equation}\]</span></p>
