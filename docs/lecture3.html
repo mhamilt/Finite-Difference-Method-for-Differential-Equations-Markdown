@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lecture 3</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lecture 3</h1>
+</header>
+<ul>
+<li><a href="#coupled-oscillators">Coupled Oscillators</a>
+<ul>
+<li><a href="#two-masses-three-springs">Two masses, three springs</a>
+<ul>
+<li><a href="#energy-considerations">Energy considerations</a></li>
+<li><a href="#eigenvalue-decomposition">Eigenvalue decomposition</a></li>
+<li><a href="#loss-and-forcing">Loss and Forcing</a></li>
+<li><a href="#an-explicit-finite-difference-scheme">An Explicit Finite Difference Scheme</a></li>
+<li><a href="#numerical-eigenvalues">Numerical Eigenvalues</a></li>
+<li><a href="#a-family-of-finite-difference-schemes">A Family of Finite Difference Schemes</a>
+<ul>
+<li><a href="#loss-and-forcing-1">Loss and Forcing</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<h1 id="coupled-oscillators">Coupled Oscillators</h1>
+<p>In this chapter we are going to study the problem of a system of coupled oscillators, in both linear and nonlinear regimes. In the linear case, extensions of the frequency-domain techniques already in use for the oscillator in isolation are possible, leading to the idea of <em>modes of vibration</em>. For the nonlinear case, analytic approximations based on perturbation methods are possible, though the algebra quickly becomes unwieldy. However, time-domain simulation techniques for this multimodal case (and, particularly, energy methods) are in fact not too dissimilar from those already encountered previously, and we shall make use of them accordingly.</p>
+<h2 id="two-masses-three-springs">Two masses, three springs</h2>
+<figure>
+<embed src="Figures/TwoMassesGeneric.pdf" id="fig:TwoMassesGeneric" /><figcaption aria-hidden="true">Two-mass system. For small vertical displacements, the two masses move vertically. The displacements from the rest positions are denoted <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>.</figcaption>
+</figure>
+<p>Consider the system sketched in Fig. <a href="#fig:TwoMassesGeneric" data-reference-type="ref" data-reference="fig:TwoMassesGeneric">1.1</a>. Here, the system possesses two degrees of freedom, which may conveniently be identified with the displacements <span class="math inline">\(x_1(t)\)</span>, <span class="math inline">\(x_2(t)\)</span> of the two masses <span class="math inline">\(m_1\)</span>, <span class="math inline">\(m_2\)</span>, from their rest position. The equations of motion for this system are as</p>
+<div class="subequations">
+<p><span id="eq:TwoMass1" label="eq:TwoMass1">[eq:TwoMass1]</span> <span class="math display">\[\begin{aligned}
+m_1 \frac{d^2 x_1}{dt^2} = -K_{11}x_1 - K_{12}(x_1 - x_2), \label{eq:Coupl1} \\
+m_2 \frac{d^2 x_2}{dt^2} = -K_{22}x_2 + K_{12}(x_1 - x_2). \label{eq:Coupl2}\end{aligned}\]</span></p>
+</div>
+<p>For the moment, it was assumed that motion is completely linear (the amplitude of vibration is small, so that nonlinear effects can be neglected).</p>
+<p>The frequency-domain techniques described in Sec. <a href="#sec:FreqDomAn" data-reference-type="ref" data-reference="sec:FreqDomAn">[sec:FreqDomAn]</a> can be extended here. To that end, it is convenient to adopt a matrix-vector formulation of the system. Though in this example the system comprises <span class="math inline">\(2\)</span> masses, this formulation proves advantageous since it can be used to describe systems comprising <span class="math inline">\(N\)</span> degrees of freedom. Furthermore, the matrix-vector formulation is the natural framework to write the discrete space-time schemes that we will encounter in later chapters. Hence, <a href="#eq:TwoMass1" data-reference-type="eqref" data-reference="eq:TwoMass1">[eq:TwoMass1]</a> is rewritten compactely as <span class="math display">\[\label{eq:MultiModalMatr}
+{\bf M} \, \frac{d^2{\bf x}}{dt^2} = -{\bf K} \, {\bf x},\]</span> where clearly <span class="math display">\[{\bf M} = \begin{bmatrix}m_1 &amp; 0 \\ 0 &amp; m_2 \end{bmatrix}, \,\, {\bf K} = \begin{bmatrix}K_{11}+K_{12} &amp; -K_{12} \\ -K_{12} &amp; K_{22}+K_{12} \end{bmatrix}, \,\, {\bf x} = \begin{bmatrix}x_1  \\  x_2 \end{bmatrix}.\]</span> Extension of the frequency-domain techniques of Sec. <a href="#sec:FreqDomAn" data-reference-type="ref" data-reference="sec:FreqDomAn">[sec:FreqDomAn]</a>, one can conveniently define a test solution of the form <span class="math display">\[{\bf x} =  {\bf X} e^{j\omega t}.\]</span> Here, <span class="math inline">\({\bf X}\)</span> is a constant complex amplitude, <span class="math inline">\(j\omega\)</span> was substituted for <span class="math inline">\(s\)</span>, since for lossless systems one has <span class="math inline">\(\sigma = 0\)</span> in <span class="math inline">\(s = j\omega + \sigma\)</span>. Substituting the test solution into <a href="#eq:MultiModalMatr" data-reference-type="eqref" data-reference="eq:MultiModalMatr">[eq:MultiModalMatr]</a>, one gets <span class="math display">\[\label{eq:OmegaEigen}
+\left( {\bf K } - \omega^2 {\bf M} \right)  {\bf X} = 0,\]</span> which shows that the frequency <span class="math inline">\(\omega\)</span> is defined as the eigenvalue of the eigenvalue problem <a href="#eq:OmegaEigen" data-reference-type="eqref" data-reference="eq:OmegaEigen">[eq:OmegaEigen]</a>. Nontrivial solutions are obtained when the determinant of <span class="math inline">\({\bf K } - \omega^2 {\bf M}\)</span> is zero. This defines the polynomial whose roots yield the eigenvalues. For this two-dimensional case, one has <span class="math display">\[(K_{11}+K_{12} - \omega^2 m_1)(K_{22}+K_{12} - \omega^2 m_2) - K_{12}^2 = 0.\]</span> Solving for <span class="math inline">\(\omega^2\)</span>, one gets <span class="math display">\[\omega_\pm^2 = \frac{m_1(K_{22}+K_{12})+m_2(K_{11}+K_{12}) \pm \sqrt{\left(m_1(K_{22}+K_{12}) - m_2(K_{11}+K_{12})\right)^2 + 4 m_1 m_2 K_{12}^2 }}{2m_1 m_2}.\]</span> This solution shows that both the eigenvalues <span class="math inline">\(\omega^2_\pm \in \mathbb{R}\)</span> (since the expression under the square root sign is always positive); however, there is no guarantee that <span class="math inline">\(\omega^2_\pm\)</span> are also <em>positive</em>. A negative <span class="math inline">\(\omega^2\)</span> would result in exponentially growing behaviour of the test solution. Checking positivity of the roots can be quite laborious in the general case. To make things a little easier, we make the assumption <span class="math inline">\(m_1=m_2=m\)</span>, for which one has <span class="math display">\[2m\omega_\pm^2 = K_{11}+K_{22}+2K_{12} \pm \sqrt{\left( K_{11}-K_{22}  \right)^2 + 4  K_{12}^2}.\]</span> The positivity of <em>both</em> solutions is enforced when <span class="math display">\[\label{eq:TempIneq}
+K_{11}+K_{22}+2K_{12} \geq 0, \,\, \text{ and } \,\, \left(K_{11}+K_{22}+2K_{12}\right)^2 \geq \left( K_{11}-K_{22}  \right)^2 + 4  K_{12}^2.\]</span> Solving for <span class="math inline">\(K_{12}\)</span>, one has</p>
+<div class="subnumcases">
+<p>K_12 -       <span id="eq:IneqK12" label="eq:IneqK12">[eq:IneqK12]</span> K_12 -       K_11+K_22 &gt; 0, <span id="eq:IneqK12a" label="eq:IneqK12a">[eq:IneqK12a]</span><br />
+K_12 -       K_11+K_22 &lt; 0. <span id="eq:IneqK12b" label="eq:IneqK12b">[eq:IneqK12b]</span></p>
+</div>
+<p>If instead <span class="math inline">\(K_{11}+K_{22}=0\)</span>, at least one eigenvalue is surely negative, as seen immediately from <a href="#eq:TempIneq" data-reference-type="eqref" data-reference="eq:TempIneq">[eq:TempIneq]</a>. As an example, consider the case <span class="math inline">\(K_{11}=K_{22}=1\)</span>. The conditions above give <span class="math inline">\(K_{12}\geq -1/2\)</span>: this is an interesting case, since one may allow the coupling to have negative stiffness, whilst guaranteeing oscillating solutions overall. As a second example, consider <span class="math inline">\(K_{11}=K_{22}=-1\)</span>: here, there is no range allowable for <span class="math inline">\(K_{12}\)</span>.</p>
+<p>Once the eigenvalues are computed, one may compute the eigenvector <span class="math inline">\({\bf X}\)</span> from <a href="#eq:OmegaEigen" data-reference-type="eqref" data-reference="eq:OmegaEigen">[eq:OmegaEigen]</a>. Assuming for instance <span class="math inline">\({ X}_1 = a_{\pm}\)</span> (where <span class="math inline">\(a_\pm\)</span> are just useful normalisation constants), one has <span class="math display">\[X_2 = a_{\pm}\frac{K_{11} + K_{12} - \omega^2_\pm m_1}{K_{12}},\]</span> such that the general solution is given by <span class="math display">\[{\bf x} = a_+\begin{bmatrix} 1 \\ \frac{K_{11} + K_{12} - \omega^2_+ m_1}{K_{12}}\end{bmatrix}\left(A_+ e^{j\omega_+ t} + A_- e^{- j\omega_+ t} \right) + a_-\begin{bmatrix} 1 \\ \frac{K_{11} + K_{12} - \omega^2_- m_1}{K_{12}}\end{bmatrix}\left(B_+ e^{j\omega_- t} + B_- e^{- j\omega_- t} \right),\]</span> where <span class="math inline">\(A_\pm\)</span>, <span class="math inline">\(B_\pm\)</span> are four complex constants depending on the intial conditions <span class="math inline">\({\bf x}(t=0)\)</span>, <span class="math inline">\(\frac{d{\bf x}(t=0) }{dt}\)</span>. The formula above is revealing: we showed that the motion of the system can be written as the the sum of two harmonic motions, independent of each other, one with frequency <span class="math inline">\(\omega_+\)</span>, the other with frequency <span class="math inline">\(\omega_-\)</span>.</p>
+<p>As an example, consider the case <span class="math inline">\(K_{11},K_{22},K_{12},m_1,m_2=1\)</span>. In this case, one has <span class="math inline">\(\omega_+ = \sqrt{3}\)</span>, <span class="math inline">\(\omega_- = 1\)</span>. Then <span class="math display">\[\label{eq:TwoMassesDecomposed}
+{\bf x} = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ -1\end{bmatrix}\left(A_+ e^{j\sqrt{3} t} + A_- e^{- j\sqrt{3} t} \right) - \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ 1\end{bmatrix}\left(B_+ e^{j  t} + B_- e^{- j t} \right),\]</span> Here the normalisation constants <span class="math inline">\(a_+\)</span>, <span class="math inline">\(a_-\)</span> where chosen so that the norm of the eigenvectors is 1. (Remember that these constants are entirely arbitrary). If one chooses <span class="math inline">\({\bf x}(t=0)=[1,-1]^\intercal\)</span>, <span class="math inline">\(d{\bf x}(t=0)/dt=[0,0]^\intercal\)</span>, the constants are set as <span class="math inline">\(A_+=A_-=1/\sqrt{2}\)</span>, <span class="math inline">\(B_+ = B_- = 0\)</span>, giving ultimately <span class="math display">\[\label{eq:Mode2}
+{\bf x} = \begin{bmatrix} 1 \\ -1\end{bmatrix}\cos\left(\sqrt{3}t\right).\]</span> This shows that a two-mode system may collapse to a single mode, when the system is started in that mode. There is no trace of the other mode of vibration! One may of course start the system in the other mode, and observe it oscillating in that mode only. Figs. <a href="#fig:TwoMassesMode1" data-reference-type="ref" data-reference="fig:TwoMassesMode1">1.2</a> and <a href="#fig:TwoMassesMode2" data-reference-type="ref" data-reference="fig:TwoMassesMode2">1.3</a> show the motion of the masses when the system is started in either one of the two modes.</p>
+<figure>
+<img src="Figures/TwoMassesMode1.png" id="fig:TwoMassesMode1" alt="Two-mass system. Visualisation of the first mode of vibration." /><figcaption aria-hidden="true">Two-mass system. Visualisation of the first mode of vibration.</figcaption>
+</figure>
+<figure>
+<img src="Figures/TwoMassesMode2.png" id="fig:TwoMassesMode2" alt="Two-mass system. Visualisation of the second mode of vibration, corresponding to [eq:Mode2]." /><figcaption aria-hidden="true">Two-mass system. Visualisation of the second mode of vibration, corresponding to <a href="#eq:Mode2" data-reference-type="eqref" data-reference="eq:Mode2">[eq:Mode2]</a>.</figcaption>
+</figure>
+<h3 id="energy-considerations">Energy considerations</h3>
+<p>It is remarked that the allowable ranges for the stiffness constants <span class="math inline">\(K_{ij}\)</span> are such that the potential energy of the system is <em>non-negative</em>, so that one may bound the growth of the solutions in some manner. The total energy of the system can be found by multiplying <a href="#eq:Coupl1" data-reference-type="eqref" data-reference="eq:Coupl1">[eq:Coupl1]</a> by <span class="math inline">\(\frac{dx_1}{dt}\)</span>, and <a href="#eq:Coupl2" data-reference-type="eqref" data-reference="eq:Coupl2">[eq:Coupl2]</a> by <span class="math inline">\(\frac{dx_2}{dt}\)</span>, and summing. Using the usual identities, this gives <span class="math display">\[\label{eq:EnBalCnt2Masses}
+\frac{d}{dt}\left( \frac{m_1}{2}\left( \frac{dx_1}{dt} \right)^2 + \frac{m_2}{2}\left( \frac{dx_2}{dt} \right)^2 + \frac{K_{11} x_1^2}{2} +  \frac{K_{22} x_2^2}{2} + \frac{K_{12} (x_1-x_2)^2}{2}\right) \triangleq \frac{dH(t)}{dt} = 0,\]</span> showing that <span class="math inline">\(H(t) = H(t=0) = H_0\)</span>, that is, energy is conserved. The form of the energy comprises the energy of the two harmonic oscillators in isolation, plus the coupling energy, proportional to <span class="math inline">\(K_{12}\)</span>. The coupling is a function of the relative distance between the masses, so at any time such that <span class="math inline">\(x_1-x_2=0\)</span>, the coupling force is null. It is convenient to write the energy in matrix form, as <span class="math display">\[H(t) = \frac{1}{2}\left(\frac{d{\bf x}^\intercal}{dt} {\bf M} \frac{d{\bf x}}{dt} + {\bf x}^\intercal {\bf K} {\bf x}\right).\]</span> Since both <span class="math inline">\({\bf K}\)</span>, <span class="math inline">\({\bf M}\)</span> are positive-definite<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, one has <span class="math display">\[0 \leq \frac{d{\bf x}^\intercal}{dt} {\bf M} \frac{d{\bf x}}{dt} \leq H_0, \quad 0 \leq {\bf x}^\intercal {\bf K} {\bf x} \leq H_0,\]</span> that is, the norms of the solution remain bounded by some energy constant incorporating the intial conditions. This is, in essence, the idea of stability for this vector case, generalising bound <a href="#eq:EgyBoundVel" data-reference-type="eqref" data-reference="eq:EgyBoundVel">[eq:EgyBoundVel]</a> (and the analogous bound on <span class="math inline">\(x\)</span>) of the single scalar case.</p>
+<h3 id="eigenvalue-decomposition">Eigenvalue decomposition</h3>
+<p>The discussion above suggests that the motion system <a href="#eq:MultiModalMatr" data-reference-type="eqref" data-reference="eq:MultiModalMatr">[eq:MultiModalMatr]</a> may in fact be decomposed onto linearly independent blocks, called the <em>modes</em>. Since the mass matrix is usually a diagonal matrix with positive entries, it is convenient to rewrite the system as <span class="math display">\[\label{eq:EigenDecTwoMasses1}
+\frac{d^2{\bf x}}{dt^2} = -{ \bf M}^{-1}{\bf K} \, {\bf x},\]</span> where here <span class="math inline">\({{\bf M}^{-1}\bf K}\)</span> is a positive-definite matrix. One is then able to write <span class="math display">\[\label{eq:eigendempos}
+{\bf M}^{-1}{\bf K} = {\bf P} \, {\bf \Omega}^2 \, {\bf P}^{\intercal},\]</span> where <span class="math inline">\({\bf P}\)</span> is a matrix comprising the column eigenvectors of <span class="math inline">\({\bf M}^{-1}{\bf K}\)</span>, and where <span class="math inline">\({\bf \Omega}\)</span> is a diagonal matrix containing the (positive) eigenvalues (that is, the resonant frequencies of the system). Since <span class="math inline">\({\bf M}^{-1}{\bf K}\)</span> is positive-definite, one has that the matrix <span class="math inline">\({\bf P}\)</span> is in fact <em>orthonormal</em>, that is, <span class="math inline">\({\bf P}^{-1}={\bf P}^\intercal\)</span>. Hence, multiplying <a href="#eq:EigenDecTwoMasses1" data-reference-type="eqref" data-reference="eq:EigenDecTwoMasses1">[eq:EigenDecTwoMasses1]</a> on the left by <span class="math inline">\({\bf P}^\intercal\)</span> gives <span class="math display">\[\label{eq:diagonalEigen}
+\frac{d^2{\bf u}}{dt^2} = -{\bf \Omega}^2 \, {\bf u},\]</span> with <span class="math inline">\({\bf u} = {\bf P}^{\intercal}{\bf x}\)</span>. This is a completely diagonal system, where the degrees of freedom are independent of each other. Coming back again to the example <a href="#eq:TwoMassesDecomposed" data-reference-type="eqref" data-reference="eq:TwoMassesDecomposed">[eq:TwoMassesDecomposed]</a>, here one has <span class="math display">\[{\bf P} =  \frac{1}{\sqrt{2}}\begin{bmatrix}-1 &amp; -1 \\ -1 &amp; 1 \end{bmatrix}, \,\, {\bf \Omega} =  \begin{bmatrix}1 &amp; 0 \\ 0 &amp; \sqrt{3} \end{bmatrix}.\]</span> One may decide to work with the diagonal system <a href="#eq:diagonalEigen" data-reference-type="eqref" data-reference="eq:diagonalEigen">[eq:diagonalEigen]</a>, and then switch back to the “physical” coordinates <span class="math inline">\(\bf x\)</span>, using <span class="math inline">\({\bf x} = {\bf P}\,{\bf u}\)</span>. Here, it is immediate to verify that <span class="math inline">\({\bf P} \, {\bf P}^{\intercal} = {\bf P}^\intercal \, {\bf P} = {\bf I}\)</span>, where <span class="math inline">\({\bf I}\)</span> is the identity matrix. It is also immediate to check that <a href="#eq:eigendempos" data-reference-type="eqref" data-reference="eq:eigendempos">[eq:eigendempos]</a> is verified.</p>
+<h3 id="loss-and-forcing">Loss and Forcing</h3>
+<p>System <a href="#eq:TwoMass1" data-reference-type="eqref" data-reference="eq:TwoMass1">[eq:TwoMass1]</a> may be generalised so to include losses and external forcing. The system reads</p>
+<div class="subequations">
+<p><span id="eq:TwoMass2" label="eq:TwoMass2">[eq:TwoMass2]</span> <span class="math display">\[\begin{aligned}
+m_1 \frac{d^2 x_1}{dt^2} &amp;= -K_{11}x_1 - K_{12}(x_1 - x_2) -2m_1c_{11}\frac{dx_{1}}{dt} + m_1 F_1 f(t), \label{eq:TwoMass2a} \\
+m_2 \frac{d^2 x_2}{dt^2} &amp;= -K_{22}x_2 + K_{12}(x_1 - x_2) - 2m_2 c_{22} + m_2 F_2 f(t) . \label{eq:TwoMass2b}\end{aligned}\]</span></p>
+</div>
+<p>Here, the <span class="math inline">\(c\)</span>’s coefficients are loss coefficients (measured in s<span class="math inline">\(^{-1}\)</span>), and <span class="math inline">\(F\)</span> is a force per unit mass. (These units are consistent with the case of the single mass, in <a href="#eq:SHOForced" data-reference-type="eqref" data-reference="eq:SHOForced">[eq:SHOForced]</a>). The system may be written as <span class="math display">\[\label{eq:tempTwoModes1}
+\frac{d^2{\bf x}}{dt^2} = -{\bf M}^{-1}{\bf K} \, {\bf x} - 2 {\bf C} \, \frac{d{\bf x}}{dt} + {\bf F}\, f(t).\]</span> Here, <span class="math inline">\(f(t)\)</span> is any suitable input time signal. Energy analysis may be performed by left-multiplying the system by <span class="math inline">\((\delta_{t\cdot}{\bf x})^\intercal {\bf M}\)</span>, leading to <span class="math display">\[\frac{1}{2}\frac{d}{dt}\left(\frac{d{\bf x}^\intercal}{dt} {\bf M} \frac{d{\bf x}}{dt} + {\bf x}^\intercal {\bf K} {\bf x}\right) = -Q(t) + P(t),\]</span> where <span class="math inline">\(Q = 2(\delta_{t\cdot}{\bf x})^\intercal \,{\bf M}{\bf C} \, \delta_{t\cdot}{\bf x} \geq 0\)</span> is the dissipated power, and where <span class="math inline">\(P = (\delta_{t\cdot}{\bf x})^\intercal \, {\bf M}{\bf F} \, f(t)\)</span> is the injected power.</p>
+<p>Conveniently, we may want to study the case where the input is a time-harmonic signal, such as <span class="math inline">\(f(t) = e^{j\omega t}\)</span>. Motion will undergo an initial transient, before settling into the steady state. There, the system will oscillate at the same frequency as the forcing. Hence, in the steady-state, one has <span class="math display">\[{\bf x} = {\bf X}\, e^{j\omega t},\]</span> and inserting this expression in <a href="#eq:tempTwoModes1" data-reference-type="eqref" data-reference="eq:tempTwoModes1">[eq:tempTwoModes1]</a> one gets <span class="math display">\[{\bf X} = \left( -\omega^2 {\bf I} + {\bf M}^{-1}{\bf K} + 2 j \omega {\bf C} \right)^{-1}{\bf F},\]</span> that is the generalisation to the vector case of <a href="#eq:TransXF" data-reference-type="eqref" data-reference="eq:TransXF">[eq:TransXF]</a>. Here, one may compute the transfer functions between any of the two inputs and ouputs. It may be convenient to define the transfer functions are matrices, so that, say, the mechanical admittance is <span class="math display">\[{\bf Y} = \begin{bmatrix} Y_{11} &amp; Y_{12} \\ Y_{21} &amp; Y_{22} \end{bmatrix},\]</span> where <span class="math inline">\(Y_{ij} = \frac{j \omega X_i}{ F_j}\)</span>. Analogously, the impedance is defined as <span class="math inline">\(Zij = \frac{F_i}{j \omega X_j}\)</span>. Fig <a href="#fig:TransFunctionsTwoMass" data-reference-type="ref" data-reference="fig:TransFunctionsTwoMass">1.4</a> presents the admittance and impedance plots for the test case <span class="math inline">\(K_{11},K_{22},K_{12},m_1,m_2=1\)</span>.</p>
+<figure>
+<img src="Figures/TwoMassTransfFunctions.png" id="fig:TransFunctionsTwoMass" alt="Transfer functions for the two-mass system, with K_{11},K_{22},K_{12},m_1,m_2=1. Here, the loss matrix is {\bf C} = \text{diag}([0.02,0.01]), and the forcing vector is {\bf F} = [1,0]^\intercal. For the admittance Y, dots (.) is Y_{11} and hats (^) is Y_{21}. For the impedance, dots (.) is Z_{11}, and cicles (o) is Z_{12}." /><figcaption aria-hidden="true">Transfer functions for the two-mass system, with <span class="math inline">\(K_{11},K_{22},K_{12},m_1,m_2=1\)</span>. Here, the loss matrix is <span class="math inline">\({\bf C} = \text{diag}([0.02,0.01])\)</span>, and the forcing vector is <span class="math inline">\({\bf F} = [1,0]^\intercal\)</span>. For the admittance <span class="math inline">\(Y\)</span>, dots (.) is <span class="math inline">\(Y_{11}\)</span> and hats (^) is <span class="math inline">\(Y_{21}\)</span>. For the impedance, dots (.) is <span class="math inline">\(Z_{11}\)</span>, and cicles (o) is <span class="math inline">\(Z_{12}\)</span>.</figcaption>
+</figure>
+<h3 id="an-explicit-finite-difference-scheme">An Explicit Finite Difference Scheme</h3>
+<p>A discrete-time version of <a href="#eq:MultiModalMatr" data-reference-type="eqref" data-reference="eq:MultiModalMatr">[eq:MultiModalMatr]</a> can be obtained considering</p>
+<div class="subequations">
+<p><span id="eq:TwoMassFD1" label="eq:TwoMassFD1">[eq:TwoMassFD1]</span> <span class="math display">\[\begin{aligned}
+m_1 \, \delta_{tt}x_1^n = -K_{11}x_1^n - K_{12}(x_1^n - x_2^n), \label{eq:CouplFD1} \\
+m_2 \, \delta_{tt}x_2^n = -K_{22}x_2^n + K_{12}(x_1^n - x_2^n), \label{eq:CouplFD2}\end{aligned}\]</span></p>
+</div>
+<p>which may be written compactly as <span class="math display">\[\label{eq:TwoMassFD1Compact}
+{\bf M}\, \delta_{tt}{\bf x}^n = - {\bf K}\, {\bf x}^n\]</span> Expanding out the difference operators, one gets <span class="math display">\[\label{eq:updateExplicitScheme}
+{\bf M}\, {\bf x}^{n+1} = \left(2{\bf M}-k^2{\bf K}\right){\bf x}^n - {\bf M}{\bf x}^{n-1}.\]</span> Since <span class="math inline">\({\bf M}\)</span> is fully diagonal, this scheme is <em>explicit</em>, and the update may be computed by merely multiplying both sides by the diagonal matrix <span class="math inline">\({\bf M}^{-1}\)</span>, and by performing the trivial matrix-vector operations on the right-hand side.</p>
+<p>Stability analysis may be performed via energy arguments. To that end, multiply <a href="#eq:CouplFD1" data-reference-type="eqref" data-reference="eq:CouplFD1">[eq:CouplFD1]</a> by <span class="math inline">\(\delta_{t\cdot}x^n_1\)</span>, and <a href="#eq:CouplFD2" data-reference-type="eqref" data-reference="eq:CouplFD2">[eq:CouplFD2]</a> by <span class="math inline">\(\delta_{t\cdot}x^n_2\)</span>, and sum. Using the usual identities, one gets <span class="math display">\[\label{eq:EnBalFD2Masses}
+\delta_{t+}\left(\underbrace{\frac{m_1(\delta_{t-}x^n_1)^2}{2} + \frac{m_2(\delta_{t-}x^n_2)^2}{2} + \frac{K_{11}x_1^n \, e_{t-}x_1^n}{2}  + \frac{K_{22}x_2^n \, e_{t-}x_2^n}{2} + \frac{K_{12}(x_1^n-x_2^n) \, e_{t-}(x_1^n-x_2^n)}{2}}_{{\mathfrak h}^{n-1/2}}\right)  = 0,\]</span> which gives the discrete energy balance. Clearly, <a href="#eq:EnBalFD2Masses" data-reference-type="eqref" data-reference="eq:EnBalFD2Masses">[eq:EnBalFD2Masses]</a> discretises <a href="#eq:EnBalCnt2Masses" data-reference-type="eqref" data-reference="eq:EnBalCnt2Masses">[eq:EnBalCnt2Masses]</a> to second-order accuracy, however there is no guarantee that the discrete energy is in fact positive. It may be useful to rewrite the energy as a quadratic form using the matrix notation. One has <span class="math display">\[\mathfrak{h}^{n-1/2} = \frac{1}{2}\left({\delta_{t-}{\bf x}}^{\intercal}\,{\bf M}\, {\delta_{t-}{\bf x}} + e_{t-}{\bf x}^\intercal \,{\bf K}\, { {\bf x}}\right) = \frac{1}{2}\left( \delta_{t-}{\bf x}^{\intercal}\,\left({\bf M}-\frac{k^2}{4}{\bf K}\right)\, \delta_{t-}{\bf x} + \mu_{t-}\left({\bf x}^{\intercal}\,{\bf K}\, {\bf x}\right) \right),\]</span> where the last equality follows after application of the identity <span class="math inline">\(e_{t-}{\bf u}^\intercal {\bf A} {\bf u}= \mu_{t-}\left({\bf u}^\intercal \,{\bf A}\, {\bf u}\right) - \frac{k^2}{4}\delta_{t-}{\bf u}^\intercal \,{\bf A}\, \delta_{t-}{\bf u}\)</span>, for a positive-definite, symmetric matrix <span class="math inline">\(\bf A\)</span>. Now, since <span class="math inline">\(\mu_{t-}\left({\bf x}^{\intercal}\,{\bf K}\, {\bf x} \right) \geq 0\)</span>, one has that the discrete energy above is positive definite if and only if <span class="math display">\[\text{eig}\left({\bf M}-\frac{k^2}{4}{\bf K}\right) \geq 0.\]</span> Finding conditions in the general case can be quite tedious. For the case <span class="math inline">\(K_{11},K_{22},K_{12},m_1,m_2=1\)</span>, the eigenvalue equation for eigenvalue <span class="math inline">\(\lambda\)</span> is obtained as <span class="math display">\[\left(\frac{k^2}{2} + \lambda - 1\right)^2 - \frac{k^2}{16}  \geq 0.\]</span> The quadratic has two solution, <span class="math inline">\(\lambda_+ = 1 - \frac{k^2}{4}\)</span>, <span class="math inline">\(\lambda_- = 1 - \frac{3 k^2}{4}\)</span>, and they are both positive if and only if <span class="math inline">\(\lambda_+ &gt; 0\)</span>, i.e. <span class="math display">\[\label{eq:TwoMassesStabCond}
+k \leq \frac{2}{\sqrt{3}},\]</span> which may be interpreted as a stability condition here.</p>
+<h3 id="numerical-eigenvalues">Numerical Eigenvalues</h3>
+<p>Frequency-domain analysis may be performed here too, generalising the results of Sec. <a href="#sec:FreqDomSHO" data-reference-type="ref" data-reference="sec:FreqDomSHO">[sec:FreqDomSHO]</a>. To that end, one re-writes the scheme <a href="#eq:TwoMassFD1" data-reference-type="eqref" data-reference="eq:TwoMassFD1">[eq:TwoMassFD1]</a> as <span class="math display">\[\delta_{tt}{\bf x}^n = - {\bf M}^{-1}{\bf K}\, {\bf x}^n.\]</span> Then, as suggested in Sec. <a href="#sec:FDtransformations" data-reference-type="ref" data-reference="sec:FDtransformations">[sec:FDtransformations]</a>, one substitutes the test solution <span class="math inline">\({\bf x}^n = \hat{\bf x}e^{j\omega kn}\)</span>, and remembering <a href="#eq:DTFTdtt" data-reference-type="eqref" data-reference="eq:DTFTdtt">[eq:DTFTdtt]</a> one gets <span class="math display">\[-\frac{4}{k^2}\sin^2\left( \frac{\omega k}{2}\right)\hat{\bf x} = - {\bf M}^{-1}{\bf K}\, \hat {\bf x}^n,\]</span> showing that the eigenvalues of the matrix <span class="math inline">\({\bf M}^{-1}{\bf K}\)</span> are <span class="math display">\[\frac{4}{k^2}\sin^2\left( \frac{\omega k}{2}\right) = \omega^2 - \frac{k^2\omega^4}{12} + O(k^4).\]</span> Hence, the numerical eigenvalues are second-order accurate with respect to the eigenvalues of the continuos system, and the absolute value of error grows approximately as <span class="math inline">\(\omega^4\)</span>. Thus, the eigenfrequencies will be less and less well computed as the stability limit is approached. Note that one may decompose the right-hand using the eigendecomposition <a href="#eq:eigendempos" data-reference-type="eqref" data-reference="eq:eigendempos">[eq:eigendempos]</a>, and, defining again <span class="math inline">\({\bf u} = {\bf P}^{\intercal}{\bf x}\)</span>, the system becomes <span class="math display">\[\delta_{tt}{\bf u}^n = -{\bf \Omega}^2 \,{\bf u}^n,\]</span> showing that motion can be completely uncoupled in the two modes of the system. Stability analysis here is immediate, since the energy is now expressed as the sum of <em>independent</em> harmonic oscillators. Hence, stability condition <a href="#eq:StabCondSHO" data-reference-type="eqref" data-reference="eq:StabCondSHO">[eq:StabCondSHO]</a> translates here directly, as <span class="math display">\[k &lt; \frac{2}{\text{max}\left(\text{diag}({\bf \Omega})\right)}.\]</span> For the test case <span class="math inline">\(K_{11},K_{22},K_{12},m_1,m_2=1\)</span>, one recovers of course <a href="#eq:TwoMassesStabCond" data-reference-type="eqref" data-reference="eq:TwoMassesStabCond">[eq:TwoMassesStabCond]</a>.</p>
+<h3 id="a-family-of-finite-difference-schemes">A Family of Finite Difference Schemes</h3>
+<p>Scheme <a href="#eq:TwoMassFD1Compact" data-reference-type="eqref" data-reference="eq:TwoMassFD1Compact">[eq:TwoMassFD1Compact]</a> is but one among many different possible realisations. Consider the following discretisation, depending on a parameter <span class="math inline">\(\alpha \in [0,1]\)</span>. <span class="math display">\[\label{eq:Impl2Masses}
+{\bf M}\, \delta_{tt}{\bf x}^n = - {\bf K}\, (\alpha + (1-\alpha)\mu_{t\cdot}) {\bf x}^n.\]</span> Remebering that <span class="math inline">\(\mu_{t\cdot}= 1 + \frac{k^2}{2}\delta_{tt}\)</span>, one can rewrite the scheme as <span class="math display">\[\left({\bf M} + (1-\alpha)\frac{k^2}{2}{\bf K} \right) \, {\bf x}^{n+1} = \left(2 {\bf M} - \alpha k^2 {\bf K} \right){\bf x}^n - \left({\bf M} + (1-\alpha)\frac{k^2}{2}{\bf K} \right) \, {\bf x}^{n-1}.\]</span> Here, the scheme is <em>implicit</em>, since the matrix multiplying the update vector <span class="math inline">\({\bf x}^{n+1}\)</span> is now (generally) not diagonal! The update equation is in the form of a linear system. This is, of course, more laborious than the update <a href="#eq:updateExplicitScheme" data-reference-type="eqref" data-reference="eq:updateExplicitScheme">[eq:updateExplicitScheme]</a> for the fully-explicit scheme. Of course, setting <span class="math inline">\(\alpha = 1\)</span> in the above, one recovers the explicit scheme <a href="#eq:TwoMassFD1Compact" data-reference-type="eqref" data-reference="eq:TwoMassFD1Compact">[eq:TwoMassFD1Compact]</a>. Energy analysis is performed in the usual way, i.e. by left-multiplying <a href="#eq:Impl2Masses" data-reference-type="eqref" data-reference="eq:Impl2Masses">[eq:Impl2Masses]</a> by <span class="math inline">\((\delta_{t\cdot}{\bf x}^n)^\intercal\)</span>. By means of the usual identities, this leads to the discrete energy balance <span class="math display">\[\delta_{t+}\frac{1}{2}\left( \delta_{t-}{\bf x}^{\intercal}\,{\bf M}\, \delta_{t-}{\bf x} + \alpha e_{t-}{\bf x}^{\intercal}\,{\bf K}\,  {\bf x} + (1-\alpha) \mu_{t-}\left({\bf x}^{\intercal}\,{\bf K}\,  {\bf x}\right) \right) \triangleq  \delta_{t+}{\mathfrak h}^{n-1/2}  = 0.\]</span> An interesting case is obtained when <span class="math inline">\(\alpha =0\)</span>, yielding a form for the discrete energy that is non-negative <em>in all cases</em>. Hence, scheme <a href="#eq:Impl2Masses" data-reference-type="eqref" data-reference="eq:Impl2Masses">[eq:Impl2Masses]</a> becomes <em>unconditionally stable</em> when <span class="math inline">\(\alpha = 0\)</span>. One should be aware that unconditional stability is but one of the many aspects to be considered whilst designing an appropriate scheme. Whilst scheme <a href="#eq:Impl2Masses" data-reference-type="eqref" data-reference="eq:Impl2Masses">[eq:Impl2Masses]</a> will remain stable, regardless of the sample rate used, multiple other issues may affect the quality of the resulting simulated dynamics, particularly with respect to Fourier and aliasing considerations. Fig. <a href="#fig:TwoMassOne" data-reference-type="ref" data-reference="fig:TwoMassOne">1.5</a> presents a numerical investigation of the two mass system, for the test case <span class="math inline">\(K_{11},K_{22},K_{12},m_1,m_2=1\)</span>.</p>
+<p>A stability condition for scheme <a href="#eq:Impl2Masses" data-reference-type="eqref" data-reference="eq:Impl2Masses">[eq:Impl2Masses]</a> may be obtained by writing out the expression for the energy as a quadratic form in <span class="math inline">\({\bf p} = [\left({\bf x}^n\right)^{\intercal}, \left({\bf x}^{n-1}\right)^{\intercal}]^{\intercal}\)</span>, as <span class="math inline">\(\mathfrak{h}^{n-1/2} = {\bf p}^{\intercal}\,{\bf A}(\alpha,k)\,{\bf p}\)</span>, where <span class="math display">\[{\bf A}(\alpha,k) = 
+\begin{bmatrix}
+\frac{{\bf M}}{k^2} + \frac{(1-\alpha)}{2}{\bf K} &amp; -\frac{{\bf M}}{k^2} +\frac{\alpha}{2}{\bf K} \\ -\frac{{\bf M}}{k^2} + \frac{\alpha}{2}{\bf K} &amp; \frac{{\bf M}}{k^2} + \frac{(1-\alpha)}{2}{\bf K}
+\end{bmatrix}.\]</span> Positive-definiteness is obtained if and only if <span class="math display">\[\label{eq:StabCondMasses}
+\text{eig}\left({\bf A}(\alpha,k)\right) &gt; 0.\]</span> This can be interpreted a stability condition for the system.</p>
+<figure>
+<img src="Figures/TwoMassOne.png" id="fig:TwoMassOne" alt="Free oscillations of the two-mass system. Here, K_{11},K_{22},K_{12},m_1,m_2=1. The sample rate is chosen as f_s = 50 Hz, and \alpha = 0.5. The initial conditions are given as x_1(0) = 1, \frac{dx_1(0)}{dt} =0, x_2(0) = 0, \frac{dx_2(0)}{dt} =0. (a): time evolution of m_1 (dots) and m_2 (circles). (b): spectra of the solutions. (c): energy components: kinetic (^), potential (), and total (solid line). (d): numerical energy error, defined as \Delta H = 1 - \mathfrak{h}^{n-1/2}/\mathfrak{h}^{1/2}." /><figcaption aria-hidden="true">Free oscillations of the two-mass system. Here, <span class="math inline">\(K_{11},K_{22},K_{12},m_1,m_2=1\)</span>. The sample rate is chosen as <span class="math inline">\(f_s = 50\)</span> Hz, and <span class="math inline">\(\alpha = 0.5\)</span>. The initial conditions are given as <span class="math inline">\(x_1(0) = 1\)</span>, <span class="math inline">\(\frac{dx_1(0)}{dt} =0\)</span>, <span class="math inline">\(x_2(0) = 0\)</span>, <span class="math inline">\(\frac{dx_2(0)}{dt} =0\)</span>. (a): time evolution of <span class="math inline">\(m_1\)</span> (dots) and <span class="math inline">\(m_2\)</span> (circles). (b): spectra of the solutions. (c): energy components: kinetic (^), potential (), and total (solid line). (d): numerical energy error, defined as <span class="math inline">\(\Delta H = 1 - \mathfrak{h}^{n-1/2}/\mathfrak{h}^{1/2}\)</span>.</figcaption>
+</figure>
+<h4 id="loss-and-forcing-1">Loss and Forcing</h4>
+<p>Inclusion of losses and external forcing is immediate from the template given above. Considering the continuous system <a href="#eq:tempTwoModes1" data-reference-type="eqref" data-reference="eq:tempTwoModes1">[eq:tempTwoModes1]</a>, a discrete-time version is obtained as <span class="math display">\[\delta_{tt}{\bf x}^n = -{\bf M}^{-1}{\bf K}\, (\alpha + (1-\alpha)\mu_{t\cdot}) {\bf x}^n - 2{\bf C}\delta_{t\cdot}{\bf x}^n + {\bf F} f^n.\]</span> The energy balance is obtained after left-multiplying the equation by <span class="math inline">\((\delta_{t\cdot}{\bf x}^n)^\intercal{\bf M}\)</span>, yielding <span class="math display">\[\frac{1}{2}\delta_{t+}\left( \delta_{t-}{\bf x}^{\intercal}\,{\bf M}\, \delta_{t-}{\bf x} + \alpha e_{t-}{\bf x}^{\intercal}\,{\bf K}\,  {\bf x} + (1-\alpha)\mu_{t-}\left({\bf x}^{\intercal}\,{\bf K}\,  {\bf x}\right)  \right)   = -Q^n+P^n,\]</span> where <span class="math inline">\(Q^n = 2(\delta_{t\cdot}{\bf x}^n)^\intercal \, {\bf C} \, \delta_{t\cdot}{\bf x}^n \geq 0\)</span> is the dissipated power, and where <span class="math inline">\(P^n = ({\delta_{t\cdot}{\bf x}^n})^\intercal \, {\bf F} \, f^n\)</span> is the injected power. Here, since <span class="math inline">\({\bf C}\)</span> is a symmetric, positive-definite matrix, the stability analysis is unaffected, and one may still impose <a href="#eq:StabCondMasses" data-reference-type="eqref" data-reference="eq:StabCondMasses">[eq:StabCondMasses]</a>. Of course, the scheme above allows to study the system under general forcing conditions, and to simulate the evolution of the system including transients.</p>
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>Remember that a positive-definite <span class="math inline">\(N\times N\)</span> symmetric matrix <span class="math inline">\({\bf A}\)</span> is a matrix with real entries such that <span class="math inline">\({\bf x}^\intercal {\bf A} {\bf x} &gt; 0\)</span>, <span class="math inline">\(\forall {\bf x} \neq {\bf 0} \in \mathbb{R}^N\)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</body>
+</html>

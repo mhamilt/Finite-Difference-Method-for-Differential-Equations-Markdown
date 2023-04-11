@@ -3,7 +3,7 @@ layout: post
 title: Lecture 1
 ---
 
-$$
+
 \newcommand{\dif}{\text{d}}
 \newcommand{\al}{\alpha}
 \newcommand{\bt}{\beta}
@@ -39,19 +39,18 @@ $$
 \newcommand{\mtm}{\mu_{t-}}
 \newcommand{\mtd}{\mu_{t\cdot}}
 \newcommand{\mtt}{\mu_{tt}}
-$$
 
 - [Introduction](#introduction)
   - [Newton's law for mechanical oscillations](#newtons-law-for-mechanical-oscillations)
-    - [Energy Analysis {#sec:EnAnGen}](#energy-analysis-secenangen)
-    - [Bounds on solution growth {#sec:BoundsSHO}](#bounds-on-solution-growth-secboundssho)
+    - [Energy Analysis](#energy-analysis)
+    - [Bounds on solution growth](#bounds-on-solution-growth)
     - [Periodicity of orbits via Fourier series](#periodicity-of-orbits-via-fourier-series)
   - [Time Difference Operators](#time-difference-operators)
     - [Shift, time and averaging operators](#shift-time-and-averaging-operators)
-  - [Frequency domain analysis and stability of LTI systems {#sec:FreqDomAn}](#frequency-domain-analysis-and-stability-of-lti-systems-secfreqdoman)
+  - [Frequency domain analysis and stability of LTI systems](#frequency-domain-analysis-and-stability-of-lti-systems)
     - [Laplace and $z$ transforms](#laplace-and-z-transforms)
     - [Fourier and discrete time Fourier transforms](#fourier-and-discrete-time-fourier-transforms)
-    - [Frequency-domain intepretation of time difference operators {#sec:FDtransformations}](#frequency-domain-intepretation-of-time-difference-operators-secfdtransformations)
+    - [Frequency-domain intepretation of time difference operators](#frequency-domain-intepretation-of-time-difference-operators)
     - [Recursion polynomials](#recursion-polynomials)
 
 
@@ -124,7 +123,7 @@ solution*, if appropriate Lipschitz-continuity arguments are satisfied.
 (There is no need to study these in detail, we will just assume that the
 examples provided here have a unique solution).
 
-### Energy Analysis {#sec:EnAnGen}
+### Energy Analysis
 
 As anticipated, all through this course, we will rely heavily on energy
 arguments. The fact that systems present some kind of energy balance is
@@ -175,7 +174,7 @@ $$\begin{equation}\label{eq:EnCons}
 and the identity $H(t) = H_0$
 holds $\forall t \geq 0$.
 
-### Bounds on solution growth {#sec:BoundsSHO}
+### Bounds on solution growth
 
 Energy, as seen, is conserved. It is remarked that the energy is also
 *non-negative*, i.e. $H(t) \geq 0$ $\forall t$, when $\phi$ itself is
@@ -506,7 +505,7 @@ fact convergent at all.
 operators approximating the first time
 derivative](figures/stencils.pdf){#fig:stencil width="\\linewidth"}
 
-## Frequency domain analysis and stability of LTI systems {#sec:FreqDomAn}
+## Frequency domain analysis and stability of LTI systems
 
 Traditional analysis techinques for time-dependent problems rely on
 frequency domain analysis, both in the continuous and discrete cases.
@@ -624,7 +623,7 @@ $$\begin{equation}\label{eq:FouTtable}
 In the second transform, $u(t)$ is again the step function as in
 \eqref{eq:LaplTtable}.
 
-### Frequency-domain intepretation of time difference operators {#sec:FDtransformations}
+### Frequency-domain intepretation of time difference operators
 
 The action of the difference operators on a time series $x^n$ may be
 interpreted in the $z$ domain as a *transformation*. In

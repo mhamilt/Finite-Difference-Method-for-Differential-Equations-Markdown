@@ -1,0 +1,360 @@
+
+\newcommand{\dif}{\mathop{}\!\mathrm{d}}
+\newcommand{\al}{\alpha}
+\newcommand{\bt}{\beta}
+\newcommand{\om}{\omega}
+\newcommand{\gm}{\gamma}
+\newcommand{\lb}{\lambda}
+\newcommand{\lm}{\lambda_-}
+\newcommand{\lp}{\lambda_+}
+\newcommand{\thw}{\theta_w}
+\newcommand{\thp}{\theta_\phi}
+\newcommand{\tht}{\theta}
+
+\newcommand{\etp}{e_{t+}}
+\newcommand{\etm}{e_{t-}}
+
+\newcommand{\esp}{e_{x+}}
+\newcommand{\esm}{e_{x-}}
+
+\newcommand{\dsp}{\delta_{x+}}
+\newcommand{\dsm}{\delta_{x-}}
+\newcommand{\dsd}{\delta_{x\cdot}}
+\newcommand{\dss}{\delta_{xx}}
+\newcommand{\dssss}{\delta_{xxxx}}
+
+\newcommand{\dtp}{\delta_{t+}}
+\newcommand{\dtm}{\delta_{t-}}
+\newcommand{\dtd}{\delta_{t\cdot}}
+\newcommand{\dtt}{\delta_{tt}}
+\newcommand{\dtttt}{\delta_{tttt}}
+\newcommand{\dspm}{\delta_{x\pm}}
+
+\newcommand{\mtp}{\mu_{t+}}
+\newcommand{\mtm}{\mu_{t-}}
+\newcommand{\mtd}{\mu_{t\cdot}}
+\newcommand{\mtt}{\mu_{tt}}
+
+\newcommand{\norm}[1]{\left\|#1\right\|}
+\newcommand{\innp}[1]{\left\langle#1\right\rangle}
+\newcommand{\virg}[1]{``#1''}
+
+\chapter{Coupled Oscillators}
+
+In this chapter we are going to study the problem of a system of coupled oscillators, in both linear and nonlinear regimes. In the linear case, extensions of the frequency-domain techniques already in use for the oscillator in isolation are possible, leading to the idea of \emph{modes of vibration}. For the nonlinear case, analytic approximations based on perturbation methods are possible, though the algebra quickly becomes unwieldy. However, time-domain simulation techniques for this multimodal case (and, particularly, energy methods) are in fact not too dissimilar from those already encountered previously, and we shall make use of them accordingly. 
+
+
+\section{Two masses, three springs}
+\begin{figure}
+\includegraphics[width=\linewidth]{Figures/TwoMassesGeneric.pdf}
+\caption{Two-mass system. For small vertical displacements, the two masses move vertically. The displacements from the rest positions are denoted $x_1$, $x_2$.}\label{fig:TwoMassesGeneric}
+\end{figure}
+
+Consider the system sketched in Fig. \ref{fig:TwoMassesGeneric}. Here, the system possesses two degrees of freedom, which may conveniently be identified with the displacements $x_1(t)$, $x_2(t)$ of the two masses $m_1$, $m_2$, from their rest position. The equations of motion for this system are as
+\begin{subequations}\label{eq:TwoMass1}
+\begin{align}
+m_1 \frac{d^2 x_1}{dt^2} = -K_{11}x_1 - K_{12}(x_1 - x_2), \label{eq:Coupl1} \\
+m_2 \frac{d^2 x_2}{dt^2} = -K_{22}x_2 + K_{12}(x_1 - x_2). \label{eq:Coupl2}
+\end{align}
+\end{subequations}
+For the moment, it was assumed that motion is completely linear (the amplitude of vibration is small, so that nonlinear effects can be neglected). 
+
+
+
+The frequency-domain techniques described in Sec. \ref{sec:FreqDomAn} can be extended here. To that end, it is convenient to adopt a matrix-vector formulation of the system. Though in this example the system comprises $2$ masses, this formulation proves advantageous since it can be used to describe systems comprising $N$ degrees of freedom. Furthermore, the matrix-vector formulation is the natural framework to write the discrete space-time schemes that we will encounter in later chapters. Hence, \eqref{eq:TwoMass1} is rewritten compactely as
+\begin{equation}\label{eq:MultiModalMatr}
+{\bf M} \, \frac{d^2{\bf x}}{dt^2} = -{\bf K} \, {\bf x}, 
+\end{equation}
+where clearly
+\begin{equation}
+{\bf M} = \begin{bmatrix}m_1 & 0 \\ 0 & m_2 \end{bmatrix}, \,\, {\bf K} = \begin{bmatrix}K_{11}+K_{12} & -K_{12} \\ -K_{12} & K_{22}+K_{12} \end{bmatrix}, \,\, {\bf x} = \begin{bmatrix}x_1  \\  x_2 \end{bmatrix}.
+\end{equation}
+Extension of the frequency-domain techniques of Sec. \ref{sec:FreqDomAn}, one can conveniently define a test solution of the form
+\begin{equation}
+{\bf x} =  {\bf X} e^{j\omega t}.
+\end{equation}
+Here, $ {\bf X}$ is a constant complex amplitude, $j\omega$ was substituted for $s$, since for lossless systems one has $\sigma = 0$ in $s = j\omega + \sigma$. Substituting the test solution into \eqref{eq:MultiModalMatr}, one gets
+\begin{equation}\label{eq:OmegaEigen}
+\left( {\bf K } - \omega^2 {\bf M} \right)  {\bf X} = 0,
+\end{equation}
+which shows that the frequency $\omega$ is defined as the eigenvalue of the  eigenvalue problem \eqref{eq:OmegaEigen}. Nontrivial solutions are obtained when the determinant of ${\bf K } - \omega^2 {\bf M}$ is zero. This defines the polynomial whose roots yield the eigenvalues. For this two-dimensional case, one has
+\begin{equation}
+ (K_{11}+K_{12} - \omega^2 m_1)(K_{22}+K_{12} - \omega^2 m_2) - K_{12}^2 = 0.
+\end{equation}
+Solving for $\omega^2$, one gets
+\begin{equation}
+\omega_\pm^2 = \frac{m_1(K_{22}+K_{12})+m_2(K_{11}+K_{12}) \pm \sqrt{\left(m_1(K_{22}+K_{12}) - m_2(K_{11}+K_{12})\right)^2 + 4 m_1 m_2 K_{12}^2 }}{2m_1 m_2}.
+\end{equation}
+This solution shows that both the eigenvalues $\omega^2_\pm \in \mathbb{R}$ (since the expression under the square root sign is always positive); however, there is no guarantee that $\omega^2_\pm$ are also \emph{positive}. A negative $\omega^2$ would result in exponentially growing behaviour of the test solution. Checking positivity of the roots can be quite laborious in the general case. To make things a little easier, we make the assumption $m_1=m_2=m$, for which one has
+\begin{equation}
+2m\omega_\pm^2 = K_{11}+K_{22}+2K_{12} \pm \sqrt{\left( K_{11}-K_{22}  \right)^2 + 4  K_{12}^2}.
+\end{equation} 
+The positivity of \emph{both} solutions is enforced when 
+\begin{equation}\label{eq:TempIneq}
+K_{11}+K_{22}+2K_{12} \geq 0, \,\, \text{ and } \,\, \left(K_{11}+K_{22}+2K_{12}\right)^2 \geq \left( K_{11}-K_{22}  \right)^2 + 4  K_{12}^2.
+\end{equation}
+Solving for $K_{12}$, one has
+\begin{subnumcases}{K_{12} \geq -\frac{K_{11}+K_{22}}{2} \,\, \text{ and } \,\, \label{eq:IneqK12}}
+ K_{12} \geq -\frac{K_{11}K_{22}}{K_{11}+K_{22}} \,\, \text{ if } \,\, K_{11}+K_{22} > 0, \label{eq:IneqK12a}\\
+ K_{12} \leq -\frac{K_{11}K_{22}}{K_{11}+K_{22}} \,\, \text{ if } \,\, K_{11}+K_{22} < 0. \label{eq:IneqK12b}
+\end{subnumcases}
+If instead $K_{11}+K_{22}=0$, at least one eigenvalue is surely negative, as seen immediately from \eqref{eq:TempIneq}. As an example, consider the case $K_{11}=K_{22}=1$. The conditions above give $K_{12}\geq -1/2$: this is an interesting case, since one may allow the coupling to have negative stiffness, whilst guaranteeing oscillating solutions overall. As a second example, consider $K_{11}=K_{22}=-1$: here, there is no range allowable for $K_{12}$. 
+
+
+
+
+
+
+
+
+
+
+Once the eigenvalues are computed, one may compute the eigenvector $ {\bf X}$ from \eqref{eq:OmegaEigen}. Assuming for instance $ { X}_1 = a_{\pm}$ (where $a_\pm$ are just useful normalisation constants), one has
+\begin{equation}
+ X_2 = a_{\pm}\frac{K_{11} + K_{12} - \omega^2_\pm m_1}{K_{12}},
+\end{equation}
+such that the general solution is given by
+\begin{equation}
+{\bf x} = a_+\begin{bmatrix} 1 \\ \frac{K_{11} + K_{12} - \omega^2_+ m_1}{K_{12}}\end{bmatrix}\left(A_+ e^{j\omega_+ t} + A_- e^{- j\omega_+ t} \right) + a_-\begin{bmatrix} 1 \\ \frac{K_{11} + K_{12} - \omega^2_- m_1}{K_{12}}\end{bmatrix}\left(B_+ e^{j\omega_- t} + B_- e^{- j\omega_- t} \right),
+\end{equation}
+where $A_\pm$, $B_\pm$ are four complex constants depending on the intial conditions ${\bf x}(t=0)$, $\frac{d{\bf x}(t=0) }{dt}$. The formula above is revealing: we showed that the motion of the system can be written as the the sum of two harmonic motions, independent of each other, one with frequency $\omega_+$, the other with frequency $\omega_-$. 
+
+
+
+
+
+
+As an example, consider the case $K_{11},K_{22},K_{12},m_1,m_2=1$. In this case, one has $\omega_+ = \sqrt{3}$, $\omega_- = 1$. Then
+\begin{equation}\label{eq:TwoMassesDecomposed}
+{\bf x} = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ -1\end{bmatrix}\left(A_+ e^{j\sqrt{3} t} + A_- e^{- j\sqrt{3} t} \right) - \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ 1\end{bmatrix}\left(B_+ e^{j  t} + B_- e^{- j t} \right),
+\end{equation}
+Here the normalisation constants $a_+$, $a_-$ where chosen so that the norm of the eigenvectors is 1. (Remember that these constants are entirely arbitrary). 
+If one chooses ${\bf x}(t=0)=[1,-1]^\intercal$, $d{\bf x}(t=0)/dt=[0,0]^\intercal$, the constants are set as $A_+=A_-=1/\sqrt{2}$, $B_+ = B_- = 0$, giving ultimately
+\begin{equation}\label{eq:Mode2}
+{\bf x} = \begin{bmatrix} 1 \\ -1\end{bmatrix}\cos\left(\sqrt{3}t\right).
+\end{equation}
+This shows that a two-mode system may collapse to a single mode, when the system is started in that mode. There is no trace of the other mode of vibration! One may of course start the system in the other mode, and observe it oscillating in that mode only. Figs. \ref{fig:TwoMassesMode1} and \ref{fig:TwoMassesMode2} show the motion of the masses when the system is started in either one of the two modes. 
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.75\linewidth,clip, trim={2cm 2cm 2cm 1cm}]{Figures/TwoMassesMode1.png}
+\caption{Two-mass system. Visualisation of the first mode of vibration.}\label{fig:TwoMassesMode1}
+\end{figure}
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.75\linewidth,clip, trim={2cm 2cm 2cm 1cm}]{Figures/TwoMassesMode2.png}
+\caption{Two-mass system. Visualisation of the second mode of vibration, corresponding to \eqref{eq:Mode2}.}\label{fig:TwoMassesMode2}
+\end{figure}
+
+
+
+\subsection{Energy considerations}
+
+It is remarked that the allowable ranges for the stiffness constants $K_{ij}$ are such that the potential energy of the system  is \emph{non-negative}, so that one may bound the growth of the solutions in some manner. The total energy of the system can be found by multiplying \eqref{eq:Coupl1} by $\frac{dx_1}{dt}$, and \eqref{eq:Coupl2} by $\frac{dx_2}{dt}$, and summing. Using the usual identities, this gives
+\begin{equation}\label{eq:EnBalCnt2Masses}
+\frac{d}{dt}\left( \frac{m_1}{2}\left( \frac{dx_1}{dt} \right)^2 + \frac{m_2}{2}\left( \frac{dx_2}{dt} \right)^2 + \frac{K_{11} x_1^2}{2} +  \frac{K_{22} x_2^2}{2} + \frac{K_{12} (x_1-x_2)^2}{2}\right) \triangleq \frac{dH(t)}{dt} = 0,
+\end{equation}
+showing that $H(t) = H(t=0) = H_0$, that is, energy is conserved. The form of the energy comprises the energy of the two harmonic oscillators in isolation, plus the coupling energy, proportional to $K_{12}$. The coupling is a function of the relative distance between the masses, so at any time such that $x_1-x_2=0$, the coupling force is null. It is convenient to write the energy in matrix form, as
+\begin{equation}
+H(t) = \frac{1}{2}\left(\frac{d{\bf x}^\intercal}{dt} {\bf M} \frac{d{\bf x}}{dt} + {\bf x}^\intercal {\bf K} {\bf x}\right).
+\end{equation}
+Since both ${\bf K}$, ${\bf M}$ are positive-definite\footnote{Remember that a positive-definite $N\times N$ symmetric matrix ${\bf A}$ is a matrix with real entries such that ${\bf x}^\intercal {\bf A} {\bf x} > 0$, $\forall {\bf x} \neq {\bf 0} \in \mathbb{R}^N$. }, one has
+\begin{equation}
+0 \leq \frac{d{\bf x}^\intercal}{dt} {\bf M} \frac{d{\bf x}}{dt} \leq H_0, \quad 0 \leq {\bf x}^\intercal {\bf K} {\bf x} \leq H_0,
+\end{equation}
+that is, the norms of the solution remain bounded by some energy constant incorporating the intial conditions. This is, in essence, the idea of stability for this vector case, generalising  bound \eqref{eq:EgyBoundVel} (and the analogous bound on $x$) of the single scalar case. 
+
+\subsection{Eigenvalue decomposition}
+
+
+The discussion above suggests that the motion system \eqref{eq:MultiModalMatr} may in fact be decomposed onto linearly independent blocks, called the \emph{modes}.  Since the mass matrix is usually a diagonal matrix with positive entries, it is convenient to rewrite the system as
+\begin{equation}\label{eq:EigenDecTwoMasses1}
+\frac{d^2{\bf x}}{dt^2} = -{ \bf M}^{-1}{\bf K} \, {\bf x}, 
+\end{equation}
+where here ${{\bf M}^{-1}\bf K}$ is a positive-definite matrix. One is then able to write
+\begin{equation}\label{eq:eigendempos}
+{\bf M}^{-1}{\bf K} = {\bf P} \, {\bf \Omega}^2 \, {\bf P}^{\intercal},
+\end{equation}
+where ${\bf P}$ is a matrix comprising the column eigenvectors of ${\bf M}^{-1}{\bf K}$, and where ${\bf \Omega}$ is a diagonal matrix containing the (positive) eigenvalues (that is, the resonant frequencies of the system). Since ${\bf M}^{-1}{\bf K}$ is positive-definite, one has that the matrix ${\bf P}$ is in fact \emph{orthonormal}, that is, ${\bf P}^{-1}={\bf P}^\intercal$. Hence, multiplying \eqref{eq:EigenDecTwoMasses1} on the left by ${\bf P}^\intercal$ gives
+\begin{equation}\label{eq:diagonalEigen}
+\frac{d^2{\bf u}}{dt^2} = -{\bf \Omega}^2 \, {\bf u}, 
+\end{equation}
+with ${\bf u} = {\bf P}^{\intercal}{\bf x}$. This is a completely diagonal system, where the  degrees of freedom are independent of each other. Coming back again to the example \eqref{eq:TwoMassesDecomposed}, here one has
+\begin{equation}
+{\bf P} =  \frac{1}{\sqrt{2}}\begin{bmatrix}-1 & -1 \\ -1 & 1 \end{bmatrix}, \,\, {\bf \Omega} =  \begin{bmatrix}1 & 0 \\ 0 & \sqrt{3} \end{bmatrix}.
+\end{equation}
+One may decide to work with the diagonal system \eqref{eq:diagonalEigen}, and then switch back to the ``physical'' coordinates $\bf x$, using ${\bf x} = {\bf P}\,{\bf u}$. Here, it is immediate to verify that ${\bf P} \, {\bf P}^{\intercal} = {\bf P}^\intercal \, {\bf P} = {\bf I}$, where ${\bf I}$ is the identity matrix. It is also immediate to check that \eqref{eq:eigendempos} is verified. 
+
+
+
+
+\subsection{Loss and Forcing}
+
+System \eqref{eq:TwoMass1} may be generalised so to include losses and external forcing. The system reads
+\begin{subequations}\label{eq:TwoMass2}
+\begin{align}
+m_1 \frac{d^2 x_1}{dt^2} &= -K_{11}x_1 - K_{12}(x_1 - x_2) -2m_1c_{11}\frac{dx_{1}}{dt} + m_1 F_1 f(t), \label{eq:TwoMass2a} \\
+m_2 \frac{d^2 x_2}{dt^2} &= -K_{22}x_2 + K_{12}(x_1 - x_2) - 2m_2 c_{22} + m_2 F_2 f(t) . \label{eq:TwoMass2b}
+\end{align}
+\end{subequations}
+Here, the $c$'s coefficients are loss coefficients (measured in s$^{-1}$), and $F$ is a force per unit mass. (These units are consistent with the case of the single mass, in \eqref{eq:SHOForced}). The system may be written as
+\begin{equation}\label{eq:tempTwoModes1}
+\frac{d^2{\bf x}}{dt^2} = -{\bf M}^{-1}{\bf K} \, {\bf x} - 2 {\bf C} \, \frac{d{\bf x}}{dt} + {\bf F}\, f(t).
+\end{equation}
+Here, $f(t)$ is any suitable input time signal. Energy analysis may be performed by left-multiplying the system by $(\dtd {\bf x})^\intercal {\bf M}$, leading to
+\begin{equation}
+\frac{1}{2}\frac{d}{dt}\left(\frac{d{\bf x}^\intercal}{dt} {\bf M} \frac{d{\bf x}}{dt} + {\bf x}^\intercal {\bf K} {\bf x}\right) = -Q(t) + P(t),
+\end{equation}
+where $Q = 2(\dtd {\bf x})^\intercal \,{\bf M}{\bf C} \, \dtd {\bf x} \geq 0$ is the dissipated power, and where $P = (\dtd {\bf x})^\intercal \, {\bf M}{\bf F} \, f(t)$ is the injected power.
+
+
+
+
+
+
+
+
+
+Conveniently, we may want to study the case where the input is a time-harmonic signal, such as $f(t) = e^{j\omega t}$. Motion will undergo an initial transient, before settling into the steady state. There, the system will oscillate at the same frequency as the forcing. Hence, in the steady-state, one has
+\begin{equation}
+{\bf x} = {\bf X}\, e^{j\omega t},
+\end{equation}
+and inserting this expression in \eqref{eq:tempTwoModes1} one gets
+\begin{equation}
+{\bf X} = \left( -\omega^2 {\bf I} + {\bf M}^{-1}{\bf K} + 2 j \omega {\bf C} \right)^{-1}{\bf F},
+\end{equation}
+that is the generalisation to the vector case of \eqref{eq:TransXF}. Here, one may compute the transfer functions between any of the two inputs and ouputs. It may be convenient to define the transfer functions are matrices, so that, say, the mechanical admittance is
+\begin{equation}
+{\bf Y} = \begin{bmatrix} Y_{11} & Y_{12} \\ Y_{21} & Y_{22} \end{bmatrix},
+\end{equation}
+where $Y_{ij} = \frac{j \omega X_i}{ F_j}$. Analogously, the impedance is defined as $Zij = \frac{F_i}{j \omega X_j}$. Fig \ref{fig:TransFunctionsTwoMass} presents the admittance and impedance plots for the test case $K_{11},K_{22},K_{12},m_1,m_2=1$.
+
+
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.85\linewidth]{Figures/TwoMassTransfFunctions.png}
+\caption{Transfer functions for the two-mass system, with $K_{11},K_{22},K_{12},m_1,m_2=1$. Here, the loss matrix is ${\bf C} = \text{diag}([0.02,0.01])$, and the forcing vector is ${\bf F} = [1,0]^\intercal$. For the admittance $Y$, dots (.) is $Y_{11}$ and hats (\^{}) is $Y_{21}$. For the impedance, dots (.) is $Z_{11}$, and cicles (o) is $Z_{12}$. }\label{fig:TransFunctionsTwoMass}
+\end{figure}
+
+\subsection{An Explicit Finite Difference Scheme}
+
+
+A discrete-time version of \eqref{eq:MultiModalMatr} can be obtained considering
+\begin{subequations}\label{eq:TwoMassFD1}
+\begin{align}
+m_1 \, \dtt x_1^n = -K_{11}x_1^n - K_{12}(x_1^n - x_2^n), \label{eq:CouplFD1} \\
+m_2 \, \dtt x_2^n = -K_{22}x_2^n + K_{12}(x_1^n - x_2^n), \label{eq:CouplFD2}
+\end{align}
+\end{subequations} 
+which may be written compactly as
+\begin{equation}\label{eq:TwoMassFD1Compact}
+{\bf M}\, \dtt {\bf x}^n = - {\bf K}\, {\bf x}^n
+\end{equation}
+Expanding out the difference operators, one gets
+\begin{equation}\label{eq:updateExplicitScheme}
+{\bf M}\, {\bf x}^{n+1} = \left(2{\bf M}-k^2{\bf K}\right){\bf x}^n - {\bf M}{\bf x}^{n-1}.
+\end{equation}
+Since ${\bf M}$ is fully diagonal, this scheme is \emph{explicit}, and the update may be computed by merely multiplying both sides by the diagonal matrix ${\bf M}^{-1}$, and by performing the trivial matrix-vector operations on the right-hand side. 
+
+
+Stability analysis may be performed via energy arguments. To that end, multiply \eqref{eq:CouplFD1} by $\dtd x^n_1$, and \eqref{eq:CouplFD2} by $\dtd x^n_2$, and sum. Using the usual identities, one gets
+\begin{equation}\label{eq:EnBalFD2Masses}
+\dtp \left(\underbrace{\frac{m_1(\dtm x^n_1)^2}{2} + \frac{m_2(\dtm x^n_2)^2}{2} + \frac{K_{11}x_1^n \, \etm x_1^n}{2}  + \frac{K_{22}x_2^n \, \etm x_2^n}{2} + \frac{K_{12}(x_1^n-x_2^n) \, \etm (x_1^n-x_2^n)}{2}}_{{\mathfrak h}^{n-1/2}}\right)  = 0,
+\end{equation}
+which gives the discrete energy balance. Clearly, \eqref{eq:EnBalFD2Masses} discretises \eqref{eq:EnBalCnt2Masses} to second-order accuracy, however there is no guarantee that the discrete energy is in fact positive. It may be useful to rewrite the energy as a quadratic form using the matrix notation. One has
+\begin{equation}
+\mathfrak{h}^{n-1/2} = \frac{1}{2}\left({\dtm {\bf x}}^{\intercal}\,{\bf M}\, {\dtm {\bf x}} + \etm{\bf x}^\intercal \,{\bf K}\, { {\bf x}}\right) = \frac{1}{2}\left( \dtm {\bf x}^{\intercal}\,\left({\bf M}-\frac{k^2}{4}{\bf K}\right)\, \dtm {\bf x} + \mtm \left({\bf x}^{\intercal}\,{\bf K}\, {\bf x}\right) \right),
+\end{equation}
+where the last equality follows after application of the  identity $\etm {\bf u}^\intercal  {\bf A} {\bf u}= \mtm \left({\bf u}^\intercal \,{\bf A}\, {\bf u}\right) - \frac{k^2}{4}\dtm{\bf u}^\intercal \,{\bf A}\, \dtm {\bf u}$, for a positive-definite, symmetric matrix $\bf A$. Now, since $\mtm \left({\bf x}^{\intercal}\,{\bf K}\,  {\bf x} \right) \geq 0$, one has that the discrete energy above is positive definite if and only if
+\begin{equation}
+\text{eig}\left({\bf M}-\frac{k^2}{4}{\bf K}\right) \geq 0.
+\end{equation}
+Finding conditions in the general case can be quite tedious. For the case  $K_{11},K_{22},K_{12},m_1,m_2=1$, the eigenvalue equation for eigenvalue $\lambda$ is obtained as
+\begin{equation}
+\left(\frac{k^2}{2} + \lambda - 1\right)^2 - \frac{k^2}{16}  \geq 0.
+\end{equation}
+The quadratic has two solution, $\lambda_+ = 1 - \frac{k^2}{4}$, $\lambda_- = 1 - \frac{3 k^2}{4}$, and they are both positive if and only if $\lambda_+ > 0$, i.e. 
+\begin{equation}\label{eq:TwoMassesStabCond}
+k \leq \frac{2}{\sqrt{3}},
+\end{equation}
+which may be interpreted as a stability condition here. 
+
+
+\subsection{Numerical Eigenvalues}
+
+
+Frequency-domain analysis may be performed here too, generalising the results of Sec. \ref{sec:FreqDomSHO}. To that end, one re-writes the scheme \eqref{eq:TwoMassFD1} as
+\begin{equation}
+\dtt {\bf x}^n = - {\bf M}^{-1}{\bf K}\, {\bf x}^n.
+\end{equation}
+Then, as suggested in Sec. \ref{sec:FDtransformations}, one substitutes the test solution ${\bf x}^n = \hat{\bf x}e^{j\omega kn}$, and remembering \eqref{eq:DTFTdtt} one gets
+\begin{equation}
+-\frac{4}{k^2}\sin^2\left( \frac{\omega k}{2}\right)\hat{\bf x} = - {\bf M}^{-1}{\bf K}\, \hat {\bf x}^n,
+\end{equation}
+showing that the eigenvalues of the matrix ${\bf M}^{-1}{\bf K}$ are 
+\begin{equation}
+\frac{4}{k^2}\sin^2\left( \frac{\omega k}{2}\right) = \omega^2 - \frac{k^2\omega^4}{12} + O(k^4).\end{equation}
+Hence, the numerical eigenvalues are second-order accurate with respect to the eigenvalues of the continuos system, and  the absolute value of error grows approximately as $\omega^4$. Thus, the  eigenfrequencies will be less and less well computed as the stability limit is approached. Note that one may decompose the right-hand using the eigendecomposition \eqref{eq:eigendempos}, and, defining again  ${\bf u} = {\bf P}^{\intercal}{\bf x}$, the system becomes
+\begin{equation}
+\dtt {\bf u}^n = -{\bf \Omega}^2 \,{\bf u}^n,
+\end{equation}
+showing that motion can be completely uncoupled in the two modes of the system. Stability analysis here is immediate, since the energy is now expressed as the sum of \emph{independent} harmonic oscillators. Hence, stability condition \eqref{eq:StabCondSHO} translates here directly, as
+\begin{equation}
+k < \frac{2}{\text{max}\left(\text{diag}({\bf \Omega})\right)}.
+\end{equation}
+For the test case $K_{11},K_{22},K_{12},m_1,m_2=1$, one recovers of course \eqref{eq:TwoMassesStabCond}. 
+
+
+\subsection{A Family of Finite Difference Schemes}
+
+
+Scheme \eqref{eq:TwoMassFD1Compact}  is but one among many different possible realisations. Consider the following discretisation, depending on a parameter $\alpha \in [0,1]$.
+\begin{equation}\label{eq:Impl2Masses}
+{\bf M}\, \dtt {\bf x}^n = - {\bf K}\, (\alpha + (1-\alpha)\mtd) {\bf x}^n.
+\end{equation}
+Remebering that $\mtd = 1 + \frac{k^2}{2}\dtt$, one can rewrite the scheme as 
+\begin{equation}
+\left({\bf M} + (1-\alpha)\frac{k^2}{2}{\bf K} \right) \, {\bf x}^{n+1} = \left(2 {\bf M} - \alpha k^2 {\bf K} \right){\bf x}^n - \left({\bf M} + (1-\alpha)\frac{k^2}{2}{\bf K} \right) \, {\bf x}^{n-1}.
+\end{equation}
+Here, the scheme is \emph{implicit}, since the matrix multiplying the update vector ${\bf x}^{n+1}$ is now (generally) not diagonal! The update equation is in the form of a linear system. This is, of course, more laborious than the update \eqref{eq:updateExplicitScheme} for the fully-explicit scheme. Of course, setting $\alpha = 1$ in the above, one recovers the explicit scheme \eqref{eq:TwoMassFD1Compact}.
+Energy analysis is performed in the usual way, i.e. by left-multiplying \eqref{eq:Impl2Masses} by $(\dtd {\bf x}^n)^\intercal$. By means of the usual identities, this leads to the discrete energy balance
+\begin{equation}
+ \dtp \frac{1}{2}\left( \dtm {\bf x}^{\intercal}\,{\bf M}\, \dtm {\bf x} + \alpha \etm {\bf x}^{\intercal}\,{\bf K}\,  {\bf x} + (1-\alpha) \mtm \left({\bf x}^{\intercal}\,{\bf K}\,  {\bf x}\right) \right) \triangleq  \dtp {\mathfrak h}^{n-1/2}  = 0.
+\end{equation}
+An interesting case is obtained when $\alpha =0$, yielding a form for the discrete energy that is non-negative \emph{in all cases}.
+Hence, scheme \eqref{eq:Impl2Masses} becomes \emph{unconditionally stable} when $\alpha = 0$. One should be aware that unconditional stability is but one of the many aspects to be considered whilst designing an appropriate scheme. Whilst scheme \eqref{eq:Impl2Masses} will remain stable, regardless of the sample rate used, multiple other issues may affect the quality of the resulting simulated dynamics, particularly with respect to Fourier and aliasing considerations. Fig. \ref{fig:TwoMassOne} presents a numerical investigation of the two mass system, for the test case $K_{11},K_{22},K_{12},m_1,m_2=1$. 
+
+
+
+A stability condition for scheme \eqref{eq:Impl2Masses} may be obtained by writing out the expression for the energy as a quadratic form in ${\bf p} = [\left({\bf x}^n\right)^{\intercal}, \left({\bf x}^{n-1}\right)^{\intercal}]^{\intercal}$, as $\mathfrak{h}^{n-1/2} = {\bf p}^{\intercal}\,{\bf A}(\alpha,k)\,{\bf p}$, where
+\begin{equation}
+{\bf A}(\alpha,k) = 
+\begin{bmatrix}
+\frac{{\bf M}}{k^2} + \frac{(1-\alpha)}{2}{\bf K} & -\frac{{\bf M}}{k^2} +\frac{\alpha}{2}{\bf K} \\ -\frac{{\bf M}}{k^2} + \frac{\alpha}{2}{\bf K} & \frac{{\bf M}}{k^2} + \frac{(1-\alpha)}{2}{\bf K}
+\end{bmatrix}.
+\end{equation}
+Positive-definiteness is obtained if and only if 
+\begin{equation}\label{eq:StabCondMasses}
+\text{eig}\left({\bf A}(\alpha,k)\right) > 0.
+\end{equation}
+This can be interpreted a stability condition for the system.
+\begin{figure}[hbt]
+\centering{}
+\includegraphics[width=0.85\linewidth]{Figures/TwoMassOne.png}
+\caption{Free oscillations of the two-mass system. Here, $K_{11},K_{22},K_{12},m_1,m_2=1$. The sample rate is chosen as $f_s = 50$ Hz, and $\alpha = 0.5$. The initial conditions are given as $x_1(0) = 1$, $\frac{dx_1(0)}{dt} =0$, $x_2(0) = 0$, $\frac{dx_2(0)}{dt} =0$. (a): time evolution of $m_1$ (dots) and $m_2$ (circles). (b): spectra of the solutions. (c): energy components: kinetic (\^{}), potential (\text{*}), and total (solid line). (d): numerical energy  error, defined as $\Delta H = 1 - \mathfrak{h}^{n-1/2}/\mathfrak{h}^{1/2}$.}\label{fig:TwoMassOne}
+\end{figure}
+
+
+\subsubsection{Loss and Forcing}
+
+Inclusion of losses and external forcing is immediate from the template given above. Considering the continuous system \eqref{eq:tempTwoModes1}, a discrete-time version is obtained as
+\begin{equation}
+\dtt {\bf x}^n = -{\bf M}^{-1}{\bf K}\, (\alpha + (1-\alpha)\mtd) {\bf x}^n - 2{\bf C}\dtd {\bf x}^n + {\bf F} f^n.
+\end{equation}
+The energy balance is obtained after left-multiplying the equation by $(\dtd {\bf x}^n)^\intercal{\bf M}$, yielding
+\begin{equation}
+\frac{1}{2}\dtp \left( \dtm {\bf x}^{\intercal}\,{\bf M}\, \dtm {\bf x} + \alpha \etm {\bf x}^{\intercal}\,{\bf K}\,  {\bf x} + (1-\alpha)\mtm \left({\bf x}^{\intercal}\,{\bf K}\,  {\bf x}\right)  \right)   = -Q^n+P^n,
+\end{equation}
+where $Q^n = 2(\dtd {\bf x}^n)^\intercal \, {\bf C} \, \dtd {\bf x}^n \geq 0$ is the dissipated power, and where $P^n = ({\dtd {\bf x}^n})^\intercal \, {\bf F} \, f^n$ is the injected power. 
+Here, since ${\bf C}$ is a symmetric, positive-definite matrix, the stability analysis is unaffected, and one may still impose \eqref{eq:StabCondMasses}. Of course, the scheme above allows to study the system under general forcing conditions, and to simulate the evolution of the system including transients. 
+
