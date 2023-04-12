@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lecture 4</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lecture 4</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#numerical-methods-for-the-wave-equation">Numerical methods for the wave equation</a>
+<ul>
+<li><a href="#spatial-difference-operators">Spatial difference operators</a>
+<ul>
+<li><a href="#sec:FDtransformationsSpatial">Frequency-domain intepretation of spatial difference operators</a></li>
+<li><a href="#matrix-form-of-difference-operators">Matrix form of difference operators</a></li>
+<li><a href="#sec:WEQNmatrices">Numerical Boundary Conditions</a></li>
+<li><a href="#eigenvalues-and-eigenvectors-of-second-difference-matrices">Eigenvalues and eigenvectors of second difference matrices</a></li>
+</ul></li>
+<li><a href="#an-explicit-finite-difference-scheme">An explicit finite difference scheme</a>
+<ul>
+<li><a href="#stability-via-energy-analysis">Stability via Energy Analysis</a></li>
+<li><a href="#accuracy">Accuracy</a></li>
+<li><a href="#initialisation.-global-error.">Initialisation. Global error.</a></li>
+</ul></li>
+<li><a href="#loss-and-forcing">Loss and forcing</a>
+<ul>
+<li><a href="#finite-difference-schemes">Finite difference schemes</a></li>
+<li><a href="#spreading-and-interpolation">Spreading and interpolation</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+<ul>
+<li><a href="#numerical-methods-for-the-wave-equation">Numerical methods for the wave equation</a>
+<ul>
+<li><a href="#spatial-difference-operators">Spatial difference operators</a>
+<ul>
+<li><a href="#sec:FDtransformationsSpatial">Frequency-domain intepretation of spatial difference operators</a></li>
+<li><a href="#matrix-form-of-difference-operators">Matrix form of difference operators</a></li>
+<li><a href="#sec:WEQNmatrices">Numerical Boundary Conditions</a></li>
+<li><a href="#eigenvalues-and-eigenvectors-of-second-difference-matrices">Eigenvalues and eigenvectors of second difference matrices</a></li>
+</ul></li>
+<li><a href="#an-explicit-finite-difference-scheme">An explicit finite difference scheme</a>
+<ul>
+<li><a href="#stability-via-energy-analysis">Stability via Energy Analysis</a></li>
+<li><a href="#accuracy">Accuracy</a></li>
+<li><a href="#initialisation.-global-error.">Initialisation. Global error.</a></li>
+</ul></li>
+<li><a href="#loss-and-forcing">Loss and forcing</a>
+<ul>
+<li><a href="#finite-difference-schemes">Finite difference schemes</a></li>
+<li><a href="#spreading-and-interpolation">Spreading and interpolation</a></li>
+</ul></li>
+</ul></li>
+</ul>
+<h1 id="numerical-methods-for-the-wave-equation">Numerical methods for the wave equation</h1>
+<p>The previous chapter has introduced the formalism of the one-dimensional wave equation. In this chapter we explore the numerical methods that can be employed to solve it. While exact solutions are available in this case, these do not generalise other systems. In fact, the exact solutions serve here as a useful benchmark against which to test the numerical schemes presented. We begin the discussion of the numerical mehtods illustrating the use of finite differences.</p>
+<h2 id="spatial-difference-operators">Spatial difference operators</h2>
+<p>Just like time can be discretised by means of a sample rate (or equivalently, a time step), the spatial domain may also be discretised using an appropriate <em>grid spacing</em>. Let such spacing be uniform along the domain of interest, so that the continuous domain <span class="math inline">\(\mathcal{D} = \{ x : x \in [0,L]\}\)</span> is mapped onto the discrete domain <span class="math inline">\(\mathfrak{d} = \{ mh : 0 \leq m \leq M = L/h, m \in {\mathbb N}\}\)</span>. In the same way as, in Chapter <a href="#chap:Intro" data-reference-type="ref" data-reference="chap:Intro">[chap:Intro]</a>, we approximated the continuous time function <span class="math inline">\(x(t)\)</span> via the discrete time series <span class="math inline">\(x^n\)</span>, here we are going to approximate the continuous function <span class="math inline">\(y(x)\)</span> via the <em>grid function</em> <span class="math inline">\(y_m\)</span>. The identity, forward and backward shift operators are then given as <span class="math display">\[{1}{y}_m = {y}_m, \quad e_{x+}{y}_m = {y}_{m+1}, \quad e_{x-}{y}_m = {y}_{m-1}.\]</span> From these, one may define the difference operators, all approximating the first spatial derivative, as</p>
+<div class="subequations">
+<p><span class="math display">\[\begin{aligned}
+        \delta_{x+}&amp; = \frac{(e_{x+}- 1)}{h} \approx \frac{d}{dx},     \\ 
+        \delta_{x-}&amp; = \frac{(1 - e_{x-})}{h}\approx \frac{d}{dx},      \\ 
+        \delta_{x\cdot}&amp; = \frac{(e_{x+}- e_{x-})}{2h}\approx \frac{d}{dx} . 
+    \end{aligned}\]</span></p>
+</div>
+<p>An approximation to the second time derivative is constructed from the above as <span class="math display">\[\delta_{xx}= \delta_{x+}\delta_{x-}\approx \frac{d^2}{dx^2}.\]</span> Averaging operators (all approximating the identity) are</p>
+<div class="subequations">
+<p><span class="math display">\[\begin{aligned}
+        \mu_{x+} &amp; = \frac{(e_{x+}+ 1)}{2} \approx 1,    \\ 
+        \mu_{x-} &amp; = \frac{(1 + e_{x-})}{2} \approx 1,    \\ 
+        \mu_{x\cdot}&amp; = \frac{(e_{x+}+ e_{x-})}{2} \approx 1. 
+    \end{aligned}\]</span></p>
+</div>
+<p>Taylor series arguments can be used to infer the order of the approximation. The truncation errors of the difference operators may again be found by applying them to the continuous function <span class="math inline">\(y(x)\)</span>, and expanding in a Taylor series. Hence</p>
+<div class="subequations">
+<p><span id="eq:ErrsSpatial" label="eq:ErrsSpatial">[eq:ErrsSpatial]</span> <span class="math display">\[\begin{aligned}
+\
+     \frac{dy(x_m)}{dx} - \delta_{t+}y(x_m) &amp;= O(h), \\
+     \frac{dy(x_m)}{dx} - \delta_{t-}y(x_m) &amp;= O(h), \\   
+     \frac{dy(x_m)}{dx} - \delta_{t\cdot}y(x_m) &amp;= O(h^2),\\   
+     \frac{d^2y(x_m)}{dx^2} - \delta_{tt}y(x_m) &amp;= O(h^2),\end{aligned}\]</span></p>
+</div>
+<p>and so on.</p>
+<h3 id="sec:FDtransformationsSpatial">Frequency-domain intepretation of spatial difference operators</h3>
+<p>In Section <a href="#sec:FDtransformations" data-reference-type="ref" data-reference="sec:FDtransformations">[sec:FDtransformations]</a>, the temporal difference operators were applied to the kernel of the Fourier transform. A similar idea can be employed for the spatial difference operators, where of course the Fourier transform is now <span class="math display">\[\mathcal{X}\left\{ y_m \right\} = \sum_{m=-\infty}^\infty y_m e^{-jmh\gamma},\]</span> where <span class="math inline">\(\gamma\)</span> is the wavenumber. The spatial difference operators transform in a manner analougous to the temporal ones. Take the second difference: <span class="math display">\[\label{eq:DTFTdss}
+\mathcal{X}\left\{\delta_{xx}y_m\right\} = \frac{e^{j\gamma h}-2+e^{-j\gamma h}}{h^2}\mathcal{X}\left\{y_m\right\}=\frac{2}{h^2}\left(\cos(\gamma k)-1 \right)\mathcal{X}\left\{y_m\right\} = -\frac{4}{h^2} \sin^2\left(\frac{\gamma h}{2}\right)\mathcal{X}\left\{y_m\right\}\]</span> Analogously, one has</p>
+<div class="subequations">
+<p><span class="math display">\[\begin{aligned}
+\mathcal{X}\left\{\mu_{x\cdot} y_m\right\} &amp;= \cos(\omega k) \mathcal{X}\left\{y_m \right\}, \\
+\mathcal{X}\left\{\mu_{xx} y_m\right\} &amp;= \frac{1}{2}\left(\cos(\omega k) + 1\right)\mathcal{X}\left\{y_m \right\} \\
+\mathcal{X}\left\{\delta_{x\cdot}y_m\right\} &amp;= \frac{j}{k}\sin(\omega k) \mathcal{X}\left\{y_m \right\}\end{aligned}\]</span></p>
+</div>
+<p>These identities will prove useful in the study of the stability of the wave equation, as will be seen shortly.</p>
+<h3 id="matrix-form-of-difference-operators">Matrix form of difference operators</h3>
+<p>Since <span class="math inline">\(y_m\)</span> is interpreted as a grid function, it is natural to think of the spatial difference operators as matrices acting on the vector <span class="math inline">\({\bf y} \in \mathbb{R}^{M+1}\)</span>. Consider the operator <span class="math inline">\(\delta_{x+}\)</span>. For interior points, one has <span class="math inline">\(\delta_{x+}y_m = \left({\bf D}^+ {\bf y}\right)_m = \frac{y_{m+1}-y_m}{h}\)</span>. This is <span class="math display">\[{\bf D}^+ {\bf y} = \frac{1}{h}\begin{bmatrix}
+&amp; &amp; {\bf \ddots}  &amp; \ddots &amp; &amp; &amp; \\ 
+&amp; &amp; &amp; {\bf -1} &amp; 1 &amp; &amp; &amp;\\
+&amp; &amp; &amp; &amp; {\bf -1} &amp; 1 &amp; &amp; \\
+&amp; &amp; &amp; &amp; &amp; \ddots &amp; \ddots &amp; \\
+\end{bmatrix}
+\begin{bmatrix}
+\vdots \\
+y_m \\
+y_{m+1}\\
+\vdots
+\end{bmatrix}.\]</span> Here, the boldface indicates the elements on the main diagonal. Analogously, one can define matrices for the operator <span class="math inline">\(\delta_{x-}y_m = \left({\bf D}^- {\bf y}\right)_m = \frac{y_{m}-y_{m-1}}{h}\)</span> <span class="math display">\[{\bf D}^- {\bf y} = \frac{1}{h}\begin{bmatrix}
+&amp; &amp; \ddots  &amp; \ddots &amp; &amp; &amp; \\ 
+&amp; &amp; &amp; -1 &amp; {\bf 1} &amp; &amp; &amp;\\
+&amp; &amp; &amp; &amp; -1 &amp; {\bf 1} &amp; &amp; \\
+&amp; &amp; &amp; &amp; &amp; \ddots &amp; \ddots &amp; \\
+\end{bmatrix}
+\begin{bmatrix}
+\vdots \\
+y_{m-1}\\
+y_{m}\\
+\vdots
+\end{bmatrix}.\]</span> The centered derivative is given by <span class="math inline">\(\delta_{x\cdot}y_m = \left({\bf D} {\bf y}\right)_m = \frac{y_{m+1} - y_{m-1}}{2h}\)</span>, or <span class="math display">\[{\bf D} {\bf y} = \frac{1}{2 h}\begin{bmatrix}
+&amp; &amp; \ddots  &amp; \ddots &amp; \ddots &amp; &amp; &amp; &amp;\\ 
+&amp; &amp; &amp; -1 &amp; {\bf 0} &amp; 1 &amp; &amp; &amp; &amp;\\
+&amp; &amp; &amp; &amp; -1 &amp; {\bf 0 } &amp; 1 &amp;  &amp; &amp;\\
+&amp; &amp; &amp; &amp; &amp; -1 &amp; {\bf 0 } &amp; 1 &amp;  &amp; \\
+&amp; &amp; &amp; &amp; &amp; &amp; \ddots &amp; \ddots &amp;  \ddots &amp; \\
+\end{bmatrix}
+\begin{bmatrix}
+\vdots \\
+y_{m-1}\\
+y_{m}\\
+y_{m+1} \\
+\vdots
+\end{bmatrix}.\]</span> The second derivative is given by <span class="math inline">\(\delta_{xx}y_m = \left({\bf D}^2 {\bf y}\right)_m = \frac{y_{m+1} -2y_{m} + y_{m-1}}{h^2}\)</span>, so that <span class="math display">\[{\bf D}^2 {\bf y} = \frac{1}{h^2}\begin{bmatrix}
+&amp; &amp; \ddots  &amp; \ddots &amp; \ddots &amp; &amp; &amp; &amp;\\ 
+&amp; &amp; &amp; 1 &amp; {\bf -2} &amp; 1 &amp; &amp; &amp; &amp;\\
+&amp; &amp; &amp; &amp; 1 &amp; {\bf -2 } &amp; 1 &amp;  &amp; &amp;\\
+&amp; &amp; &amp; &amp; &amp; 1 &amp; {\bf -2 } &amp; 1 &amp;  &amp; \\
+&amp; &amp; &amp; &amp; &amp; &amp; \ddots &amp; \ddots &amp;  \ddots &amp; \\
+\end{bmatrix}
+\begin{bmatrix}
+\vdots \\
+y_{m-1}\\
+y_{m}\\
+y_{m+1} \\
+\vdots
+\end{bmatrix}.\]</span> The averaging operators can be defined analogously. Denoting them by the letter <span class="math inline">\({\bf W}\)</span>, one has</p>
+<div class="subequations">
+<p><span class="math display">\[\begin{aligned}
+{\bf W}^+  &amp;= \frac{1}{2}\begin{bmatrix}
+&amp; &amp; {\bf \ddots}  &amp; \ddots &amp; &amp; &amp; \\ 
+&amp; &amp; &amp; {\bf 1} &amp; 1 &amp; &amp; &amp;\\
+&amp; &amp; &amp; &amp; {\bf 1} &amp; 1 &amp; &amp; \\
+&amp; &amp; &amp; &amp; &amp; \ddots &amp; \ddots &amp; \\
+\end{bmatrix}, \\
+{\bf W}^-  &amp;= \frac{1}{2}\begin{bmatrix}
+&amp; &amp; \ddots  &amp; \ddots &amp; &amp; &amp; \\ 
+&amp; &amp; &amp; 1 &amp; {\bf 1} &amp; &amp; &amp;\\
+&amp; &amp; &amp; &amp; 1 &amp; {\bf 1} &amp; &amp; \\
+&amp; &amp; &amp; &amp; &amp; \ddots &amp; \ddots &amp; \\
+\end{bmatrix}, \\
+{\bf W} &amp;= \frac{1}{2 }\begin{bmatrix}
+&amp; &amp; \ddots  &amp; \ddots &amp; \ddots &amp; &amp; &amp; &amp;\\ 
+&amp; &amp; &amp; 1 &amp; {\bf 0} &amp; 1 &amp; &amp; &amp; &amp;\\
+&amp; &amp; &amp; &amp; 1 &amp; {\bf 0 } &amp; 1 &amp;  &amp; &amp;\\
+&amp; &amp; &amp; &amp; &amp; 1 &amp; {\bf 0 } &amp; 1 &amp;  &amp; \\
+&amp; &amp; &amp; &amp; &amp; &amp; \ddots &amp; \ddots &amp;  \ddots &amp; \\
+\end{bmatrix}.\end{aligned}\]</span></p>
+</div>
+<h3 id="sec:WEQNmatrices">Numerical Boundary Conditions</h3>
+<p>While the forms of the matrices above hold for central points, the points near the boundary deserve special treatment. One needs of course to discretise the prescribed boundary conditions. We are considering now the two types of boundary conditions encountered in Section <a href="#sec:WaveEquationsBCs" data-reference-type="ref" data-reference="sec:WaveEquationsBCs">[sec:WaveEquationsBCs]</a>: Dirichlet (<span class="math inline">\(y=0\)</span>) and Neumann <span class="math inline">\(\left(\frac{dy}{dx}=0\right)\)</span>.</p>
+<h4 id="fixed-boundary-conditions">Fixed boundary conditions</h4>
+<p>For conditions of Dirichlet type, one can apply <span class="math inline">\(y_0=y_M=0\)</span>. Clearly one need not store the end points, since these are identically zero. Then, one may define <span class="math display">\[{\bf D}^-_d  = \frac{1}{h}\begin{bmatrix}
+{\bf 1} &amp;  &amp;   &amp;   \\ 
+-1&amp; {\bf 1} &amp; &amp; &amp;    \\
+&amp;-1 &amp; {\bf 1} &amp; &amp;    \\
+&amp; &amp; \ddots &amp; \ddots &amp;    \\
+&amp; &amp;  &amp; -1&amp;   
+\end{bmatrix},\]</span> and note that this matrix is <em>rectangular</em>, with dimensions <span class="math inline">\(M \times M-1\)</span>. The subscript <span class="math inline">\(d\)</span> is for <em>Dirichlet</em>. The elements on the main diagonal were again written in boldface. The matrix <span class="math inline">\({\bf D}^{+}\)</span> can be defined simply as <span class="math display">\[{\bf D}^+_{d} = -({\bf D}^-_d)^\intercal\]</span> or <span class="math display">\[{\bf D}^+_d  = \frac{1}{h}\begin{bmatrix}
+{\bf -1} &amp;  1 &amp;   &amp;   &amp;\\ 
+&amp; {\bf -1} &amp; 1 &amp; &amp;  &amp;  \\
+&amp; &amp; {\bf -1} &amp; 1&amp;   &amp; \\
+&amp; &amp; &amp; \ddots &amp;  \ddots &amp; \\
+&amp; &amp; &amp;  &amp; {\bf -1}&amp;   1
+\end{bmatrix},\]</span> and is a rectangular matrix of dimensions <span class="math inline">\(M-1 \times M\)</span>. The second difference operator is then given by composing the first difference matrices, as <span class="math display">\[\label{eq:SecondDiffMat}
+{\bf D}^2_d = {\bf D}^+_d \,\, {\bf D}^-_d\]</span> Note that this composition is obvisously <em>not</em> symmetric! That is, the product <span class="math inline">\({\bf D}^-_d \,\, {\bf D}^+_d\)</span> is not the same as <a href="#eq:SecondDiffMat" data-reference-type="eqref" data-reference="eq:SecondDiffMat">[eq:SecondDiffMat]</a>, since the resulting matrix has different dimensions. The correct composition is given by <a href="#eq:SecondDiffMat" data-reference-type="eqref" data-reference="eq:SecondDiffMat">[eq:SecondDiffMat]</a>, since the resulting matrix is <span class="math inline">\(M-1 \times M-1\)</span>. Explicitly <span class="math display">\[\label{eq:D2Diri}
+{\bf D}^2_d = \frac{1}{h^2}\begin{bmatrix}
+{\bf -2}&amp; 1&amp;   &amp;  &amp;  &amp;  \\ 
+-1&amp; {\bf -2} &amp; 1 &amp;  &amp;  &amp;\\
+&amp; \ddots &amp; \ddots &amp; \ddots &amp;  &amp;      \\
+&amp; &amp;  1 &amp; {\bf -2}&amp; 1   \\
+&amp; &amp;   &amp; 1 &amp; {\bf -2}   \\
+\end{bmatrix}.\]</span></p>
+<h4 id="free-boundary-conditions-non-centred">Free boundary conditions (Non-centred)</h4>
+<p>Consider now an approximation to the Neumann condition as <span class="math inline">\(\delta_{x+}y_0 = \delta_{x-}y_M=0\)</span>. This gives <span class="math inline">\(y_0=y_1\)</span> and <span class="math inline">\(y_M=y_{M-1}\)</span>. Again, one need not store the end points <span class="math inline">\(y_0\)</span>, <span class="math inline">\(y_M\)</span>, since their value is the same as the inner points <span class="math inline">\(y_1\)</span>, <span class="math inline">\(y_{M-1}\)</span>. Then, one can again define rectangular matrices as the forward and backward difference operators. For the backward difference, take <span class="math display">\[{\bf D}^-_{n1}  = \frac{1}{h}\begin{bmatrix}
+{\bf 0} &amp;  &amp;   &amp;   \\ 
+-1&amp; {\bf 1} &amp; &amp; &amp;    \\
+&amp;-1 &amp; {\bf 1} &amp; &amp;    \\
+&amp; &amp; \ddots &amp; \ddots &amp;    \\
+&amp; &amp;  &amp; 0&amp;   
+\end{bmatrix},\]</span> This is a <span class="math inline">\(M \times M-1\)</span> matrix, whose first and last rows are filled with zeros. Again, boldaface symbols are on the main diagonal. The subscript <span class="math inline">\({n1}\)</span> indicates <em>first-order Neumann</em> conditions. Just like previously, the forward difference operator is obtained as <span class="math display">\[{\bf D}^+_{n1} = -({\bf D}^-_{n1})^\intercal,\]</span> or <span class="math display">\[{\bf D}^+_{n1} = \frac{1}{h}\begin{bmatrix}
+{\bf 0} &amp;  1 &amp;   &amp;   &amp;\\ 
+&amp; {\bf -1} &amp; 1 &amp; &amp;  &amp;  \\
+&amp; &amp; {\bf -1} &amp; 1&amp;   &amp; \\
+&amp; &amp; &amp; \ddots &amp;  \ddots &amp; \\
+&amp; &amp; &amp;  &amp; {\bf -1}&amp;   0
+\end{bmatrix},\]</span> and is a <span class="math inline">\(M-1\times M\)</span> matrix. The second difference operator is given by <span class="math display">\[\label{eq:SecondDiffMatNeumann}
+{\bf D}^2_{n1} = {\bf D}^+_{n1} \,\, {\bf D}^-_{n1},\]</span> or <span class="math display">\[\label{eq:D2Neum1}
+{\bf D}^2_{n1} = \frac{1}{h^2}\begin{bmatrix}
+{\bf -1}&amp; 1&amp;   &amp;  &amp;  &amp;  \\ 
+-1&amp; {\bf -2} &amp; 1 &amp;  &amp;  &amp;\\
+&amp; \ddots &amp; \ddots &amp; \ddots &amp;  &amp;      \\
+&amp; &amp;  1 &amp; {\bf -2}&amp; 1   \\
+&amp; &amp;   &amp; 1 &amp; {\bf -1}   \\
+\end{bmatrix},\]</span> and is <span class="math inline">\(M-1 \times M-1\)</span>.</p>
+<h4 id="free-boundary-conditions-centred">Free boundary conditions (Centred)</h4>
+<p>A second-order accurate implementation of the Neumann condition results from the application of <span class="math inline">\(\delta_{x\cdot}y_0=\delta_{x\cdot}y_M=0\)</span>. In this case, it results that <span class="math inline">\(y_{-1}=y_1\)</span>, <span class="math inline">\(y_{M-1}=y_{M+1}\)</span>, and hence, application of the second-difference operator at the boundary points results in <span class="math display">\[\label{eq:D2Neum2}
+{\bf D}^2_{n2} = \frac{1}{h^2}\begin{bmatrix}
+{\bf -2}&amp; 2&amp;   &amp;  &amp;  &amp;  \\ 
+-1&amp; {\bf -2} &amp; 1 &amp;  &amp;  &amp;\\
+&amp; \ddots &amp; \ddots &amp; \ddots &amp;  &amp;      \\
+&amp; &amp;  1 &amp; {\bf -2}&amp; 1   \\
+&amp; &amp;   &amp; 2 &amp; {\bf -2}   \\
+\end{bmatrix},\]</span> and the matrix is <span class="math inline">\(M+1 \times M+1\)</span>. Note that this matrix is <em>not</em> symmetric, and it is therefore not possible to write it as the product of a matrix times its transpose. Note, however, that the matrix can be symmetrised by applying a linear transformation in the form of a positive-definite diagonal matrix. To that end, consider the <span class="math inline">\(M+1\times M+1\)</span> diagonal matrix <span class="math inline">\({\bf T} = \text{diag}([\frac{1}{2},1,1,...,1,1,\frac{1}{2}])\)</span>. Then <span class="math display">\[\label{eq:LinTransfn2}
+{\bf T}\,{\bf D}^{2}_{n2} = \frac{1}{h^2}\begin{bmatrix}
+{\bf -1}&amp; 1&amp;   &amp;  &amp;  &amp;  \\ 
+-1&amp; {\bf -2} &amp; 1 &amp;  &amp;  &amp;\\
+&amp; \ddots &amp; \ddots &amp; \ddots &amp;  &amp;      \\
+&amp; &amp;  1 &amp; {\bf -2}&amp; 1   \\
+&amp; &amp;   &amp; 1 &amp; {\bf -1}   \\
+\end{bmatrix},\]</span> that is, <a href="#eq:D2Neum1" data-reference-type="eqref" data-reference="eq:D2Neum1">[eq:D2Neum1]</a>, except the dimensions of the matrix are here <span class="math inline">\(M+1 \times M+1\)</span>.</p>
+<h3 id="eigenvalues-and-eigenvectors-of-second-difference-matrices">Eigenvalues and eigenvectors of second difference matrices</h3>
+<p>The analysis is Section <a href="#sec:FDtransformationsSpatial" data-reference-type="ref" data-reference="sec:FDtransformationsSpatial">1.1.1</a> revealed that an eigenfunction of the <span class="math inline">\(\delta_{xx}\)</span> operator is <span class="math inline">\(e^{-jm h \gamma}\)</span>, with eigenvalue <span class="math inline">\(-\frac{4}{h^2}\sin^2\left( \frac{\gamma h}{2}\right)\)</span>. Of course, a second eigenfunction is given by <span class="math inline">\(e^{jm h \gamma}\)</span>, so that the eigenfunctions of the second difference matrix can be written as <span class="math display">\[{\bf D}^2 \hat {\bf y} = -\frac{4}{h^2}\sin^2\left( \frac{\gamma h}{2}\right)\hat {\bf y},\]</span> where <span class="math inline">\(\hat {\bf y} = A_+ \hat {\bf y}^+ + A_- \hat {\bf y}^-\)</span> and where <span class="math inline">\(\hat { y}^+_m = e^{jmh\gamma}\)</span>, <span class="math inline">\(\hat { y}^-_m = e^{-jmh\gamma}\)</span>. Here, <span class="math inline">\({\bf D}^2\)</span> is either one of <a href="#eq:D2Diri" data-reference-type="eqref" data-reference="eq:D2Diri">[eq:D2Diri]</a>, <a href="#eq:D2Neum1" data-reference-type="eqref" data-reference="eq:D2Neum1">[eq:D2Neum1]</a> or <a href="#eq:D2Neum2" data-reference-type="eqref" data-reference="eq:D2Neum2">[eq:D2Neum2]</a>. In practice, the quantised wavenumbers <span class="math inline">\(\gamma\)</span> and the corresponding eigenvectors are obtained after application of the boundary conditions.</p>
+<h4 id="eigenvalues-of-bf-d2_d">Eigenvalues of <span class="math inline">\({\bf D}^2_d\)</span></h4>
+<p>Application of <span class="math inline">\({\hat{y}}_{m=0}={\hat{y}}_{m=M}=0\)</span> results in the following system of equations for <span class="math inline">\(A_+\)</span>, <span class="math inline">\(A_-\)</span> <span class="math display">\[\label{eq:eigenD2d}
+\begin{bmatrix}
+1 &amp; 1 \\
+e^{jMh\gamma} &amp; e^{-jMh\gamma}
+\end{bmatrix}
+\begin{bmatrix}
+A_+ \\
+A_-
+\end{bmatrix}=
+\begin{bmatrix}
+0 \\
+0
+\end{bmatrix},\]</span> which has non-trivial solutions if and only if the determinant is set to zero, i.e. when <span class="math display">\[\label{eq:waveNrD2d}
+\sin ({Mh\gamma}) = 0  \implies  \gamma_p = \frac{p \pi}{M h}, \,\, p = 1,...,M-1.\]</span> The eigenvectors are obtained by solving either one of <a href="#eq:eigenD2d" data-reference-type="eqref" data-reference="eq:eigenD2d">[eq:eigenD2d]</a>. This gives <span class="math inline">\(A_+=-A_-\)</span>, and thus <span class="math display">\[\label{eq:EigenVecsD2d}
+{\hat y}^p_m = A_+ \sin \frac{mp\pi}{M },\,\, m = 1,..,M-1.\]</span> In the above <span class="math inline">\(\hat{ y}^p_m\)</span> denotes the <span class="math inline">\(m^{th}\)</span> component of the <span class="math inline">\(p^{th}\)</span> eigenvector. The constant <span class="math inline">\(A_+\)</span> can be set to normalise the eigenvectors conveniently, as shown below. The eigenvectors can be ordered columnwise in a matrix, <span class="math display">\[{\bf Y}_d = \begin{bmatrix}\hat {\bf y}^1 &amp; \hat{\bf y}^2 &amp; ... &amp; \hat{\bf y}^{M-1}\end{bmatrix},\]</span> so that, from the spectral theorem, a decomposition of the second-difference matrix is obtained as <span class="math display">\[\label{eq:DecompD2d}
+{\bf D}^{2}_d = -{\bf Y}_d \, {\bf \Lambda}_d \, {\bf Y}^\intercal_d,\]</span> where <span class="math inline">\({{\bf \Lambda}_d}\)</span> is a diagonal matrix, whose diagonal elements <span class="math inline">\(\lambda_p\)</span> are <span class="math inline">\(\frac{4}{h^2}\sin^2 \left( \frac{\gamma_p h}{2}\right)\)</span>. Here, <span class="math display">\[\label{eq:BndLambdaD2d}
+0 &lt; \lambda_p &lt; 4/h^2.\]</span> Note that, by virtue of the bounds on the eigenvalues, this matrix is clearly positive-definite. When the eigenvectors are normalised using <span class="math inline">\(A_+ = \sqrt{2/M}\)</span>, the matrix <span class="math inline">\({\bf Y}_d\)</span> is orthonormal, and thus <span class="math inline">\({\bf Y}_d {\bf Y}_d^{\intercal}={\bf Y}_d^\intercal {\bf Y}_d = {\bf I}\)</span>.</p>
+<h4 id="eigenvalues-of-bf-d2_n1">Eigenvalues of <span class="math inline">\({\bf D}^2_{n1}\)</span></h4>
+<p>Application of <span class="math inline">\(\delta_{x+}\hat y_0 = \delta_{x-}\hat y_M = 0\)</span> gives, after a little algebra, the following system of equations <span class="math display">\[\label{eq:eigenD2n1}
+\begin{bmatrix}
+e^{jh\gamma} &amp; -1 \\
+e^{j(M-1)h\gamma} &amp; -e^{-jMh\gamma}
+\end{bmatrix}
+\begin{bmatrix}
+A_+ \\
+A_-
+\end{bmatrix}=
+\begin{bmatrix}
+0 \\
+0
+\end{bmatrix},\]</span> Setting the determinant to zero gives <span class="math display">\[\label{eq:EigenvaluesD2n1}
+\sin ({(M-1)h\gamma}) = 0  \implies  \gamma_p = \frac{p \pi}{(M-1) h}, \,\, p = 0,...,M-2.\]</span> Note that the range for <span class="math inline">\(p\)</span> is now shifted, so to include the zero eigenvalue. This must be included: looking at <a href="#eq:D2Neum1" data-reference-type="eqref" data-reference="eq:D2Neum1">[eq:D2Neum1]</a>, the vector <span class="math inline">\(\hat {\bf y} = [1,1,...,1]\)</span> is necessarily an eigenvector, with eigenvalue equal to zero. The eigenvectors are obtanained solving either one of <a href="#eq:eigenD2n1" data-reference-type="eqref" data-reference="eq:eigenD2n1">[eq:eigenD2n1]</a>. This gives <span class="math display">\[\hat y^p_m=A_+\cos\frac{p \pi \left( m-\frac{1}{2}\right)}{M-1}, \,\, m = 1,..,M-1.\]</span> As before, the eigenvectors can be arranged in columns, <span class="math display">\[{\bf Y}_{n1} = \begin{bmatrix}\hat {\bf y}^1 &amp; \hat{\bf y}^2 &amp; ... &amp; \hat{\bf y}^{M-1}\end{bmatrix},\]</span> so that, from the spectral theorem, a decomposition of the second-difference matrix is obtained as <span class="math display">\[\label{eq:DecompD2n1}
+{\bf D}^{2}_{n1} = -{\bf Y}_{n1} \, {\bf \Lambda}_{n1} \, {\bf Y}^\intercal_{n1}.\]</span> where <span class="math inline">\({{\bf \Lambda}_{n1}}\)</span> is a diagonal matrix, whose diagonal elements <span class="math inline">\(\lambda_p\)</span> are equal to <span class="math inline">\(\frac{4}{h^2}\sin^2 \left( \frac{\gamma_p h}{2}\right)\)</span>. Here, <span class="math display">\[\label{eq:BndLambdaD2n1}
+0 \leq \lambda_p &lt; 4/h^2.\]</span> When the eigenvectors are normalised using <span class="math inline">\(A_+ = \sqrt{2/(M-1)}\)</span>, the matrix <span class="math inline">\({\bf Y}_{n1}\)</span> is orthonormal, and thus <span class="math inline">\({\bf Y}_{n1} {\bf Y}_{n1}^{\intercal}={\bf Y}_{n1}^\intercal {\bf Y}_{n1} = {\bf I}\)</span>.</p>
+<h4 id="eigenvalues-of-bf-d2_n2">Eigenvalues of <span class="math inline">\({\bf D}^2_{n2}\)</span></h4>
+<p>Here, applying the boundary conditions <span class="math inline">\(\delta_{x\cdot}y_0 = \delta_{x\cdot}y_M = 0\)</span> gives the following set of equations <span class="math display">\[\label{eq:eigenD2n2}
+\begin{bmatrix}
+1 &amp; -1 \\
+e^{jMh\gamma} &amp; -e^{-jMh\gamma}
+\end{bmatrix}
+\begin{bmatrix}
+A_+ \\
+A_-
+\end{bmatrix}=
+\begin{bmatrix}
+0 \\
+0
+\end{bmatrix},\]</span> and, upon setting the determinant to zero, the quantised wavenumbers are such that <span class="math display">\[\label{eq:EigenvaluesD2n2}
+\sin ({Mh\gamma}) = 0  \implies  \gamma_p = \frac{p \pi}{M h}, \,\, p = 0,...,M.\]</span> These are the same as <a href="#eq:waveNrD2d" data-reference-type="eqref" data-reference="eq:waveNrD2d">[eq:waveNrD2d]</a>, except for the range of <span class="math inline">\(p\)</span>, which again must include the zero eigenvalue since the vector <span class="math inline">\(\hat {\bf y}=[1,1,..,1]^\intercal\)</span> is necessarily an eigenvector. The eigenvectors are then given by solving either one of <a href="#eq:eigenD2n2" data-reference-type="eqref" data-reference="eq:eigenD2n2">[eq:eigenD2n2]</a>, yielding <span class="math display">\[\hat y^p_m=A_+\cos\frac{m p \pi}{M}, \,\, m = 0,..,M.\]</span> The eigenvectors can be ordered columnwise in a matrix, <span class="math display">\[{\bf Y}_{n2} = \begin{bmatrix}\hat {\bf y}^1 &amp; \hat{\bf y}^2 &amp; ... &amp; \hat{\bf y}^{M-1}\end{bmatrix},\]</span> so that, from the spectral theorem, a decomposition of the second-difference matrix is obtained as <span class="math display">\[\label{eq:DecompD2n2}
+{\bf D}^{2}_{n2} = -{\bf Y}_{n2} \, {\bf \Lambda}_{n2} \, {\bf Y}^{-1}_{n2},\]</span> where <span class="math inline">\({{\bf \Lambda}_{n2}}\)</span> is a diagonal matrix, whose diagonal elements <span class="math inline">\(\lambda_p\)</span> are equal to <span class="math inline">\(\frac{4}{h^2}\sin^2 \left( \frac{\gamma_p h}{2}\right)\)</span>. Here, <span class="math display">\[\label{eq:BndLambdaD2n2}
+0 \leq \lambda_p \leq 4/h^2.\]</span> Note that now, since <span class="math inline">\({\bf D}^2_{n2}\)</span> is <em>not</em> symmetric, the matrix <span class="math inline">\({\bf Y}_{n2}\)</span> is not orthogonal.</p>
+<h2 id="an-explicit-finite-difference-scheme">An explicit finite difference scheme</h2>
+<p>As a working finite difference scheme discretising <a href="#eq:WE" data-reference-type="eqref" data-reference="eq:WE">[eq:WE]</a>, consider <span class="math display">\[\label{eq:WEFDexp}
+\delta_{tt}{\bf y}^n = c^2 {\bf D}^2 {\bf y}^n.\]</span> Here, we are not bothered with the particular form of the second-difference matrix. It may be stem from application of either Neumann or Dirichlet boundary conditions, so the subscript is left blank. Expanding out the second time difference in <a href="#eq:WEFDexp" data-reference-type="eqref" data-reference="eq:WEFDexp">[eq:WEFDexp]</a>, one gets <span class="math display">\[{\bf y}^{n+1} = \left(2{\bf I}+c^2k^2{\bf D}^2 \right){\bf y}^n - {\bf y}^{n-1},\]</span> giving an explicit update. While simple, the properties of this scheme are still unknown, particularly with respect to stability and accuracy. Just like the choice of the system’s parameters poses an upper bound on the choice of the time step in the case of the harmonic oscillator, here the choice of the time step and the grid spacing is limited by a stability condition.</p>
+<h3 id="stability-via-energy-analysis">Stability via Energy Analysis</h3>
+<p>An idea of stability from distributed systems is encapsulated in the continuous energy balance given in Section <a href="#sec:BoundWECnt" data-reference-type="ref" data-reference="sec:BoundWECnt">[sec:BoundWECnt]</a>. A similar idea can be employed in the discrete case. First, write <span class="math display">\[{\bf D}^2 = -{\bf Y} \, {\bf \Lambda} \, {\bf Y}^{-1},\]</span> for a positive-semidefinite diagonal matrix <span class="math inline">\({\bf \Lambda}\)</span>, which holds true for the Dirichlet, first- and second-order Neumann conditions, as in <a href="#eq:DecompD2d" data-reference-type="eqref" data-reference="eq:DecompD2d">[eq:DecompD2d]</a>, <a href="#eq:DecompD2n1" data-reference-type="eqref" data-reference="eq:DecompD2n1">[eq:DecompD2n1]</a>, <a href="#eq:DecompD2n2" data-reference-type="eqref" data-reference="eq:DecompD2n2">[eq:DecompD2n2]</a>. Then, multiply <a href="#eq:WEFDexp" data-reference-type="eqref" data-reference="eq:WEFDexp">[eq:WEFDexp]</a> on the left by <span class="math inline">\({\bf Y}^{-1}\)</span>, to get <span class="math display">\[\delta_{tt}{\bf q}^n = -c^2 {\bf \Lambda} {\bf q}^n, \,\, \text{where }{\bf q}^n = {\bf Y}^{-1}{\bf y}^n.\]</span> Multiplying the equation above on the left by <span class="math inline">\(\delta_{t\cdot}{\bf q}^\intercal\)</span>, and using the usual identities, one gets <span class="math display">\[\delta_{t+}{\mathfrak h}^{n-1/2} = 0,\]</span> where <span class="math display">\[\label{eq:EnWaveEqnFD}
+{\mathfrak h}^{n-1/2} = \frac{(\delta_{t-}{\bf q}^n)^\intercal \delta_{t-}{\bf q}^n}{2} + \frac{c^2(e_{t-}{\bf q}^n)^\intercal {\bf \Lambda} {\bf q}^n}{2}.\]</span> This expresses an energy balance in terms of the modified state variable <span class="math inline">\(\bf q\)</span>. While conserved, the discrete energy is not necessarily positive, because the potential term is of indefinite sign. It may be useful to re-write the discrete energy as a quadratic form for the vector <span class="math inline">\({\bf p} = \frac{1}{\sqrt{2}}[({\bf q}^n)^\intercal, ({\bf q}^{n-1})^\intercal]^\intercal\)</span>. This gives <span class="math display">\[{\mathfrak h}^{n-1/2} = {\bf p}^\intercal \begin{bmatrix}\frac{\bf I}{k^2} &amp; -\frac{\bf I}{k^2}+\frac{c^2}{2}{\bf \Lambda} \\ -\frac{\bf I}{k^2}+\frac{c^2}{2}{\bf \Lambda} &amp; \frac{\bf I}{k^2} \end{bmatrix}{\bf p}.\]</span> Positive-definiteness may be established after inspection of the Schur complement, that is, the matrix is positive definite if and only if its Schur complement is: <span class="math display">\[\frac{\bf I}{k^2} - k^2 \left( -\frac{\bf I}{k^2}+\frac{c^2}{2}{\bf \Lambda}\right)^2 = -\frac{c^2k^2}{2}{\bf \Lambda}\left(-\frac{2{\bf I}}{k^2} + \frac{c^2}{2}{\bf \Lambda} \right) \geq 0.\]</span> Now, since we established that <span class="math inline">\({\bf \Lambda}\)</span> is positive definite, with largest eigenvalue <span class="math inline">\(4/h^2\)</span>, the condition above results in establishing when <span class="math inline">\(-\frac{2{\bf I}}{k^2} + \frac{c^2}{2}{\bf \Lambda}\leq 0\)</span>, that is: <span class="math display">\[\label{eq:CFL}
+h\geq ck.\]</span> The condition above takes the name of <em>Courant-Friedrichs-Lewy</em>, or CFL, condition. It is a stability condition for scheme <a href="#eq:WEFDexp" data-reference-type="eqref" data-reference="eq:WEFDexp">[eq:WEFDexp]</a>. In practice, given a wave velocity <span class="math inline">\(c\)</span> and a time step <span class="math inline">\(k\)</span>, the grid spacing cannot be chosen to be smaller than bound <a href="#eq:CFL" data-reference-type="eqref" data-reference="eq:CFL">[eq:CFL]</a>.</p>
+<p>While <a href="#eq:EnWaveEqnFD" data-reference-type="eqref" data-reference="eq:EnWaveEqnFD">[eq:EnWaveEqnFD]</a> expresses a discrete energy balance, it is not immediate to see how this is related to the continuous energy balance <a href="#eq:EnBalFull" data-reference-type="eqref" data-reference="eq:EnBalFull">[eq:EnBalFull]</a>. This difficulty is only apparent: a natural discretisation of <a href="#eq:EnBalFull" data-reference-type="eqref" data-reference="eq:EnBalFull">[eq:EnBalFull]</a> is already encoded in <a href="#eq:EnWaveEqnFD" data-reference-type="eqref" data-reference="eq:EnWaveEqnFD">[eq:EnWaveEqnFD]</a>, when the physical state <span class="math inline">\({\bf y}^n\)</span> is substituted back in. First, start with the Dirichlet and non-centred Neumann conditions. For these, one has <span class="math inline">\({\bf Y}^\intercal = {\bf Y}^{-1}\)</span>, and thus <a href="#eq:EnWaveEqnFD" data-reference-type="eqref" data-reference="eq:EnWaveEqnFD">[eq:EnWaveEqnFD]</a> can be expressed as <span class="math display">\[{\mathfrak h}^{n-1/2} = \frac{(\delta_{t-}{\bf y}^n)^\intercal \delta_{t-}{\bf y}^n}{2} + \frac{c^2(e_{t-}{\bf {\bf D}^-{\bf y}}^n)^\intercal \, {\bf D}^-{\bf y}^n}{2},\]</span> where the fact that <span class="math inline">\({\bf D}^2 = {\bf D}^+{\bf D}^-\)</span> was used, as per <a href="#eq:SecondDiffMat" data-reference-type="eqref" data-reference="eq:SecondDiffMat">[eq:SecondDiffMat]</a> and <a href="#eq:SecondDiffMatNeumann" data-reference-type="eqref" data-reference="eq:SecondDiffMatNeumann">[eq:SecondDiffMatNeumann]</a>. For centered conditions, however, the second-difference matrix is not symmetric, and <span class="math inline">\({\bf Y}\)</span> is not orthogonal, meaning that <a href="#eq:EnWaveEqnFD" data-reference-type="eqref" data-reference="eq:EnWaveEqnFD">[eq:EnWaveEqnFD]</a> cannot be directly converted to a discrete counterpart of <a href="#eq:EnBalFull" data-reference-type="eqref" data-reference="eq:EnBalFull">[eq:EnBalFull]</a>. To solve this issue, one may employ the linear transformation <a href="#eq:LinTransfn2" data-reference-type="eqref" data-reference="eq:LinTransfn2">[eq:LinTransfn2]</a> on the wave equation <a href="#eq:WEFDexp" data-reference-type="eqref" data-reference="eq:WEFDexp">[eq:WEFDexp]</a>, to get <span class="math display">\[\delta_{tt}{\bf T}\,{\bf y}^n = c^2 {\bf T}\,{\bf D}^2 \,{\bf y}^n,\]</span> Remember that now the matrix <span class="math inline">\({\bf T}\,{\bf D}^2\)</span> is symmetric, and can be decomposed as <span class="math inline">\({\bf D}^2 = {\bf D}^+{\bf D}^-\)</span>. Multiplying the equation above on the left by <span class="math inline">\({\bf y}^\intercal\)</span> gives the energy <span class="math display">\[{\mathfrak h}^{n-1/2} = \frac{(\delta_{t-}{\bf y}^n)^\intercal {\bf T} \delta_{t-}{\bf y}^n}{2} + \frac{c^2(e_{t-}{\bf {\bf D}^-{\bf y}}^n)^\intercal \, {\bf D}^-{\bf y}^n}{2},\]</span> and of course the stability analysis of this modified energy gives the same CFL condition as <a href="#eq:CFL" data-reference-type="eqref" data-reference="eq:CFL">[eq:CFL]</a>.</p>
+<h3 id="accuracy">Accuracy</h3>
+<p>The question of accuracy for scheme <a href="#eq:WEFDexp" data-reference-type="eqref" data-reference="eq:WEFDexp">[eq:WEFDexp]</a> is an interesting one. First, it may be useful to derive the <em>numerical dispersion relation</em>. Remember that, for the continuous system, the dispersion relation is given by <a href="#eq:DispRelWECnt" data-reference-type="eqref" data-reference="eq:DispRelWECnt">[eq:DispRelWECnt]</a>, in which the temporal frequencies are proportional to the wavenumbers, with constant of proportionality given by the wave speed <span class="math inline">\(c\)</span>. Now, re-write scheme <a href="#eq:WEFDexp" data-reference-type="eqref" data-reference="eq:WEFDexp">[eq:WEFDexp]</a> in operator form, and transform in the frequency domain: <span class="math display">\[\label{eq:WEfdOperator}
+\delta_{tt}y^n_m = c^2 \delta_{xx}y^n_m \implies -\frac{4}{k^2}\sin^2 \left( \frac{\omega k}{2}\right) = -\frac{4 c^2}{h^2}\sin^2 \left( \frac{\gamma h}{2}\right).{}\]</span> When the stability condition <a href="#eq:CFL" data-reference-type="eqref" data-reference="eq:CFL">[eq:CFL]</a> is satisfied with equality, the numerical dispersion relation above gives <span class="math display">\[\label{eq:NumDispRelWE}
+\omega = c \gamma,\]</span> that is, the same as the continuous system! In practice, the system is dispersionless. This is certainly too strong a statement, since the dispersion relation above was obtained in the case of an infinite grid, without boundaries. For all practical applications, the grid is finite and the wavenumbers and frequencies are quantised. It is the accuracy of these quantised frequencies and wavenumbers that must be checked. From the previous section, we know that the continuous boundary conditions can be discretised in a number of ways, leading to different expressions for the quantised wavenumbers. First, consider the numerical Dirichlet conditions. The wavenumbers are given by <a href="#eq:waveNrD2d" data-reference-type="eqref" data-reference="eq:waveNrD2d">[eq:waveNrD2d]</a>. When one chooses <span class="math inline">\(h\)</span> to be exactly equal to <span class="math inline">\(L/M\)</span>, then the numerical wavenumbers are the same as the continuous ones, up to <span class="math inline">\(m=M-1\)</span>, and hence the numerical frequencies are obtained from <a href="#eq:NumDispRelWE" data-reference-type="eqref" data-reference="eq:NumDispRelWE">[eq:NumDispRelWE]</a>, as <span class="math display">\[\omega_p = \frac{pc\pi}{Mh}, \,\, p = 1,...,M-1,\]</span> and these are the same as the eigenfrequencies of the continuous system, <a href="#eq:omeM" data-reference-type="eqref" data-reference="eq:omeM">[eq:omeM]</a>. Note that, of course, the eigenvectors of the <span class="math inline">\({\bf D}^2_{d}\)</span> matrix, given in <a href="#eq:EigenVecsD2d" data-reference-type="eqref" data-reference="eq:EigenVecsD2d">[eq:EigenVecsD2d]</a> are a sampled version of the eigenvectors of the continuous system. So, for Dirchlet conditions, satisfying the stability condition <a href="#eq:CFL" data-reference-type="eqref" data-reference="eq:CFL">[eq:CFL]</a> and using the matrix <span class="math inline">\({\bf D}^2_{d}\)</span> given in <a href="#eq:D2Diri" data-reference-type="eqref" data-reference="eq:D2Diri">[eq:D2Diri]</a> does indeed result in an exact scheme in the frequency domain! In the time domain, things are slightly more complicated, due to the discretisation of the initial conditions, discussed below. This is nonetheless a powerful result, and indeed one rarely found in other systems.</p>
+<p>For Neumann conditions, the first-order accurate discretisation <span class="math inline">\({\bf D}^2_{n1}\)</span> gives the quantised wavenumbers <a href="#eq:EigenvaluesD2n1" data-reference-type="eqref" data-reference="eq:EigenvaluesD2n1">[eq:EigenvaluesD2n1]</a>. When one chooses <span class="math inline">\(h = L/M\)</span>, the quantised wavenumbers are not exactly the same as the continuous one, so here an approximation is introduced. However, the eigenvalues of the matrix <span class="math inline">\({\bf D}^2_{n2}\)</span>, in <a href="#eq:EigenvaluesD2n2" data-reference-type="eqref" data-reference="eq:EigenvaluesD2n2">[eq:EigenvaluesD2n2]</a>, are again exact, and the eigenvectors are sampled versions of the continuous eigenvectors.</p>
+<p>The order of accuracy of scheme <a href="#eq:WEFDexp" data-reference-type="eqref" data-reference="eq:WEFDexp">[eq:WEFDexp]</a> may as well be approached in terms of the Taylor series of its operators, given in <a href="#eq:WEfdOperator" data-reference-type="eqref" data-reference="eq:WEfdOperator">[eq:WEfdOperator]</a>. We want to get the local truncation error of the scheme. To that end, assume now that <span class="math inline">\(y(t,x)\)</span> is in fact the true solution of the continuous wave equation <a href="#eq:WE" data-reference-type="eqref" data-reference="eq:WE">[eq:WE]</a>. Then, apply the difference operators to <span class="math inline">\(y(t,x)\)</span>. This gives the definition of the local truncation error (LTE), as follows: <span class="math display">\[\tau^n_m \triangleq (\delta_{tt}- c^2 \delta_{xx})y(t=kn,x=mh).\]</span> Taylor-expanding the operators, one gets <span class="math display">\[\left(\frac{\partial^2}{\partial t^2} - c^2 \frac{\partial^2}{\partial x^2} + \frac{1}{12}\left(k^2 \frac{\partial^4}{\partial t^4} - c^2 h^2 \frac{\partial^4}{\partial x^4}\right) + \frac{1}{360}\left(k^4 \frac{\partial^6}{\partial t^6} - c^2 h^4 \frac{\partial^6}{\partial x^6}\right) + ... \right)y(t,x) = \tau^n_m.\]</span> When the stability condition <a href="#eq:CFL" data-reference-type="eqref" data-reference="eq:CFL">[eq:CFL]</a> is satisfied with equality, each term in the expansion contains the factor <span class="math inline">\(\frac{\partial^2}{\partial t^2} - c^2 \frac{\partial^2}{\partial x^2}\)</span>, so that a factorisation of the above results as <span class="math display">\[\left(1 + \frac{k^2}{12}\left(\frac{\partial^2}{\partial t^2} + c^2 \frac{\partial^2}{\partial x^2}\right) + \frac{k^4}{360}\left( \frac{\partial^4}{\partial t^4} + c^4 \frac{\partial^4}{\partial x^4} +c^2 \frac{\partial^4}{\partial x^2 \partial t^2} \right) + ... \right)\left(\frac{\partial^2}{\partial t^2} - c^2 \frac{\partial^2}{\partial x^2}\right) y(t,x) = \tau^n_m.\]</span> But since <span class="math inline">\(y(t,x)\)</span> solves <a href="#eq:WE" data-reference-type="eqref" data-reference="eq:WE">[eq:WE]</a>, then one gets <span class="math inline">\(\tau^n_m=0\)</span>, that is, the LTE is zero!</p>
+<h3 id="initialisation.-global-error.">Initialisation. Global error.</h3>
+<p>The LTE computed above is exactly zero when <span class="math inline">\(m\)</span> is an inner point in the domain, and <span class="math inline">\(n \geq 2\)</span> is some time step away from the initial time steps. The global error of the finite difference scheme is defined as <span class="math display">\[\label{eq:ErrWaveEqn}
+E^n_m = y(kn,mh)-y^n_m,\]</span> that is, the difference between the exact solution computed at the time <span class="math inline">\(t=kn\)</span>, <span class="math inline">\(x=mh\)</span>, and the output of the difference scheme at the corresponding time step and grid point. Clearly, the global error includes the errors made in approximating the boundary and initial conditions. The former, as seen, can be approximated exactly via the matrices <span class="math inline">\({\bf D}^2_{d}\)</span>, <span class="math inline">\({\bf D}^2_{n2}\)</span>. As for the latter, a suitable discretisation of the continuous initial conditions <a href="#eq:ICs" data-reference-type="eqref" data-reference="eq:ICs">[eq:ICs]</a> must be given, for some smooth initial displacement <span class="math inline">\(y_0(x)\)</span> and velocity <span class="math inline">\(v_0(x)\)</span>. As per usual, one may set <span class="math display">\[\label{eq:y0m}
+y^0_m = y_0(x=mh),\]</span> that is, one may simply sample the continuous initial shape to set the value of the grid function <span class="math inline">\({\bf y}^0\)</span>. The grid function <span class="math inline">\({\bf y}^1\)</span> is obtained approximating the initial condition on the velocity. In analogy with <a href="#eq:HigherOrderICsOscillator" data-reference-type="eqref" data-reference="eq:HigherOrderICsOscillator">[eq:HigherOrderICsOscillator]</a>, obtained for the oscillator, one may higher-order initial conditions may be obtained here by expanding out the second time difference operator <span class="math inline">\(\delta_{tt}\)</span>.</p>
+<div class="subequations">
+<p><span id="eq:HigherOrderICsWE" label="eq:HigherOrderICsWE">[eq:HigherOrderICsWE]</span> <span class="math display">\[\begin{aligned}
+\delta_{t+}y^0_m &amp;= v_0(x=mh) \quad \text{first order} \label{eq:HigherOrderICsWE1}\\
+\left(\delta_{t+}-\frac{k}{2}\delta_{tt}\right) y^0_m &amp;= v_0(x=mh) \quad \text{second order} \label{eq:HigherOrderICsWE2}\\
+\left(\delta_{t+}-\frac{k}{2}\delta_{tt}- \frac{k^2}{6}\delta_{t+}\delta_{tt}\right) y^0_m &amp;= v_0(x=mh) \quad \text{third order}\label{eq:HigherOrderICsWE3}\\
+\left(\delta_{t+}-\frac{k}{2}\delta_{tt}- \frac{k^2}{6}\delta_{t+}\delta_{tt}- \frac{k^3}{24}\delta_{tt}^2 \right) y^0_m &amp;= v_0(x=mh) \quad \text{fourth order}\label{eq:HigherOrderICsWE4}\end{aligned}\]</span></p>
+</div>
+<p>In the expressions above, substituting <span class="math inline">\(\delta_{tt}y^0_m = c^2 \delta_{xx}y^0_m\)</span> gives a way to compute <span class="math inline">\(y^1_m\)</span>, knowing <span class="math inline">\(y^0_m\)</span> and <span class="math inline">\(v_0\)</span>. While this idea is simple in theory, things turn out to be a little more complicated than this. To figure out what is going on, it may be useful in fact to plot the error curves as a function of <span class="math inline">\(k\)</span>, the time step. In order to do so, we are going to compute the numerical error of the scheme against the exact solution. The initial conditions are given as follows <span class="math display">\[y_0(x)  = 
+\left\{ 
+\begin{array}{ll}
+1 - \cos \left(\frac{2\pi x}{L/2}\right)&amp; \text{if }0\leq x \leq L/2, \\
+0 &amp; \text{elsewhere,}
+\end{array}
+\right.\]</span> and <span class="math inline">\(v_0(x)=0\)</span>. Under such intial conditions, an exact solution is given by the D’Alembert soluition <a href="#eq:Tr" data-reference-type="eqref" data-reference="eq:Tr">[eq:Tr]</a>. Boundary conditions of fixed type are chosen, so that the wave reflects with a change of sign at the boundary. In practice, a discrete counterpart of <a href="#eq:Tr" data-reference-type="eqref" data-reference="eq:Tr">[eq:Tr]</a> is needed, in the form of a digital waveguide. For that, divide the length of the string in <span class="math inline">\(M\)</span> subintervals. Define <span class="math inline">\(h=L/M\)</span>, <span class="math inline">\(k = h/c\)</span>. Define the left-travelling wave front as <span class="math inline">\(l_{m}^n\)</span>, and the right-travelling wave front as <span class="math inline">\(r^n_m\)</span>. For <span class="math inline">\(n=1\)</span>, one has <span class="math display">\[l^1_m = r^1_m = \frac{y^0_m}{2},\quad m=1,...,M-1.\]</span> where <span class="math inline">\(y^0_m\)</span> is defined in <a href="#eq:y0m" data-reference-type="eqref" data-reference="eq:y0m">[eq:y0m]</a>. Then, at the timestep <span class="math inline">\(n\geq 2\)</span>, the travelling wavefronts are updated as follows <span class="math display">\[l^n_m = l^{n-1}_{m+1}  \,\, (m &lt; M-1), \quad
+l^n_{M-1} = r^{n-2}_{M-1}, \quad
+r^n_m = r^{n-1}_{m-1}, \,\, (m &gt; 1), \quad
+r^n_1 = l^{n-2}_{1}.\]</span> This discretises the wave equation exactly. Then the ouput of the finite difference scheme, with initial conditions as per <a href="#eq:HigherOrderICsWE" data-reference-type="eqref" data-reference="eq:HigherOrderICsWE">[eq:HigherOrderICsWE]</a>, is then compared against the output of the exact solution, and the error <a href="#eq:ErrWaveEqn" data-reference-type="eqref" data-reference="eq:ErrWaveEqn">[eq:ErrWaveEqn]</a> is stored for various timesteps <span class="math inline">\(k\)</span>. It is convenient to use an even number <span class="math inline">\(M\)</span> of subintervals, and to check the output of the wave equation at <span class="math inline">\(m=M/2 +1\)</span> (the central point of the grid). The reference sample is <code>Ts=floor(te/k)</code>, where <span class="math inline">\(t_e\)</span> is the duration in seconds of the simulation. The results are presented in Fig. <a href="#fig:ErrorCurvesWE" data-reference-type="ref" data-reference="fig:ErrorCurvesWE">1.1</a>.</p>
+<figure>
+<embed src="Figures/ErrorWEeqn.eps" id="fig:ErrorCurvesWE" /><figcaption aria-hidden="true">Error curves for scheme <a href="#eq:WEFDexp" data-reference-type="eqref" data-reference="eq:WEFDexp">[eq:WEFDexp]</a>, under various initial conditions. (a): <a href="#eq:HigherOrderICsWE1" data-reference-type="eqref" data-reference="eq:HigherOrderICsWE1">[eq:HigherOrderICsWE1]</a>; (b): <a href="#eq:HigherOrderICsWE2" data-reference-type="eqref" data-reference="eq:HigherOrderICsWE2">[eq:HigherOrderICsWE2]</a>; (c): <a href="#eq:HigherOrderICsWE3" data-reference-type="eqref" data-reference="eq:HigherOrderICsWE3">[eq:HigherOrderICsWE3]</a>; (d): <a href="#eq:HigherOrderICsWE4" data-reference-type="eqref" data-reference="eq:HigherOrderICsWE4">[eq:HigherOrderICsWE4]</a>. The error is computed as per <a href="#eq:ErrWaveEqn" data-reference-type="eqref" data-reference="eq:ErrWaveEqn">[eq:ErrWaveEqn]</a>, where <span class="math inline">\(m = M/2 + 1\)</span> (M is always chosen to be even); and <span class="math inline">\(n = \text{floor}(0.0165/k)\)</span>. Then, <span class="math inline">\(h=L/M\)</span>, and <span class="math inline">\(k = h/c\)</span>, where <span class="math inline">\(L=1\)</span>, and <span class="math inline">\(c=315\)</span>.</figcaption>
+</figure>
+<p>The error plots are revealing: for <a href="#eq:HigherOrderICsWE1" data-reference-type="eqref" data-reference="eq:HigherOrderICsWE1">[eq:HigherOrderICsWE1]</a> and <a href="#eq:HigherOrderICsWE3" data-reference-type="eqref" data-reference="eq:HigherOrderICsWE3">[eq:HigherOrderICsWE3]</a>, the error curves attain the expected trends, but for <a href="#eq:HigherOrderICsWE2" data-reference-type="eqref" data-reference="eq:HigherOrderICsWE2">[eq:HigherOrderICsWE2]</a> and <a href="#eq:HigherOrderICsWE4" data-reference-type="eqref" data-reference="eq:HigherOrderICsWE4">[eq:HigherOrderICsWE4]</a>, they do not! In fact, <a href="#eq:HigherOrderICsWE2" data-reference-type="eqref" data-reference="eq:HigherOrderICsWE2">[eq:HigherOrderICsWE2]</a> reveals that the error is down to machine accuracy: in other words, the initialisation is <em>exact</em> in this case. This is understood by a simple arguments: it is immediate to verify that, under the condition that <span class="math inline">\(h=ck\)</span>, <a href="#eq:HigherOrderICsWE2" data-reference-type="eqref" data-reference="eq:HigherOrderICsWE2">[eq:HigherOrderICsWE2]</a> gives <span class="math inline">\(y^1_m = \frac{y^0_{m+1}+y^0_{m-1}}{2}\)</span>, that is, the discrete D’Alembert solution. This holds true for inner points, but, as we know from the previous section, the boundary conditions are also discretised exactly in this case via the matrix <span class="math inline">\({\bf D}^2_d\)</span>, and hence the scheme overall is exact!</p>
+<p>The interpretation of Fig. <a href="#fig:ErrorCurvesWE" data-reference-type="ref" data-reference="fig:ErrorCurvesWE">1.1</a>(d) is a little more obscure. Note that, in order to implement the corresponding initial condition <a href="#eq:HigherOrderICsWE4" data-reference-type="eqref" data-reference="eq:HigherOrderICsWE4">[eq:HigherOrderICsWE4]</a>, one needs to apply the discrete difference <span class="math inline">\(\delta_{xx}\)</span> twice or, equivalently, form a matrix <span class="math inline">\({\bf D}^4_d\)</span>. Here, the choice was to use the product of <span class="math inline">\({\bf D}^2_d\)</span> with itself: <span class="math inline">\({\bf D}^4_d = {\bf D}^2_d \, {\bf D}^2_d\)</span>. This is the problem: <span class="math inline">\({\bf D}^4_d\)</span> is not of sufficiently high accuracy to increase the accuracy of the scheme overall, which hence reamins third-order. A higher-order discretisation of <span class="math inline">\(\delta_{xx}^2\)</span> needs to be implemented, though this possibility will not be explored further here.</p>
+<h2 id="loss-and-forcing">Loss and forcing</h2>
+<p>The wave equation including loss and source terms can be given as <span class="math display">\[\frac{\partial^2 y}{\partial t^2} = c^2 \frac{\partial^2 y}{\partial x^2}-2 \sigma \frac{\partial y}{\partial t} + p(x,t).\]</span> Here, <span class="math inline">\(\sigma \geq 0\)</span> (measured in s<span class="math inline">\(^{-1}\)</span>) is a viscous-loss, as in <a href="#eq:WEloss" data-reference-type="eqref" data-reference="eq:WEloss">[eq:WEloss]</a>, and <span class="math inline">\(p\)</span> (measured in m/s<span class="math inline">\(^2\)</span>) is a source term. For all practical purposes, one may set <span class="math inline">\(p(x,t) = \frac{\eta(x)}{\rho A} f(t)\)</span>, that is, the source is separable in <span class="math inline">\(x\)</span> and <span class="math inline">\(t\)</span>, with <span class="math inline">\(f\)</span> being a force signal measured in N. The energy balance for this equation, an extension of <a href="#eq:EnBalWE" data-reference-type="eqref" data-reference="eq:EnBalWE">[eq:EnBalWE]</a>, reads <span class="math display">\[\label{eq:EnBalanceWEQNloss}
+\frac{d}{dt}\left( \int_{0}^{L} \frac{1}{2}\left( \frac{\partial y}{\partial t} \right)^2 dx + \int_{0}^{L} \frac{c^2}{2}\left( \frac{\partial y}{\partial x} \right)^2 dx \right) = -2\sigma \int_0^L \left(\frac{\partial y}{\partial t}\right)^2 \, dx + \frac{f(t)}{\rho A}\int_0^L \eta \frac{\partial y}{\partial t}\, dx.\]</span> Here, conservative boundary conditions are assumed, for instance of fixed type, so that the corresponding boundary integrals vanish in the energy balance.</p>
+<h3 id="finite-difference-schemes">Finite difference schemes</h3>
+<p>An approximation using finite differences is obtained immediately after defining the time-dependent vector <span class="math inline">\({\bf y}^n\)</span>, approximating the solution <span class="math inline">\(y(t,x)\)</span> on the grid. Then, take <span class="math display">\[\delta_{tt}{\bf y}^n = c^2 {\bf D}^2_d {\bf y}^n - 2\sigma \delta_{t\cdot}{\bf y}^n + \frac{f^n}{\rho A}{\boldsymbol \eta}.\]</span> Here, the grid function <span class="math inline">\({\boldsymbol \eta}\)</span> is a discrete approximation to the continuous distribution <span class="math inline">\(\eta(x)\)</span>, and <span class="math inline">\(f^n\)</span> is a time series sampling the input <span class="math inline">\(f(t)\)</span> at the current time step. Regardless of the particular discretisation for <span class="math inline">\(\eta\)</span>, notice that the discrete energy balance is obtained immediately after multiplication of the left by <span class="math inline">\(\delta_{t\cdot}{\bf y}^\intercal\)</span>, giving <span class="math display">\[\delta_{t+}\left(\frac{\delta_{t-}({\bf y}^n)^\intercal \, \delta_{t-}{\bf y}^n}{2} + \frac{c^2(e_{t-}{\bf {\bf D}^-{\bf y}}^n)^\intercal \, {\bf D}^-{\bf y}^n}{2} \right) = -2\sigma (\delta_{t\cdot}{\bf y}^n)^\intercal \delta_{t\cdot}{\bf y}^n +  \frac{f^n}{\rho A}(\delta_{t\cdot}{\bf y}^n)^\intercal {\boldsymbol \eta},\]</span> that is a discrete counterpart of <a href="#eq:EnBalanceWEQNloss" data-reference-type="eqref" data-reference="eq:EnBalanceWEQNloss">[eq:EnBalanceWEQNloss]</a>.</p>
+<h3 id="spreading-and-interpolation">Spreading and interpolation</h3>
+<p>In many practical applications, the distribution of the load is concentrated in a small area around the loading point <span class="math inline">\(x_p\)</span>, so that <span class="math inline">\(\eta(x) \approx \delta(x-x_p)\)</span>. In this case, <span class="math inline">\(\boldsymbol \eta\)</span> is obtained using a spreading operator of sufficient accuracy. Spreading and interpolation are closely-related concepts, in that the former consists in yielding a grid function, starting from the knowledge of a given continuous function; the former instead produces a continuous function, starting from the sampled values of a grid function. There are many different kinds of interpolants. One such popular ones is due to Lagrange, and it uses a basis of polynomials. Suppose we want to interpolate the value of a point <span class="math inline">\(x_p\)</span>, such that <span class="math display">\[m_p = \text{floor}(x_p/h), \quad \alpha = x_p/h - m_p,\]</span> In practice <span class="math inline">\(0\leq m_p\leq M\)</span> is the grid point to the left of <span class="math inline">\(x_p\)</span>, and <span class="math inline">\(0\leq \alpha \leq h\)</span> represent the remainder of the flooring operation. Then, consider the following arrays <span class="math inline">\({\bf r}\)</span> of coefficients, of length <span class="math inline">\(M+1\)</span>: <span class="math display">\[\label{eq:LagrangeArrays}
+\begin{bmatrix}
+\vdots\\
+r_{mp} \\
+\vdots
+\end{bmatrix} = \frac{1}{h}\begin{bmatrix}
+\vdots\\
+1 \\
+\vdots
+\end{bmatrix},\quad 
+\begin{bmatrix}
+\vdots\\
+r_{mp-1} \\
+r_{mp} \\
+r_{mp+1} \\
+\vdots
+\end{bmatrix} = \frac{1}{h}\begin{bmatrix}
+\vdots\\
+\frac{1-\alpha}{2} \\
+0 \\
+\frac{1+\alpha}{2} \\
+\vdots
+\end{bmatrix},\quad
+\begin{bmatrix}
+\vdots\\
+r_{mp-1} \\
+r_{mp} \\
+r_{mp+1} \\
+\vdots
+\end{bmatrix} = \frac{1}{h}\begin{bmatrix}
+\vdots\\
+\frac{\alpha(\alpha-1)}{2} \\
+(1+\alpha)(1-\alpha) \\
+\frac{\alpha(\alpha+1)}{2} \\
+\vdots
+\end{bmatrix},\quad
+\begin{bmatrix}
+\vdots\\
+r_{mp-1} \\
+r_{mp} \\
+r_{mp+1} \\
+r_{mp+2} \\
+\vdots
+\end{bmatrix} = \frac{1}{h}\begin{bmatrix}
+\vdots\\
+-\frac{\alpha(\alpha-1)(\alpha-2)}{6} \\
+\frac{(\alpha+1)(\alpha-1)(\alpha-2)}{2} \\
+-\frac{\alpha(\alpha+1)(\alpha-2)}{2} \\
+\frac{\alpha(\alpha+1)(\alpha-1)}{6}\\
+\vdots
+\end{bmatrix}\]</span></p>
+<figure>
+<embed src="Figures/ErrorsSpreading.eps" id="fig:ErrsLagrange" /><figcaption aria-hidden="true">Errors of the discrete spreading operators <a href="#eq:LagrangeArrays" data-reference-type="eqref" data-reference="eq:LagrangeArrays">[eq:LagrangeArrays]</a>. Here, the error <span class="math inline">\(E\)</span>, as per <a href="#eq:ErrSpreading" data-reference-type="eqref" data-reference="eq:ErrSpreading">[eq:ErrSpreading]</a>, is computed starting from the continuous function <span class="math inline">\(y(x) = \sin (\pi x)\)</span>, at <span class="math inline">\(x_p=0.289\)</span>, and where the grid function <span class="math inline">\({\bf y}\)</span> contains the sampled values of <span class="math inline">\(y\)</span> at <span class="math inline">\(x=mh\)</span>, where <span class="math inline">\(h=1/M\)</span>. The plots are obtained using a number of values for <span class="math inline">\(M\)</span>. The panels, from <span class="math inline">\((a)\)</span> to <span class="math inline">\((d)\)</span>, include higher-order approximations to the Delta function, as given in <a href="#eq:LagrangeArrays" data-reference-type="eqref" data-reference="eq:LagrangeArrays">[eq:LagrangeArrays]</a>.</figcaption>
+</figure>
+<p>Lagrange interpolation is simply given by <span class="math display">\[y(x_p) = h{\bf r}^\intercal {\bf y},\]</span> where <span class="math inline">\(\bf r\)</span> is any one of the arrays given in <a href="#eq:LagrangeArrays" data-reference-type="eqref" data-reference="eq:LagrangeArrays">[eq:LagrangeArrays]</a>. Of course, the arrays yields coefficients such that the order of the approximation increases. The error is defined simply as <span class="math display">\[\label{eq:ErrSpreading}
+E = y(x_p)-h{\bf r}^\intercal {\bf y}.\]</span> In particular, <a href="#eq:LagrangeArrays" data-reference-type="eqref" data-reference="eq:LagrangeArrays">[eq:LagrangeArrays]</a> gives approximations of order one to four. Spreading, on the other hand, is somewhat the reversed operation. Note that the equation above can be written in an equivalent form as <span class="math display">\[y(x_p) \triangleq \int_0^L y(x) \delta(x-x_p)\, dx = h{\bf r}^\intercal {\bf y},\]</span> in pratice yielding an approximation to the Dirac delta function as the array <span class="math inline">\(\bf r\)</span>. In Fig. <a href="#fig:ErrsLagrange" data-reference-type="ref" data-reference="fig:ErrsLagrange">1.2</a>, the accuracy of the spreading operator is checked in a numerical experiment, yielding the expected error trends.</p>
+</body>
+</html>
