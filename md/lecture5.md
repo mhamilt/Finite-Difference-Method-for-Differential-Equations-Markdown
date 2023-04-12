@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Lecture 4
+title: Lecture 5
 ---
 
 -   [Numerical methods for the wave
